@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>진로·현장실습 관리 데모</title>
+<meta name="description" content="특성화고 학생 취업·진로 이력 관리와 현장실습 전자동의를 직접 눌러 볼 수 있는 제안용 데모예요. 학교 이름, 학생, 기업, 숫자는 모두 예시예요.">
+<meta name="theme-color" content="#F2F4F7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232457F5'/%3E%3Cpath d='M9 22V10h8a4 4 0 010 8h-8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style id="tokens">
+:root{
+  color-scheme: only light;
+  --brand:#2457F5; --brand-hover:#1B45D6; --brand-press:#1638B0; --brand-text:#1B45D6;
+  --brand-tint:#EEF3FF; --brand-tint-2:#D9E4FF; --ring:0 0 0 3px rgba(36,87,245,.25); --on-brand:#FFFFFF;
+  --bg:#F2F4F7; --card:#FFFFFF; --soft:#F7F8FA; --track:#ECEFF3; --line:#E5E8EB; --line-2:#EBEEF2;
+  --ink:#191F28; --ink-2:#4E5968; --mut:#636D7B; --mut-2:#9AA3AE;
+  --ok:#127A4F; --ok-bg:#E3F6ED; --ok-dot:#1FA971;
+  --warn:#7A5600; --warn-bg:#FFF3D4; --warn-dot:#F2B01E;
+  --bad:#BF2930; --bad-bg:#FFE3E4; --bad-dot:#E5484D;
+  --info:#175CD3; --info-bg:#EAF2FF; --info-dot:#2E7CF6;
+  --neu:#4E5968; --neu-bg:#F0F2F5; --neu-dot:#8B95A1;
+  --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --r-sm:8px; --r-md:12px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --sh-pill:0 1px 2px rgba(16,24,40,.08);
+  --sh-pop:0 2px 6px rgba(16,24,40,.06),0 12px 32px rgba(16,24,40,.12);
+}
+</style>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.6;word-break:keep-all;-webkit-text-size-adjust:100%}
+body{overflow-x:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--r-sm)}
+.num{font-variant-numeric:tabular-nums}
+.mut{color:var(--mut)}
+.small{font-size:13px}
+h1,h2,h3{margin:0;line-height:1.3}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* 예시 띠 */
+.demo-bar{background:var(--soft);border-bottom:1px solid var(--line-2);font-size:13px;color:var(--ink-2);padding:8px 16px;text-align:center}
+.demo-bar b{font-weight:600;color:var(--ink)}
+
+/* 머리 */
+.top{background:var(--card);border-bottom:1px solid var(--line-2);position:sticky;top:0;z-index:20}
+.top-in{max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;min-width:0}
+.logo-mark{width:32px;height:32px;border-radius:8px;background:var(--brand);display:grid;place-items:center;flex:none}
+.logo-t{font-weight:700;font-size:15px;line-height:1.25}
+.logo-s{font-size:12px;color:var(--mut);line-height:1.25}
+.role-wrap{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--track);border-radius:var(--r-pill);padding:4px;gap:2px}
+.seg button{border:0;background:transparent;height:36px;padding:0 14px;border-radius:var(--r-pill);font-weight:600;font-size:13px;color:var(--ink-2);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--sh-pill)}
+.seg button:hover{color:var(--ink)}
+.sel{height:44px;border:1px solid var(--line);border-radius:var(--r-md);padding:0 36px 0 12px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23636D7B' stroke-width='2.4'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;font-size:14px;max-width:100%}
+.sel:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+
+.nav-row{max-width:1200px;margin:0 auto;padding:0 24px 12px}
+.pills{display:flex;gap:4px;background:var(--track);border-radius:var(--r-pill);padding:4px;width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.pills::-webkit-scrollbar{display:none}
+.pills button{border:0;background:transparent;height:40px;padding:0 18px;border-radius:var(--r-pill);font-weight:600;color:var(--ink-2);white-space:nowrap;font-size:14px}
+.pills button[aria-current="page"]{background:var(--card);color:var(--ink);box-shadow:var(--sh-pill)}
+
+.wrap{max-width:1200px;margin:0 auto;padding:24px 24px 64px}
+.page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.page-h h1{font-size:24px;letter-spacing:-.02em}
+.page-h p{margin:4px 0 0;color:var(--mut);font-size:14px}
+.scope{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2);background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-pill);padding:6px 12px}
+
+/* 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:44px;padding:0 18px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--card);font-weight:600;font-size:14px;white-space:nowrap;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--soft)}
+.btn:active{background:var(--track)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.btn.pri:hover{background:var(--brand-hover);border-color:var(--brand-hover)}
+.btn.pri:active{background:var(--brand-press)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--brand-text)}
+.btn.ghost:hover{background:var(--brand-tint)}
+.btn.sm{height:36px;padding:0 12px;font-size:13px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.block{width:100%}
+.btn.cta{height:52px;border-radius:var(--r-md);font-size:17px;width:100%}
+.btn svg{flex:none}
+.link{border:0;background:none;padding:0;color:var(--brand-text);font-weight:600;text-align:left}
+.link:hover{text-decoration:underline}
+
+/* 칩 */
+.chip{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 9px;border-radius:var(--r-pill);font-size:12px;font-weight:600;white-space:nowrap;line-height:1}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;flex:none}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.ok::before{background:var(--ok-dot)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.warn::before{background:var(--warn-dot)}
+.chip.bad{background:var(--bad-bg);color:var(--bad)}.chip.bad::before{background:var(--bad-dot)}
+.chip.info{background:var(--info-bg);color:var(--info)}.chip.info::before{background:var(--info-dot)}
+.chip.neu{background:var(--neu-bg);color:var(--neu)}.chip.neu::before{background:var(--neu-dot)}
+.tag{display:inline-flex;align-items:center;height:24px;padding:0 8px;border-radius:6px;background:var(--soft);border:1px solid var(--line-2);font-size:12px;color:var(--ink-2);white-space:nowrap}
+
+/* 필터 칩 */
+.fchips{display:flex;gap:8px;flex-wrap:wrap}
+.fchip{height:36px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.fchip b{font-weight:600;color:var(--mut);margin-left:4px}
+.fchip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.fchip[aria-pressed="true"] b{color:#C9CED6}
+
+/* 카드 */
+.card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:24px;min-width:0}
+.card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.card-h h2{font-size:17px;font-weight:600}
+.card-h p{margin:2px 0 0;font-size:13px;color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}
+.stack{display:flex;flex-direction:column;gap:16px}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px 24px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi .l{font-size:14px;color:var(--ink-2);font-weight:500}
+.kpi .v{font-size:32px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.25}
+.kpi .v small{font-size:15px;font-weight:500;color:var(--mut);margin-left:2px}
+.kpi .d{font-size:13px;color:var(--mut)}
+.kpi.hi{background:var(--brand);border-color:var(--brand);color:#fff}
+.kpi.hi .l,.kpi.hi .d,.kpi.hi .v small{color:rgba(255,255,255,.86)}
+.kpi.hi .btn{margin-top:8px;align-self:flex-start;background:#fff;color:var(--brand-text);border-color:#fff;height:40px}
+.kpi.hi .btn:hover{background:var(--brand-tint)}
+
+/* 막대 */
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar-row{display:grid;grid-template-columns:88px 1fr 64px;align-items:center;gap:12px;border:0;background:none;padding:6px 8px;margin:0 -8px;border-radius:var(--r-sm);text-align:left;min-height:44px;width:calc(100% + 16px)}
+.bar-row:hover{background:var(--soft)}
+.bar-row .bl{font-size:13px;color:var(--ink-2);font-weight:500}
+.bar-track{height:20px;background:var(--soft);border-radius:10px;position:relative;overflow:hidden}
+.bar-fill{position:absolute;inset:0 auto 0 0;background:var(--brand-tint-2);border-radius:10px;transition:width .4s}
+.bar-row[aria-pressed="true"] .bar-fill{background:var(--brand)}
+.bar-row .bv{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.bar-tip{margin-top:12px;background:var(--ink);color:#fff;border-radius:var(--r-sm);padding:10px 12px;font-size:13px;line-height:1.5}
+.bar-tip b{font-weight:600}
+
+/* 표 */
+.tbl-wrap{border:1px solid var(--line-2);border-radius:var(--r-md);overflow:hidden}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--soft);color:var(--mut);font-size:13px;font-weight:500;text-align:left;padding:10px 12px;white-space:nowrap;border-bottom:1px solid var(--line-2)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--line-2);height:52px;vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr.click{cursor:pointer}
+.tbl tbody tr.click:hover td{background:var(--soft)}
+.tbl .r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl .nm{font-weight:600}
+.ellip{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.tbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.search{height:44px;border:1px solid var(--line);border-radius:var(--r-pill);padding:0 16px 0 40px;width:240px;max-width:100%;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23636D7B' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 14px center}
+.search:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;font-size:13px;color:var(--mut)}
+.pager .pg{display:flex;gap:4px}
+.pager .pg button{min-width:44px;height:44px;border-radius:var(--r-sm);border:1px solid var(--line-2);background:var(--card);font-weight:600}
+.pager .pg button[disabled]{opacity:.4;cursor:not-allowed}
+.pager .pg button{display:inline-grid;place-items:center}
+.pcur{display:none;align-self:center;padding:0 8px;color:var(--ink);font-weight:600}
+.pager .pg button[aria-current="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.empty{padding:40px 16px;text-align:center;color:var(--mut)}
+.empty b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+
+/* 서명 단계 */
+.steps3{display:flex;gap:4px;align-items:center}
+.dot3{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dot3.ok{background:var(--ok-dot)}.dot3.wait{background:var(--warn-dot)}
+
+/* 폼 */
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.field label,.field .lb{font-size:13px;font-weight:600;color:var(--ink-2)}
+.inp,.ta{border:1px solid var(--line);border-radius:var(--r-md);padding:0 14px;height:48px;font-size:15px;background:var(--card);width:100%}
+.ta{padding:12px 14px;height:auto;min-height:120px;resize:vertical;line-height:1.6}
+.inp:focus,.ta:focus{border-color:var(--brand);box-shadow:var(--ring);outline:none}
+.help{font-size:13px;color:var(--mut)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{display:flex;gap:10px;align-items:flex-start;min-height:44px;padding:10px 0;font-size:15px;cursor:pointer}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--brand);flex:none}
+.varbtns{display:flex;gap:6px;flex-wrap:wrap}
+.varbtns button{height:36px;border:1px dashed var(--line);background:var(--soft);border-radius:var(--r-pill);padding:0 12px;font-size:13px;color:var(--ink-2)}
+
+/* 목록 줄 */
+.li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line-2);min-height:56px}
+.li:last-child{border-bottom:0}
+.li .grow{flex:1;min-width:0}
+.li .t{font-weight:600;font-size:14px}
+.li .s{font-size:13px;color:var(--mut)}
+.fileic{width:36px;height:36px;border-radius:var(--r-sm);background:var(--soft);display:grid;place-items:center;flex:none;color:var(--mut)}
+
+/* 정보 표 */
+.dinfo{display:grid;grid-template-columns:96px 1fr;font-size:14px;border-top:1px solid var(--line-2)}
+.dinfo dt{color:var(--mut);padding:10px 0;border-bottom:1px solid var(--line-2)}
+.dinfo dd{margin:0;padding:10px 0;border-bottom:1px solid var(--line-2);font-weight:500;min-width:0}
+
+/* 로그 */
+.log{background:var(--soft);border:1px solid var(--line-2);border-radius:var(--r-md);padding:12px;max-height:280px;overflow:auto;font-size:13px;font-variant-numeric:tabular-nums}
+.log div{display:flex;gap:8px;align-items:center;padding:4px 0;flex-wrap:wrap}
+.log time{color:var(--mut);width:64px;flex:none}
+.sumrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.sumrow div{background:var(--soft);border-radius:var(--r-md);padding:10px 12px}
+.sumrow b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.sumrow span{font-size:12px;color:var(--mut)}
+
+/* 모달 */
+.modal-bg{position:fixed;inset:0;background:rgba(25,31,40,.45);z-index:50;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-bg.open{display:flex}
+.modal{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--sh-pop);width:100%;max-width:640px;max-height:calc(100vh - 48px);overflow:auto;padding:24px}
+.modal.wide{max-width:880px}
+.modal-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+.modal-h h2{font-size:20px}
+.xbtn{width:44px;height:44px;border-radius:50%;border:0;background:var(--soft);display:grid;place-items:center;flex:none}
+.modal-f{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:var(--r-md);box-shadow:var(--sh-pop);font-size:14px;opacity:0;pointer-events:none;transition:.2s;z-index:80;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+
+/* 휴대폰 화면 */
+.phone-stage{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:32px;align-items:start;max-width:960px;margin:0 auto}
+.stage-note h1{font-size:24px;letter-spacing:-.02em;margin-bottom:8px}
+.stage-note p{color:var(--ink-2);margin:0 0 16px;font-size:15px}
+.stage-note ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:14px}
+.stage-note li{margin-bottom:6px}
+.phone{background:var(--card);border:1px solid var(--line);border-radius:36px;overflow:clip;width:100%;max-width:400px;min-height:780px;display:flex;flex-direction:column;position:relative}
+.ph-top{padding:16px 20px 12px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:8px}
+.ph-top h2{font-size:17px;font-weight:700;flex:1}
+.ph-body{padding:16px 16px 24px;flex:1;background:var(--bg);overflow:auto}
+.ph-card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px;margin-bottom:12px}
+.ph-card h3{font-size:17px;font-weight:600;margin-bottom:8px}
+.ph-tabs{position:sticky;bottom:0;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-2);background:var(--card);padding-bottom:env(safe-area-inset-bottom)}
+.ph-tabs button{border:0;background:none;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;color:var(--mut);font-weight:500}
+.ph-tabs button[aria-current="page"]{color:var(--brand-text);font-weight:700}
+.ph-foot{position:sticky;bottom:0;z-index:2;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line-2)}
+.ph-foot .hint{font-size:13px;color:var(--mut);text-align:center;margin-bottom:8px}
+.big-n{font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1.1;font-variant-numeric:tabular-nums}
+.big-n small{font-size:17px;color:var(--mut);font-weight:500}
+.prog{height:8px;background:var(--track);border-radius:4px;overflow:hidden;margin-top:12px}
+.prog i{display:block;height:100%;background:var(--brand);border-radius:4px}
+.todo{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line-2);width:100%;border-left:0;border-right:0;border-bottom:0;background:none;text-align:left;min-height:56px}
+.todo .grow{flex:1;min-width:0}
+.msg{background:var(--card);border-radius:4px 20px 20px 20px;padding:16px;border:1px solid var(--line-2);font-size:15px;line-height:1.6}
+.msg-from{font-size:13px;color:var(--mut);margin-bottom:6px}
+.msg-btn{display:flex;align-items:center;justify-content:center;height:48px;border-radius:var(--r-md);background:var(--soft);border:1px solid var(--line);font-weight:600;margin-top:12px;width:100%}
+.stepper{display:flex;gap:6px;margin-bottom:12px}
+.stepper i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.stepper i.on{background:var(--brand)}
+.sig-box{border:1.5px dashed var(--line);border-radius:var(--r-md);background:#fff;position:relative;touch-action:none;height:200px}
+.sig-box.signed{border-style:solid;border-color:var(--brand)}
+.sig-box canvas{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}
+.sig-ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--mut-2);font-size:15px;pointer-events:none}
+.sig-line{position:absolute;left:20px;right:20px;bottom:44px;border-bottom:1px solid var(--line)}
+
+/* 문서(PDF) */
+.doc{background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:28px 24px;font-size:13px;line-height:1.7;color:#111}
+.doc > h3{text-align:center;font-size:20px;margin-bottom:4px;letter-spacing:-.01em}
+.doc .docno{text-align:center;color:#555;font-size:12px;margin-bottom:16px}
+.doc table{width:100%;border-collapse:collapse;margin:12px 0}
+.doc th,.doc td{border:1px solid #999;padding:6px 8px;text-align:left;font-size:13px;vertical-align:top}
+.doc th{background:#F3F4F6;width:30%;font-weight:600}
+.doc .sigs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:16px}
+.doc .sigs > div{border:1px solid #999;padding:8px;min-height:96px;position:relative}
+.doc .sigs img{height:56px;max-width:100%;object-fit:contain;display:block;margin-top:4px}
+.doc .foot{margin-top:16px;font-size:11px;color:#555;border-top:1px solid #ddd;padding-top:8px;word-break:break-all}
+
+/* 리포트 */
+.gap-item{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line-2);align-items:center}
+.gap-item:last-child{border-bottom:0}
+.gap-item .gt{font-weight:600}
+.gap-item .gs{font-size:13px;color:var(--mut);grid-column:1/-1}
+.ring-wrap{display:flex;align-items:center;gap:20px}
+.score{font-size:44px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+.score small{font-size:17px;color:var(--mut);font-weight:500}
+
+.posting{border:1px solid var(--line-2);border-radius:var(--r-md);padding:16px;background:var(--card);text-align:left;width:100%;display:flex;flex-direction:column;gap:8px;min-height:44px}
+.posting:hover{border-color:var(--line)}
+.posting[aria-pressed="true"]{border-color:var(--brand);box-shadow:var(--ring)}
+.posting .pt{font-weight:600;font-size:15px}
+.posting .meta{display:flex;flex-wrap:wrap;gap:6px}
+.plist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cap{font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums}
+
+.notice{background:var(--soft);border:1px solid var(--line-2);border-radius:var(--r-md);padding:12px 14px;font-size:13px;color:var(--ink-2)}
+.notice b{color:var(--ink);font-weight:600}
+.preview-bubble{background:var(--soft);border:1px solid var(--line-2);border-radius:4px 16px 16px 16px;padding:14px;font-size:14px;white-space:pre-wrap;line-height:1.6}
+.hl{background:var(--brand-tint);color:var(--brand-text);border-radius:4px;padding:0 2px;font-weight:600}
+.foot-note{max-width:1200px;margin:0 auto;padding:0 24px 40px;font-size:13px;color:var(--mut)}
+
+#printArea{display:none}
+
+/* 반응형 */
+@media (max-width:1024px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .c8,.c7,.c6,.c5,.c4{grid-column:span 12}
+  .phone-stage{grid-template-columns:1fr;justify-items:center}
+  .stage-note{max-width:400px}
+}
+@media (max-width:760px){
+  .top{position:static}
+  .top-in{padding:10px 16px;gap:10px}
+  .role-wrap{margin-left:0;width:100%}
+  .role-wrap .seg{width:100%}
+  .role-wrap .seg button{flex:1;padding:0 6px}
+  .role-wrap .sel{width:100%}
+  .nav-row{padding:0 16px 10px}
+  .pills{width:100%}
+  .pills button{padding:0 14px}
+  .wrap{padding:16px 16px 48px}
+  .page-h h1{font-size:22px}
+  .card{padding:20px 16px}
+  .kpis{gap:12px}
+  .kpi{padding:16px}
+  .kpi .v{font-size:24px}
+  .kpi .l{font-size:13px}
+  .grid{gap:12px}
+  .bar-row{grid-template-columns:72px 1fr 52px;gap:8px}
+  .tbl-wrap{border:0;border-radius:0}
+  .tbl thead{display:none}
+  .tbl,.tbl tbody{display:block}
+  .tbl tr{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-2)}
+  .tbl td{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px;border:0;height:auto;padding:0;min-height:26px}
+  .tbl td:empty{display:none}
+  .tbl td[data-l]::before{content:attr(data-l);color:var(--mut);font-size:12px}
+  .tbl td.m-full{width:100%}
+  .tbl td.m-hide{display:none}
+  .tbl .r{text-align:left}
+  .ellip{max-width:none;white-space:normal}
+  .search{width:100%}
+  .btn.sm,.fchip,.varbtns button{height:44px}
+  .seg button,.pills button,.kpi.hi .btn{height:44px}
+  .pager .pn{display:none !important}
+  .pcur{display:inline}
+  .tbar .btn{flex:1}
+  .plist{grid-template-columns:1fr}
+  .row2{grid-template-columns:1fr}
+  .sumrow{grid-template-columns:repeat(2,1fr)}
+  .modal-bg{padding:0;align-items:flex-end}
+  .modal{border-radius:var(--r-xl) var(--r-xl) 0 0;max-height:92vh;padding:20px 16px calc(20px + env(safe-area-inset-bottom))}
+  .modal-f .btn{flex:1}
+  .phone-stage{gap:16px}
+  .stage-note{display:none}
+  .phone{border:0;border-radius:0;max-width:none;min-height:calc(100vh - 140px)}
+  .phone-wrap{margin:-16px -16px -48px}
+  .dinfo{grid-template-columns:84px 1fr}
+  .foot-note{padding:0 16px 32px}
+  .doc{padding:20px 14px}
+}
+
+@media print{
+  html,body{background:#fff !important}
+  body > *:not(#printArea){display:none !important}
+  #printArea{display:block !important;padding:0}
+  #printArea .doc{border:0;padding:0;font-size:12px}
+  .no-print{display:none !important}
+  @page{size:A4;margin:16mm}
+}
+</style>
+</head>
+<body>
+<div class="demo-bar"><b>제안용 데모 · 예시</b> — ○○공업고등학교(예시)를 가정했어요. 학생·학부모·기업 이름과 숫자는 모두 가상이고, 알림은 실제로 보내지 않아요.</div>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo">
+      <div class="logo-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19V5h7a4.5 4.5 0 010 9H6"/></svg></div>
+      <div><div class="logo-t">진로·현장실습 관리</div><div class="logo-s">○○공업고등학교 (예시)</div></div>
+    </div>
+    <div class="role-wrap">
+      <div class="seg" role="group" aria-label="화면 바꾸기" id="roleSeg">
+        <button data-act="role" data-v="teacher">교사 화면</button>
+        <button data-act="role" data-v="student">학생 화면</button>
+        <button data-act="role" data-v="parent">학부모 서명 링크</button>
+      </div>
+      <select class="sel" id="permSel" aria-label="교사 권한">
+        <option value="homeroom">담임 · 3학년 3반</option>
+        <option value="career">취업지원부 · 전체</option>
+        <option value="admin">총괄 관리자</option>
+      </select>
+    </div>
+  </div>
+  <div class="nav-row" id="navRow">
+    <nav class="pills" aria-label="교사 메뉴" id="pills">
+      <button data-act="tab" data-v="dash">대시보드</button>
+      <button data-act="tab" data-v="students">학생 이력</button>
+      <button data-act="tab" data-v="field">현장실습·동의서</button>
+      <button data-act="tab" data-v="notify">맞춤 알림</button>
+      <button data-act="tab" data-v="stats">통계·보고</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="app"></main>
+<p class="foot-note" id="footNote">이 데모는 브라우저 안에서만 움직여요. 새로 고치면 처음 상태로 돌아가요. 실제 구축에서는 학교 명의 클라우드의 DB에 저장하고, 알림은 학교 명의 카카오 채널로 보내요.</p>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="printArea"></div>
+
+<script>
+/* ---------- 도구 ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const rnd = mulberry32(20261022);
+const pick = a => a[Math.floor(rnd()*a.length)];
+const pct = (a,b) => b ? Math.round(a/b*1000)/10 : 0;
+const pad = n => String(n).padStart(2,'0');
+const nowStr = () => { const d = new Date(); return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+const timeStr = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; };
+const ic = {
+  file:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5"/></svg>',
+  send:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>',
+  up:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>',
+  down:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6"/><path d="M4 20h16"/></svg>',
+  print:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>',
+  x:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  back:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+  home:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg>',
+  list:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+  brief:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>',
+  chart:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  plus:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+};
+
+/* ---------- 예시 데이터 ---------- */
+const SPEC = {
+  'CNC 가공':[{n:'컴퓨터응용선반기능사',k:'자격증',must:1},{n:'컴퓨터응용밀링기능사',k:'자격증'},{n:'CAD 기초 과정 수료',k:'교육'},{n:'기계가공 현장실습',k:'경험',must:1},{n:'TOEIC 400 이상',k:'어학'}],
+  '기계 조립·검사':[{n:'공유압기능사',k:'자격증',must:1},{n:'컴퓨터응용선반기능사',k:'자격증'},{n:'품질관리 기초 교육',k:'교육'},{n:'제조 현장실습',k:'경험',must:1}],
+  '전기설비 시공·유지보수':[{n:'전기기능사',k:'자격증',must:1},{n:'승강기기능사',k:'자격증'},{n:'건설업 기초안전보건교육',k:'교육',must:1},{n:'전기공사 현장실습',k:'경험'},{n:'TOEIC 400 이상',k:'어학'}],
+  '태양광 설비 점검':[{n:'전기기능사',k:'자격증',must:1},{n:'신재생에너지발전설비기능사(태양광)',k:'자격증'},{n:'건설업 기초안전보건교육',k:'교육'},{n:'설비 점검 현장실습',k:'경험'}],
+  '전자부품 품질검사':[{n:'전자기기기능사',k:'자격증',must:1},{n:'전자캐드기능사',k:'자격증'},{n:'품질관리 기초 교육',k:'교육'},{n:'전자 제조 현장실습',k:'경험'}],
+  '통신설비 설치':[{n:'통신선로기능사',k:'자격증',must:1},{n:'전자기기기능사',k:'자격증'},{n:'통신 현장실습',k:'경험'}],
+  '자동차 정비':[{n:'자동차정비기능사',k:'자격증',must:1},{n:'운전면허 1종 보통',k:'자격증'},{n:'자동차보수도장기능사',k:'자격증'},{n:'정비 현장실습',k:'경험',must:1}],
+  '자동차 부품 생산':[{n:'공유압기능사',k:'자격증'},{n:'자동차정비기능사',k:'자격증',must:1},{n:'제조 현장실습',k:'경험'}],
+  '건축 CAD 도면':[{n:'전산응용건축제도기능사',k:'자격증',must:1},{n:'컴퓨터활용능력 2급',k:'자격증'},{n:'설계 현장실습',k:'경험'}],
+  '건축 시공 관리 보조':[{n:'전산응용건축제도기능사',k:'자격증'},{n:'건설업 기초안전보건교육',k:'교육',must:1},{n:'시공 현장실습',k:'경험'}],
+};
+const COURSE = {
+  '자격증':'다음 정기 기능사 시험 접수 (일정은 큐넷에서 확인)',
+  '교육':'교내 방과후 또는 지역 직업훈련기관 단기 과정 (예시)',
+  '어학':'교내 토익 방과후반 (예시) · 목표 점수 맞춰 2회 응시',
+  '경험':'현장실습 매칭에서 관련 기업 우선 추천',
+};
+const DEPTS = [
+  {k:'기계과',cls:[1,2],jobs:['CNC 가공','기계 조립·검사'],n:44,disp:28,emp:20},
+  {k:'전기과',cls:[3,4],jobs:['전기설비 시공·유지보수','태양광 설비 점검'],n:42,disp:30,emp:22},
+  {k:'전자통신과',cls:[5,6],jobs:['전자부품 품질검사','통신설비 설치'],n:40,disp:22,emp:15},
+  {k:'자동차과',cls:[7,8],jobs:['자동차 정비','자동차 부품 생산'],n:42,disp:25,emp:18},
+  {k:'건축과',cls:[9,10],jobs:['건축 CAD 도면','건축 시공 관리 보조'],n:36,disp:14,emp:9},
+];
+const COMPANIES = {
+  '기계과':['가람정밀','서해기계','다온정밀','청원기계','대원산업'],
+  '전기과':['세진전기','청솔전기','한결에너지','누리테크','빛가람설비'],
+  '전자통신과':['동하전자','보람전자','새온통신','미르전자부품'],
+  '자동차과':['우진모빌리티','새길모터스','미르오토','한빛카정비'],
+  '건축과':['태성건축사사무소','해솔건설','온누리건축','바른공간설계'],
+};
+const SUR = ['김','이','박','최','정','강','조','윤','장','임','한','오','서','신','권','황','안','송','류','홍'];
+const LAST = ['준','민','현','우','서','진','호','윤','빈','훈','영','희','수','아','연','혁','원','결'];
+const PSUR = ['정','호','철','숙','희','미','석','경'];
+
+const students = [];
+DEPTS.forEach((d,di) => {
+  const perCls = [Math.ceil(d.n/2), Math.floor(d.n/2)];
+  let placed = 0, emp = 0;
+  d.cls.forEach((c,ci) => {
+    for (let i=1;i<=perCls[ci];i++){
+      const sur = pick(SUR);
+      const job = pick(d.jobs);
+      const pool = SPEC[job].filter(x=>x.k!=='경험');
+      const certs = [];
+      pool.forEach(p => { if (rnd()<0.45) certs.push({type:p.k,name:p.n,date:`2026.${pad(1+Math.floor(rnd()*9))}.${pad(1+Math.floor(rnd()*27))}`,file:`${p.n.replace(/\s/g,'')}_증빙.pdf`,status:rnd()<0.8?'ok':'wait'}); });
+      if (rnd()<0.25) certs.push({type:'수상',name:'교내 기능경진대회 '+pick(['금상','은상','동상']),date:'2026.06.12',file:'상장.jpg',status:'ok'});
+      const s = {
+        id:`3${pad(c)}${pad(i)}`, name:`${sur}*${pick(LAST)}`, dept:d.k, cls:c, job,
+        goal: pick(['졸업 후 관련 기업 취업','취업 후 일학습 병행','전문대 진학 후 취업','공기업 고졸 채용 준비']),
+        phone:`010-****-${String(1000+Math.floor(rnd()*8999))}`, parent:`${sur}*${pick(PSUR)}`, birth:'08****',
+        certs, docs:[
+          {kind:'자기소개서',ver:'v1',date:'2026.04.02',note:'첫 작성',size:'38KB'},
+          ...(rnd()<0.7?[{kind:'자기소개서',ver:'v2',date:'2026.07.15',note:'담임 첨삭 반영',size:'41KB'}]:[]),
+          ...(rnd()<0.5?[{kind:'포트폴리오',ver:'v1',date:'2026.06.20',note:'실습 결과물 사진 12장',size:'4.2MB'}]:[]),
+        ],
+        placement:null, consent:null, employed:false, applied:null, memo:'', lastSent:null
+      };
+      students.push(s);
+    }
+  });
+  const list = students.filter(s=>s.dept===d.k);
+  // 파견·취업 배정
+  const idx = list.map((_,i)=>i).sort(()=>rnd()-.5);
+  idx.slice(0,d.disp).forEach((k,j) => {
+    const s = list[k];
+    s.placement = {company:pick(COMPANIES[d.k]), period:pick(['10.13~12.19','11.03~12.26','11.10~01.16'])};
+    const r = rnd();
+    s.consent = {agree: r<0.05?'wait':'ok', student: r<0.09?'wait':'ok', parent: r<0.18?'wait':'ok'};
+    if (j < d.emp) s.employed = true;
+  });
+});
+// 시연용 학생 고정: 3학년 3반 4번
+const HERO = students.find(s=>s.id==='30304');
+Object.assign(HERO,{name:'박*준',parent:'박*호',job:'전기설비 시공·유지보수',goal:'졸업 후 전기공사 기업 취업, 3년 안에 전기산업기사',phone:'010-****-2741',
+  certs:[{type:'자격증',name:'전기기능사',date:'2026.06.27',file:'전기기능사_합격증.pdf',status:'ok'},{type:'어학',name:'TOEIC 405점',date:'2026.09.14',file:'TOEIC_성적표.pdf',status:'wait'},{type:'수상',name:'교내 기능경진대회 은상',date:'2026.06.12',file:'상장.jpg',status:'ok'}],
+  docs:[{kind:'자기소개서',ver:'v1',date:'2026.04.02',note:'첫 작성',size:'38KB'},{kind:'자기소개서',ver:'v2',date:'2026.07.15',note:'담임 첨삭 반영',size:'41KB'},{kind:'자기소개서',ver:'v3',date:'2026.10.08',note:'세진전기 지원용으로 수정',size:'43KB'},{kind:'포트폴리오',ver:'v1',date:'2026.06.20',note:'배선 실습 사진 12장',size:'4.2MB'},{kind:'포트폴리오',ver:'v2',date:'2026.09.30',note:'시퀀스 제어 과제 추가',size:'6.8MB'}],
+  placement:{company:'세진전기',period:'11.10~12.19'}, consent:{agree:'ok',student:'wait',parent:'wait'}, employed:false,
+  memo:'10/15 상담: 현장 설비 쪽 관심 큼. 안전교육 이수 먼저 챙기기로 함.'});
+
+const POSTINGS = [
+  {id:1,co:'세진전기',ind:'전기공사업',job:'전기설비 시공 보조',pay:'월 110만 원',period:'11.10~12.19 (6주)',cap:4,dept:'전기과',jobKey:'전기설비 시공·유지보수'},
+  {id:2,co:'가람정밀',ind:'금속 가공',job:'CNC 선반 가공',pay:'월 105만 원',period:'11.03~12.26 (8주)',cap:3,dept:'기계과',jobKey:'CNC 가공'},
+  {id:3,co:'우진모빌리티',ind:'자동차 정비',job:'경정비 보조',pay:'월 100만 원',period:'11.10~01.16 (10주)',cap:2,dept:'자동차과',jobKey:'자동차 정비'},
+  {id:4,co:'동하전자',ind:'전자부품 제조',job:'품질검사',pay:'월 108만 원',period:'11.17~12.26 (6주)',cap:5,dept:'전자통신과',jobKey:'전자부품 품질검사'},
+  {id:5,co:'태성건축사사무소',ind:'건축 설계',job:'CAD 도면 보조',pay:'월 95만 원',period:'11.10~12.19 (6주)',cap:2,dept:'건축과',jobKey:'건축 CAD 도면'},
+  {id:6,co:'한결에너지',ind:'태양광 설비',job:'설치·점검 보조',pay:'월 110만 원',period:'11.17~01.09 (8주)',cap:3,dept:'전기과',jobKey:'태양광 설비 점검'},
+];
+POSTINGS.forEach(p => {
+  const cand = students.filter(s=>s.dept===p.dept && !s.placement && !s.applied);
+  p.applicants = cand.slice(0, 3 + (p.id % 3)).map(s => { s.applied = p.id; return s.id; });
+  p.assigned = [];
+});
+// 박*준은 이미 세진전기 배정
+POSTINGS[0].assigned.push(HERO.id);
+
+const TEMPLATES = [
+  {k:'consent',name:'동의서 서명 독려',body:'[○○공업고등학교] #{보호자}님, #{이름} 학생의 현장실습 동의서 서명이 아직 남아 있어요.\n실습 기업: #{기업명}\n서명 마감: #{마감일}\n아래 링크를 누르면 휴대폰에서 바로 서명할 수 있어요.\n#{링크}'},
+  {k:'job',name:'채용·실습 공고 안내',body:'[○○공업고등학교] #{이름} 학생, 희망 직무(#{직무})에 맞는 새 공고가 올라왔어요.\n기업: #{기업명}\n지원 마감: #{마감일}\n자세히 보기: #{링크}'},
+  {k:'cert',name:'자격증 시험 안내',body:'[○○공업고등학교] #{이름} 학생, #{직무} 분야 권장 자격증 중 아직 없는 것이 있어요.\n다음 시험 접수 일정을 확인해 보세요.\n#{링크}'},
+  {k:'counsel',name:'진로 상담 일정',body:'[○○공업고등학교] #{이름} 학생, 담임 선생님과 진로 상담이 #{마감일}에 잡혔어요.\n진로 리포트 미리 보기: #{링크}'},
+];
+
+const TEACHERS = [
+  {name:'정*희',role:'담임',scope:'3학년 3반',perm:'homeroom'},
+  {name:'강*석',role:'담임',scope:'3학년 4반',perm:'homeroom'},
+  {name:'한*수',role:'취업지원부장',scope:'전체 열람·배정',perm:'career'},
+  {name:'임*아',role:'취업지원부',scope:'전체 열람·배정',perm:'career'},
+  {name:'오*진',role:'교감',scope:'총괄 관리자',perm:'admin'},
+];
+
+const S = {
+  role:'teacher', perm:'career', tab:'dash', metric:'disp', selDept:'전기과',
+  filter:'all', page:1, stuQ:'', stuDept:'all', stuPage:1, profile:null,
+  posting:1, stuTab:'home', parentStep:0, sig:null, sigAt:null, studentSig:null,
+  history:[
+    {at:'2026.10.20 16:10',tpl:'동의서 서명 독려',n:21,ok:17,sms:3,fail:1,unread:6},
+    {at:'2026.10.17 09:30',tpl:'채용·실습 공고 안내',n:42,ok:38,sms:4,fail:0,unread:11},
+  ],
+  journal:[
+    {date:'2026.10.21',co:'가람정밀',stu:'김*민 외 2명',who:'한*수',note:'보호구 착용 확인, 야간 작업 없음',act:'이상 없음'},
+    {date:'2026.10.20',co:'우진모빌리티',stu:'최*우',who:'임*아',note:'리프트 작업 구역 출입 제한 표시 미흡',act:'기업에 개선 요청, 10/27 재점검'},
+    {date:'2026.10.16',co:'세진전기',stu:'이*현 외 1명',who:'정*희',note:'실습 일지 작성 양호',act:'이상 없음'},
+  ],
+  ntf:{dept:'all',cond:'consent',to:'parent',tpl:'consent',body:TEMPLATES[0].body}
+};
+
+/* ---------- 권한 범위 ---------- */
+const scoped = () => S.perm==='homeroom' ? students.filter(s=>s.cls===3) : students;
+const canAssign = () => S.perm!=='homeroom';
+const scopeLabel = () => ({homeroom:'담임 권한 · 3학년 3반 학생만 보여요',career:'취업지원부 권한 · 전체 열람과 배정',admin:'총괄 관리자 · 전체 + 교사 권한 관리'})[S.perm];
+const incomplete = s => s.consent && (s.consent.agree!=='ok'||s.consent.student!=='ok'||s.consent.parent!=='ok');
+const cchip = v => v==='ok' ? '<span class="chip ok">완료</span>' : '<span class="chip warn">대기</span>';
+
+/* ---------- 렌더 ---------- */
+function render(){
+  document.querySelectorAll('#roleSeg button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.v===S.role));
+  $('#permSel').style.display = S.role==='teacher' ? '' : 'none';
+  $('#navRow').style.display = S.role==='teacher' ? '' : 'none';
+  $('#footNote').style.display = S.role==='teacher' ? '' : 'none';
+  $('#permSel').value = S.perm;
+  document.querySelectorAll('#pills button').forEach(b=>{ if(b.dataset.v===S.tab) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  const app = $('#app');
+  if (S.role==='student') app.innerHTML = vStudent();
+  else if (S.role==='parent') app.innerHTML = vParent();
+  else if (S.profile) app.innerHTML = vProfile(students.find(s=>s.id===S.profile));
+  else app.innerHTML = ({dash:vDash,students:vStudents,field:vField,notify:vNotify,stats:vStats})[S.tab]();
+  afterRender();
+}
+function pageHead(title, desc, right=''){
+  return `<div class="page-h"><div><h1>${title}</h1><p>${desc}</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="scope">${esc(scopeLabel())}</span>${right}</div></div>`;
+}
+
+/* 대시보드 */
+function vDash(){
+  const all = scoped();
+  const placed = all.filter(s=>s.placement);
+  const emp = all.filter(s=>s.employed);
+  const inc = placed.filter(incomplete);
+  const totalStu = S.perm==='homeroom' ? all.length : 612;
+  const base = all.length;
+  const unsignedPeople = placed.reduce((a,s)=>a+(s.consent.student!=='ok')+(s.consent.parent!=='ok'),0);
+  // 필터
+  const F = {
+    all:['전체',()=>true], done:['모두 완료',s=>!incomplete(s)], agree:['협약서 대기',s=>s.consent.agree!=='ok'],
+    student:['학생 미서명',s=>s.consent.student!=='ok'], parent:['학부모 미서명',s=>s.consent.parent!=='ok'],
+  };
+  const rows = placed.filter(F[S.filter][1]).sort((a,b)=>incomplete(b)-incomplete(a));
+  const per = 8, pages = Math.max(1,Math.ceil(rows.length/per)); if (S.page>pages) S.page=pages;
+  const view = rows.slice((S.page-1)*per, S.page*per);
+  const deptRows = DEPTS.filter(d=> S.perm!=='homeroom' || d.k==='전기과').map(d => {
+    const ss = all.filter(s=>s.dept===d.k), p = ss.filter(s=>s.placement);
+    const v = S.metric==='disp' ? pct(p.length, ss.length) : S.metric==='emp' ? pct(ss.filter(s=>s.employed).length, ss.length) : pct(p.filter(s=>!incomplete(s)).length, p.length);
+    return {d, v, n:ss.length, p:p.length, e:ss.filter(s=>s.employed).length, ok:p.filter(s=>!incomplete(s)).length};
+  });
+  const sel = deptRows.find(r=>r.d.k===S.selDept) || deptRows[0];
+  return `
+  ${pageHead('오늘의 현황', `${S.perm==='homeroom'?'3학년 3반':'3학년'} 현장실습·취업 기준 · 2026.10.22 08:00 갱신`)}
+  <section class="kpis" aria-label="핵심 지표">
+    <div class="kpi"><span class="l">재학생 수</span><span class="v">${totalStu.toLocaleString()}<small>명</small></span><span class="d">${S.perm==='homeroom'?'3학년 3반':'3학년 '+base+'명 · 1·2학년은 데모에서 생략'}</span></div>
+    <div class="kpi"><span class="l">현장실습 파견율</span><span class="v">${pct(placed.length,base)}<small>%</small></span><span class="d">${placed.length} / ${base}명 파견</span></div>
+    <div class="kpi"><span class="l">취업 확정률</span><span class="v">${pct(emp.length,base)}<small>%</small></span><span class="d">${emp.length}명 채용 확정</span></div>
+    <div class="kpi hi"><span class="l">동의서 미완료</span><span class="v">${inc.length}<small>건</small></span><span class="d">서명이 남은 사람 ${unsignedPeople}명</span>
+      <button class="btn" data-act="nudge" ${unsignedPeople?'':'disabled'}>${ic.send} 독려 알림 보내기</button></div>
+  </section>
+  <div class="grid">
+    <section class="card c5">
+      <div class="card-h"><div><h2>학과별 비교</h2><p>막대를 누르면 자세히 보여요</p></div></div>
+      <div class="seg" role="group" aria-label="지표 고르기" style="margin-bottom:16px">
+        ${[['disp','파견율'],['emp','취업 확정률'],['sign','동의서 완료율']].map(([k,l])=>`<button data-act="metric" data-v="${k}" aria-pressed="${S.metric===k}">${l}</button>`).join('')}
+      </div>
+      <div class="bars">
+        ${deptRows.map(r=>`<button class="bar-row" data-act="dept" data-v="${r.d.k}" aria-pressed="${r.d.k===sel.d.k}"><span class="bl">${r.d.k}</span><span class="bar-track"><span class="bar-fill" style="width:${r.v}%"></span></span><span class="bv">${r.v}%</span></button>`).join('')}
+      </div>
+      <div class="bar-tip"><b>${sel.d.k}</b> · 3학년 ${sel.n}명 중 파견 ${sel.p}명, 취업 확정 ${sel.e}명, 동의서 모두 완료 ${sel.ok}명</div>
+    </section>
+    <section class="card c7">
+      <div class="card-h"><div><h2>현장실습 배정 학생</h2><p>협약서 · 학생 동의서 · 학부모 동의서 순서</p></div>
+        <button class="btn sm" data-act="nudge" ${unsignedPeople?'':'disabled'}>미서명 ${unsignedPeople}명에게 알림</button></div>
+      <div class="fchips" style="margin-bottom:12px">
+        ${Object.entries(F).map(([k,[l,f]])=>`<button class="fchip" data-act="filter" data-v="${k}" aria-pressed="${S.filter===k}">${l}<b class="num">${placed.filter(f).length}</b></button>`).join('')}
+      </div>
+      ${view.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>학번</th><th>이름</th><th>학과·반</th><th>실습 기업</th><th>협약서</th><th>학생</th><th>학부모</th></tr></thead><tbody>
+      ${view.map(s=>`<tr class="click" data-act="openProfile" data-v="${s.id}"><td class="num mut">${s.id}</td><td class="nm">${s.name}</td><td class="mut">${s.dept} ${s.cls}반</td><td class="m-full"><span class="ellip">${s.placement.company}</span></td><td data-l="협약서">${cchip(s.consent.agree)}</td><td data-l="학생">${cchip(s.consent.student)}</td><td data-l="학부모">${cchip(s.consent.parent)}</td></tr>`).join('')}
+      </tbody></table></div>
+      <div class="pager"><span class="num">${rows.length}명 중 ${(S.page-1)*per+1}–${Math.min(S.page*per,rows.length)}</span>${pager('page',S.page,pages)}</div>`
+      : `<div class="empty"><b>해당하는 학생이 없어요</b>다른 상태를 골라 보세요.<br><button class="btn sm" style="margin-top:12px" data-act="filter" data-v="all">전체 보기</button></div>`}
+    </section>
+  </div>`;
+}
+
+function pager(act,cur,pages){
+  if (pages<=1) return '';
+  const st=Math.max(1,Math.min(cur-2,pages-4)), nums=[]; for(let i=st;i<=Math.min(pages,st+4);i++) nums.push(i);
+  return `<span class="pg"><button data-act="${act}" data-v="${Math.max(1,cur-1)}" ${cur===1?'disabled':''} aria-label="이전 쪽">${ic.back}</button>${nums.map(i=>`<button class="pn" data-act="${act}" data-v="${i}" aria-current="${cur===i}">${i}</button>`).join('')}<span class="pcur num">${cur} / ${pages}</span><button data-act="${act}" data-v="${Math.min(pages,cur+1)}" ${cur===pages?'disabled':''} aria-label="다음 쪽" style="transform:scaleX(-1)">${ic.back}</button></span>`;
+}
+/* 학생 목록 */
+function readiness(s){
+  const spec = SPEC[s.job] || [];
+  let got = 0;
+  spec.forEach(it => {
+    if (it.k==='경험') { if (s.placement) got+=1; return; }
+    const c = s.certs.find(c=>c.name===it.n || (it.n.startsWith('TOEIC') && c.name.startsWith('TOEIC') && parseInt(c.name.replace(/\D/g,''))>=400));
+    if (c) got += c.status==='ok' ? 1 : .5;
+  });
+  return Math.round(got/spec.length*100);
+}
+function vStudents(){
+  let list = scoped();
+  if (S.stuDept!=='all') list = list.filter(s=>s.dept===S.stuDept);
+  const q = S.stuQ.trim();
+  if (q) list = list.filter(s=>s.name.includes(q)||s.id.includes(q)||s.job.includes(q)||s.name.replace('*','').includes(q));
+  const per=10, pages=Math.max(1,Math.ceil(list.length/per)); if(S.stuPage>pages) S.stuPage=pages;
+  const view = list.slice((S.stuPage-1)*per,S.stuPage*per);
+  const depts = S.perm==='homeroom' ? [] : DEPTS.map(d=>d.k);
+  const waitCount = scoped().reduce((a,s)=>a+s.certs.filter(c=>c.status==='wait').length,0);
+  return `
+  ${pageHead('학생 이력', `자격증·수상·어학 증빙과 자기소개서·포트폴리오 버전을 한곳에서 봐요 · 확인 대기 증빙 ${waitCount}건`, `<button class="btn" data-act="openExcel">${ic.up} 엑셀로 한꺼번에 등록</button>`)}
+  <section class="card">
+    <div class="tbar">
+      <input class="search" id="stuQ" type="search" placeholder="이름, 학번, 희망 직무" value="${esc(S.stuQ)}" aria-label="학생 검색">
+      ${depts.length?`<div class="fchips">${['all',...depts].map(k=>`<button class="fchip" data-act="stuDept" data-v="${k}" aria-pressed="${S.stuDept===k}">${k==='all'?'전체 학과':k}</button>`).join('')}</div>`:''}
+    </div>
+    ${view.length?`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>학번</th><th>이름</th><th>학과·반</th><th>희망 직무</th><th class="r">증빙 확인</th><th>현장실습</th><th class="r">준비도</th></tr></thead><tbody>
+    ${view.map(s=>{const ok=s.certs.filter(c=>c.status==='ok').length, w=s.certs.length-ok; return `<tr class="click" data-act="openProfile" data-v="${s.id}"><td class="num mut">${s.id}</td><td class="nm">${s.name}</td><td class="mut">${s.dept} ${s.cls}반</td><td class="m-full"><span class="ellip">${s.job}</span></td><td class="r" data-l="증빙">${ok}/${s.certs.length}${w?` <span class="chip warn">대기 ${w}</span>`:''}</td><td data-l="실습">${s.placement?`<span class="chip info">${s.placement.company}</span>`:'<span class="chip neu">미배정</span>'}</td><td class="r num" data-l="준비도"><b>${readiness(s)}%</b></td></tr>`}).join('')}
+    </tbody></table></div>
+    <div class="pager"><span class="num">${list.length}명</span>${pager('stuPage',S.stuPage,pages)}</div>`
+    :`<div class="empty"><b>“${esc(q)}”에 맞는 학생이 없어요</b>이름 가운데 글자는 * 로 가려져 있어요. 성이나 학번으로 찾아보세요.<br><button class="btn sm" style="margin-top:12px" data-act="clearQ">검색 지우기</button></div>`}
+  </section>`;
+}
+
+/* 학생 프로필 (교사) */
+function vProfile(s){
+  const kinds = ['자기소개서','포트폴리오'];
+  const canVerify = S.perm!=='homeroom' || s.cls===3;
+  return `
+  <div style="margin-bottom:16px"><button class="btn sm" data-act="closeProfile">${ic.back} 목록으로</button></div>
+  ${pageHead(`${s.name} <span class="mut" style="font-weight:500;font-size:17px">${s.id}</span>`, `${s.dept} 3학년 ${s.cls}반 · 희망 직무 ${s.job}`, `<button class="btn pri" data-act="report" data-v="${s.id}">${ic.file} 진로 가이드 리포트</button>`)}
+  <div class="grid">
+    <div class="c4 stack">
+      <section class="card"><div class="card-h"><h2>인적사항</h2></div>
+        <dl class="dinfo"><dt>학번</dt><dd class="num">${s.id}</dd><dt>이름</dt><dd>${s.name}</dd><dt>생년월일</dt><dd>${s.birth}</dd><dt>연락처</dt><dd class="num">${s.phone}</dd><dt>보호자</dt><dd>${s.parent}</dd><dt>학과·반</dt><dd>${s.dept} ${s.cls}반</dd><dt>희망 직무</dt><dd>${s.job}</dd><dt>진로 목표</dt><dd>${esc(s.goal)}</dd></dl>
+        <p class="help" style="margin:12px 0 0">연락처와 생년월일은 권한이 있는 교사에게만 전체가 보여요.</p>
+      </section>
+      <section class="card"><div class="card-h"><h2>현장실습</h2></div>
+        ${s.placement?`<div style="font-weight:600;font-size:15px">${s.placement.company}</div><div class="mut small">${s.placement.period}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px"><span class="small mut">협약서</span>${cchip(s.consent.agree)}<span class="small mut">학생</span>${cchip(s.consent.student)}<span class="small mut">학부모</span>${cchip(s.consent.parent)}</div>
+        ${!incomplete(s)?`<button class="btn sm" style="margin-top:12px" data-act="pdf" data-v="${s.id}">${ic.file} 서명 완료 문서 보기</button>`:''}`
+        :`<span class="chip neu">미배정</span>${s.applied?`<p class="small mut" style="margin:8px 0 0">${POSTINGS.find(p=>p.id===s.applied).co} 공고에 지원했어요</p>`:''}`}
+      </section>
+    </div>
+    <div class="c8 stack">
+      <section class="card"><div class="card-h"><div><h2>자격증 · 수상 · 어학</h2><p>학생이 올린 증빙을 확인하면 리포트에 반영돼요</p></div></div>
+        ${s.certs.length?`<div class="tbl-wrap"><table class="tbl"><thead><tr><th>구분</th><th>이름</th><th>취득일</th><th>증빙</th><th>교사 확인</th></tr></thead><tbody>
+        ${s.certs.map((c,i)=>`<tr><td><span class="tag">${c.type}</span></td><td class="nm m-full">${esc(c.name)}</td><td class="num mut">${c.date}</td><td><button class="link small" data-act="viewFile" data-v="${esc(c.file)}">${esc(c.file)}</button></td>
+        <td class="m-full">${c.status==='ok'?'<span class="chip ok">확인 완료</span>':c.status==='rej'?'<span class="chip bad">반려 · 재제출 요청</span>':(canVerify?`<span style="display:inline-flex;gap:6px"><button class="btn sm pri" data-act="verify" data-v="${s.id}|${i}|ok">확인</button><button class="btn sm" data-act="verify" data-v="${s.id}|${i}|rej">반려</button></span>`:'<span class="chip warn">확인 대기</span>')}</td></tr>`).join('')}
+        </tbody></table></div>`:`<div class="empty"><b>아직 등록한 이력이 없어요</b>학생 화면에서 자격증을 올리면 여기에 나와요.</div>`}
+      </section>
+      <section class="card"><div class="card-h"><div><h2>자기소개서 · 포트폴리오 버전</h2><p>새로 올려도 이전 버전이 지워지지 않아요</p></div></div>
+        ${kinds.map(k=>{const vs=s.docs.filter(d=>d.kind===k).slice().reverse(); return `<div style="margin-bottom:8px"><div class="small" style="font-weight:600;color:var(--ink-2);margin:4px 0">${k}</div>
+          ${vs.length?vs.map((d,i)=>`<div class="li"><div class="fileic">${ic.file}</div><div class="grow"><div class="t">${k} ${d.ver} ${i===0?'<span class="chip info" style="margin-left:4px">최신</span>':''}</div><div class="s">${d.date} · ${esc(d.note)} · ${d.size}</div></div><button class="btn sm" data-act="viewFile" data-v="${k}_${d.ver}">열기</button></div>`).join(''):'<div class="small mut" style="padding:8px 0">아직 없어요</div>'}</div>`}).join('')}
+      </section>
+      <section class="card"><div class="card-h"><div><h2>담임 상담 메모</h2><p>리포트 인쇄본 아래에 같이 나와요. 학생·학부모에게는 보이지 않아요.</p></div></div>
+        <textarea class="ta" id="memo" data-id="${s.id}" placeholder="상담 내용을 적어 두세요">${esc(s.memo)}</textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn" data-act="saveMemo" data-v="${s.id}">메모 저장하기</button></div>
+      </section>
+    </div>
+  </div>`;
+}
+
+/* 진로 리포트 (공용) */
+function reportHTML(s, forPrint=false){
+  const spec = SPEC[s.job]||[];
+  const items = spec.map(it=>{
+    let st='none', where='';
+    if (it.k==='경험'){ if (s.placement){st='ok';where=s.placement.company+' 실습';} }
+    else { const c = s.certs.find(c=>c.name===it.n || (it.n.startsWith('TOEIC') && c.name.startsWith('TOEIC')));
+      if (c){ const score=parseInt(c.name.replace(/\D/g,'')); if (it.n.startsWith('TOEIC') && score<400){st='part';where=`${c.name} · 목표까지 ${400-score}점`;} else {st=c.status==='ok'?'ok':'part'; where=c.status==='ok'?`${c.date} 취득 · 교사 확인`:'증빙 확인 대기';} } }
+    return {...it, st, where};
+  });
+  const score = readiness(s);
+  const missing = items.filter(i=>i.st!=='ok');
+  const chip = st => st==='ok'?'<span class="chip ok">보유</span>':st==='part'?'<span class="chip warn">진행 중</span>':'<span class="chip bad">미보유</span>';
+  return `
+  <div class="ring-wrap" style="margin-bottom:16px"><div><div class="small mut">희망 직무 준비도</div><div class="score">${score}<small>%</small></div></div>
+    <div style="flex:1"><div class="small" style="font-weight:600">${esc(s.job)}</div><div class="prog"><i style="width:${score}%"></i></div><div class="small mut" style="margin-top:6px">권장 ${items.length}개 중 보유 ${items.filter(i=>i.st==='ok').length}개 · 진행 중 ${items.filter(i=>i.st==='part').length}개</div></div></div>
+  <h3 style="font-size:15px;margin:8px 0 4px">권장 스펙과 지금 이력</h3>
+  ${items.map(i=>`<div class="gap-item"><span class="gt">${i.n}${i.must?' <span class="tag">필수</span>':''}</span>${chip(i.st)}<span class="gs">${i.where||'아직 없어요'}</span></div>`).join('')}
+  <h3 style="font-size:15px;margin:20px 0 4px">이렇게 채워 보세요</h3>
+  ${missing.length?missing.map(i=>`<div class="gap-item"><span class="gt">${i.n}</span><span class="tag">${i.k}</span><span class="gs">${COURSE[i.k]}</span></div>`).join(''):'<p class="small mut">권장 스펙을 모두 갖췄어요. 기업 면접 준비로 넘어가요.</p>'}
+  ${forPrint&&s.memo?`<h3 style="font-size:15px;margin:20px 0 4px">담임 상담 메모</h3><p style="white-space:pre-wrap;margin:0">${esc(s.memo)}</p>`:''}
+  <p class="help" style="margin-top:16px">권장 스펙은 예시예요. 실제 구축에서는 학교 취업지원부가 직무별 기준을 관리 화면에서 직접 고쳐요.</p>`;
+}
+function openReport(id){
+  const s = students.find(x=>x.id===id);
+  openModal(`<div class="modal-h"><div><h2 id="modalTitle">진로 가이드 리포트</h2><p class="mut small" style="margin:4px 0 0">${s.name} · ${s.dept} ${s.cls}반 · ${nowStr()} 기준</p></div><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+  ${reportHTML(s)}
+  <div class="modal-f"><button class="btn" data-act="closeModal">닫기</button><button class="btn pri" data-act="printReport" data-v="${s.id}">${ic.print} 인쇄 · PDF 저장</button></div>`, true);
+}
+function printReport(id){
+  const s = students.find(x=>x.id===id);
+  $('#printArea').innerHTML = `<div class="doc"><h3>진로 가이드 리포트</h3><div class="docno">○○공업고등학교(예시) · ${s.name} (${s.id}) · ${s.dept} ${s.cls}반 · 출력 ${nowStr()}</div>${reportHTML(s,true)}</div>`;
+  window.print();
+}
+
+/* 현장실습·동의서 */
+function vField(){
+  const p = POSTINGS.find(x=>x.id===S.posting);
+  const placed = scoped().filter(s=>s.placement);
+  const cnt = k => placed.filter(s=>s.consent[k]==='ok').length;
+  const done = placed.filter(s=>!incomplete(s));
+  return `
+  ${pageHead('현장실습 매칭 · 전자동의', '기업 공고를 올리고 학생을 배정하면, 협약서·동의서 서명 요청이 차례로 나가요', canAssign()?`<button class="btn pri" data-act="newPosting">${ic.plus} 기업 공고 등록하기</button>`:'')}
+  <div class="grid">
+    <section class="card c7">
+      <div class="card-h"><div><h2>모집 중인 기업 공고</h2><p>공고를 누르면 지원 학생과 배정 칸이 열려요</p></div><span class="cap">${POSTINGS.length}건</span></div>
+      <div class="plist">
+        ${POSTINGS.map(x=>`<button class="posting" data-act="posting" data-v="${x.id}" aria-pressed="${x.id===S.posting}">
+          <span class="pt">${x.co} <span class="mut" style="font-weight:500;font-size:13px">· ${x.ind}</span></span>
+          <span class="small">${x.job}</span>
+          <span class="meta"><span class="tag">${x.pay} (예시)</span><span class="tag">${x.period}</span></span>
+          <span class="cap">${x.dept} · 모집 ${x.cap}명 · 배정 ${x.assigned.length} · 지원 ${x.applicants.length}</span>
+        </button>`).join('')}
+      </div>
+    </section>
+    <section class="card c5" id="matchCard">
+      <div class="card-h"><div><h2>${p.co} 매칭</h2><p>${p.job} · 모집 ${p.cap}명 · 남은 자리 ${p.cap-p.assigned.length}</p></div></div>
+      ${!canAssign()?'<div class="notice" style="margin-bottom:12px">담임 권한은 배정을 볼 수만 있어요. 배정은 취업지원부가 해요.</div>':''}
+      ${p.assigned.map(id=>{const s=students.find(x=>x.id===id);return `<div class="li"><div class="grow"><div class="t">${s.name} <span class="mut small">${s.id}</span></div><div class="s">${s.dept} ${s.cls}반 · 준비도 ${readiness(s)}%</div></div><span class="chip ok">배정</span></div>`}).join('')}
+      ${p.applicants.filter(id=>!p.assigned.includes(id)).map(id=>{const s=students.find(x=>x.id===id);return `<div class="li"><div class="grow"><div class="t">${s.name} <span class="mut small">${s.id}</span></div><div class="s">${s.dept} ${s.cls}반 · ${s.job} · 준비도 ${readiness(s)}%</div></div><button class="btn sm" data-act="assign" data-v="${p.id}|${s.id}" ${canAssign()&&p.assigned.length<p.cap?'':'disabled'}>배정하기</button></div>`}).join('') || '<div class="empty"><b>지원한 학생이 없어요</b>맞춤 알림으로 공고를 안내해 보세요.</div>'}
+    </section>
+    <section class="card c12">
+      <div class="card-h"><div><h2>서명 현황</h2><p>${S.perm==='homeroom'?'3학년 3반':'3학년 전체'} 파견 ${placed.length}명 기준</p></div>
+        <button class="btn sm" data-act="bundle" ${done.length?'':'disabled'}>${ic.down} 완료 문서 ${done.length}건 묶어 받기</button></div>
+      <div class="grid" style="gap:12px">
+        ${[['agree','표준협약서 (학교·기업)'],['student','학생 동의서'],['parent','학부모 동의서']].map(([k,l])=>`<div class="c4" style="background:var(--soft);border-radius:var(--r-md);padding:16px">
+          <div class="small" style="font-weight:600">${l}</div><div style="font-size:24px;font-weight:700" class="num">${cnt(k)} <span class="mut" style="font-size:15px;font-weight:500">/ ${placed.length}</span></div>
+          <div class="prog"><i style="width:${pct(cnt(k),placed.length)}%"></i></div></div>`).join('')}
+      </div>
+      <p class="help" style="margin:12px 0 0">세 서명이 모두 끝나면 PDF가 자동으로 만들어져요. 시연: 위쪽 ‘학부모 서명 링크’에서 박*준 학생 보호자로 서명해 보면 여기 숫자가 바뀌어요.</p>
+    </section>
+  </div>`;
+}
+function newPosting(){
+  openModal(`<div class="modal-h"><h2 id="modalTitle">기업 공고 등록</h2><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+  <form id="postForm" novalidate>
+    <div class="row2"><div class="field"><label for="pCo">기업 이름 <span style="color:var(--bad)">*</span></label><input class="inp" id="pCo" required placeholder="예: 한울전기"></div>
+    <div class="field"><label for="pInd">업종</label><input class="inp" id="pInd" placeholder="예: 전기공사업"></div></div>
+    <div class="row2"><div class="field"><label for="pJob">직무 <span style="color:var(--bad)">*</span></label><input class="inp" id="pJob" required placeholder="예: 배전반 조립 보조"></div>
+    <div class="field"><label for="pDept">대상 학과</label><select class="sel" id="pDept" style="height:48px">${DEPTS.map(d=>`<option>${d.k}</option>`).join('')}</select></div></div>
+    <div class="row2"><div class="field"><label for="pPay">실습 수당 (월)</label><input class="inp" id="pPay" inputmode="numeric" placeholder="예: 110"><span class="help">만 원 단위 숫자만</span></div>
+    <div class="field"><label for="pCap">인원 <span style="color:var(--bad)">*</span></label><input class="inp" id="pCap" inputmode="numeric" required placeholder="예: 3"></div></div>
+    <div class="field"><label for="pPeriod">기간</label><input class="inp" id="pPeriod" placeholder="예: 11.17~12.26 (6주)"></div>
+    <p class="help" id="pErr" style="color:var(--bad);display:none"></p>
+    <div class="modal-f"><button type="button" class="btn" data-act="closeModal">닫기</button><button class="btn pri" type="submit">공고 등록하기</button></div>
+  </form>`);
+  $('#postForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const co=$('#pCo').value.trim(), job=$('#pJob').value.trim(), cap=parseInt($('#pCap').value);
+    const err = !co?'기업 이름을 써 주세요':!job?'직무를 써 주세요':!(cap>0&&cap<50)?'인원을 1~49 사이 숫자로 써 주세요':'';
+    if (err){ $('#pErr').textContent=err; $('#pErr').style.display='block'; return; }
+    const dept=$('#pDept').value, pay=parseInt($('#pPay').value);
+    const id = POSTINGS.length+1;
+    POSTINGS.unshift({id,co,ind:$('#pInd').value.trim()||'업종 미입력',job,pay:pay?`월 ${pay}만 원`:'수당 협의',period:$('#pPeriod').value.trim()||'기간 협의',cap,dept,jobKey:DEPTS.find(d=>d.k===dept).jobs[0],applicants:students.filter(s=>s.dept===dept&&!s.placement&&!s.applied).slice(0,2).map(s=>{s.applied=id;return s.id}),assigned:[]});
+    S.posting=id; closeModal(); render(); toast(`${co} 공고를 등록했어요`);
+  });
+}
+
+/* 알림 */
+function ntfTargets(){
+  const N = S.ntf;
+  let list = scoped();
+  if (N.dept!=='all') list = list.filter(s=>s.dept===N.dept);
+  const C = {
+    consent: s=>incomplete(s), nocert: s=>!s.certs.some(c=>c.type==='자격증'&&c.status==='ok'),
+    unplaced: s=>!s.placement, all: ()=>true,
+  };
+  return list.filter(C[N.cond]);
+}
+function fill(body, s){
+  const p = s.placement ? s.placement.company : (s.applied ? POSTINGS.find(x=>x.id===s.applied).co : POSTINGS.find(x=>x.dept===s.dept)?.co||'');
+  const map = {'이름':s.name,'보호자':s.parent+' 보호자','기업명':p,'마감일':'10월 29일(목)','링크':'https://(학교 도메인)/s/'+s.id.slice(-3)+'x7','직무':s.job};
+  return body.replace(/#\{(.+?)\}/g,(m,k)=>map[k]??m);
+}
+function vNotify(){
+  const N = S.ntf, T = ntfTargets();
+  const ppl = N.to==='both' ? T.length*2 : T.length;
+  const prevS = T[0];
+  const bytes = new Blob([prevS?fill(N.body,prevS):N.body]).size;
+  return `
+  ${pageHead('맞춤 알림', '조건으로 대상을 고르고, 템플릿의 #{변수}를 학생마다 바꿔서 보내요. 알림톡이 안 되면 문자로 대신 가요.')}
+  <div class="grid">
+    <section class="card c7">
+      <div class="card-h"><h2>보낼 대상</h2><span class="cap">${T.length}명 · 받는 사람 ${ppl}명</span></div>
+      <div class="row2">
+        <div class="field"><label for="nDept">학과</label><select class="sel" id="nDept" style="height:48px" ${S.perm==='homeroom'?'disabled':''}><option value="all">${S.perm==='homeroom'?'3학년 3반':'전체 학과'}</option>${S.perm==='homeroom'?'':DEPTS.map(d=>`<option ${N.dept===d.k?'selected':''}>${d.k}</option>`).join('')}</select></div>
+        <div class="field"><label for="nTo">받는 사람</label><select class="sel" id="nTo" style="height:48px">${[['parent','학부모'],['student','학생'],['both','학생 + 학부모']].map(([k,l])=>`<option value="${k}" ${N.to===k?'selected':''}>${l}</option>`).join('')}</select></div>
+      </div>
+      <div class="field"><span class="lb">조건</span><div class="fchips">${[['consent','동의서 미제출'],['nocert','자격증 미보유'],['unplaced','현장실습 미배정'],['all','조건 없음']].map(([k,l])=>`<button class="fchip" data-act="ncond" data-v="${k}" aria-pressed="${N.cond===k}">${l}</button>`).join('')}</div></div>
+      <div class="field"><label for="nTpl">템플릿</label><select class="sel" id="nTpl" style="height:48px">${TEMPLATES.map(t=>`<option value="${t.k}" ${N.tpl===t.k?'selected':''}>${t.name}</option>`).join('')}</select></div>
+      <div class="field"><label for="nBody">내용</label><textarea class="ta" id="nBody" rows="7">${esc(N.body)}</textarea>
+        <div class="varbtns" aria-label="변수 넣기">${['이름','보호자','기업명','직무','마감일','링크'].map(v=>`<button type="button" data-act="ins" data-v="#{${v}}">#{${v}}</button>`).join('')}</div>
+        <span class="help">${bytes}바이트 · 알림톡 실패 시 ${bytes>90?'장문 문자(LMS)':'단문 문자(SMS)'}로 대신 보내요. 실제 알림톡은 카카오 검수를 받은 템플릿만 보낼 수 있어요.</span></div>
+      <div style="display:flex;justify-content:flex-end"><button class="btn pri" data-act="sendNtf" ${T.length?'':'disabled'}>${ic.send} ${ppl}명에게 보내기</button></div>
+    </section>
+    <section class="card c5">
+      <div class="card-h"><div><h2>미리 보기</h2><p>${prevS?`${prevS.name} 학생 기준`:'대상이 없어요'}</p></div></div>
+      ${prevS?`<div class="msg-from">○○공업고등학교 (학교 명의 채널)</div><div class="preview-bubble">${esc(N.body).replace(/#\{(.+?)\}/g,(m,k)=>`<span class="hl">${esc(fill('#{'+k+'}',prevS))}</span>`)}</div>
+      ${T.length>1?`<p class="small mut" style="margin:12px 0 0">${T.slice(1,4).map(s=>s.name).join(', ')}${T.length>4?` 외 ${T.length-4}명`:''}에게도 각자 이름과 기업으로 바뀌어 가요.</p>`:''}`:'<div class="empty"><b>조건에 맞는 학생이 없어요</b>조건을 바꿔 보세요.</div>'}
+    </section>
+    <section class="card c12">
+      <div class="card-h"><div><h2>발송 이력</h2><p>미확인은 알림톡을 열어 보지 않은 사람이에요</p></div></div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>보낸 시각</th><th>템플릿</th><th class="r">대상</th><th class="r">알림톡</th><th class="r">문자 대체</th><th class="r">실패</th><th class="r">미확인</th><th></th></tr></thead><tbody>
+      ${S.history.map((h,i)=>`<tr><td class="num mut">${h.at}</td><td class="nm m-full">${h.tpl}</td><td class="r" data-l="대상">${h.n}</td><td class="r" data-l="알림톡">${h.ok}</td><td class="r" data-l="문자">${h.sms}</td><td class="r" data-l="실패">${h.fail?`<span class="chip bad">${h.fail}</span>`:'0'}</td><td class="r" data-l="미확인">${h.unread}</td><td>${h.unread?`<button class="btn sm" data-act="resend" data-v="${i}">미확인 ${h.unread}명 다시 보내기</button>`:'<span class="chip ok">모두 확인</span>'}</td></tr>`).join('')}
+      </tbody></table></div>
+    </section>
+  </div>`;
+}
+/* 발송 시뮬레이션 */
+function simulateSend(list, tplName, toWhom){
+  const recips = [];
+  list.forEach(s => {
+    if (toWhom!=='student') recips.push({s, who:'학부모', name:s.parent+' 보호자'});
+    if (toWhom!=='parent') recips.push({s, who:'학생', name:s.name});
+  });
+  openModal(`<div class="modal-h"><div><h2 id="modalTitle">보내는 중 · 시뮬레이션</h2><p class="mut small" style="margin:4px 0 0">${tplName} · ${recips.length}명 · 실제로 보내지 않아요</p></div><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+    <div class="sumrow"><div><b id="sOk">0</b><span>알림톡 성공</span></div><div><b id="sSms">0</b><span>문자로 대체</span></div><div><b id="sFail">0</b><span>최종 실패</span></div><div><b id="sLeft">${recips.length}</b><span>남음</span></div></div>
+    <div class="log" id="sLog" aria-live="polite"></div>
+    <div class="modal-f"><button class="btn pri" data-act="closeModal" id="sDone" disabled>확인</button></div>`);
+  let ok=0,sms=0,fail=0,i=0; const r2 = mulberry32(Date.now()%100000);
+  const step = () => {
+    if (!$('#sLog')) return;
+    if (i>=recips.length){
+      $('#sLog').insertAdjacentHTML('beforeend',`<div><time>${timeStr()}</time><b>끝났어요.</b> 실패 ${fail}명은 번호를 확인해 달라고 담임에게 알려요.</div>`);
+      $('#sDone').disabled=false;
+      S.history.unshift({at:nowStr(),tpl:tplName,n:recips.length,ok,sms,fail,unread:Math.round(ok*.3)});
+      list.forEach(s=>s.lastSent=nowStr());
+      if (S.role==='teacher' && S.tab==='notify' && !S.profile) render();
+      return;
+    }
+    const x = recips[i++], v = r2();
+    let line;
+    if (v<0.84){ ok++; line=`<span class="chip ok">알림톡</span> ${x.name} (${x.s.id})`; }
+    else if (v<0.97){ sms++; line=`<span class="chip bad">알림톡 실패</span><span class="mut">카카오톡 미사용</span> → <span class="chip info">문자 대체 성공</span> ${x.name}`; }
+    else { fail++; line=`<span class="chip bad">실패</span> ${x.name} · 없는 번호`; }
+    $('#sLog').insertAdjacentHTML('beforeend',`<div><time>${timeStr()}</time>${line}</div>`);
+    $('#sLog').scrollTop = 1e6;
+    $('#sOk').textContent=ok; $('#sSms').textContent=sms; $('#sFail').textContent=fail; $('#sLeft').textContent=recips.length-i;
+    setTimeout(step, recips.length>40?25:70);
+  };
+  setTimeout(step, 200);
+}
+
+/* 통계·보고 */
+function vStats(){
+  const all = scoped();
+  const rows = [];
+  DEPTS.forEach(d => d.cls.forEach(c => {
+    const ss = all.filter(s=>s.dept===d.k && s.cls===c); if (!ss.length) return;
+    rows.push({d:d.k,c,n:ss.length,p:ss.filter(s=>s.placement).length,e:ss.filter(s=>s.employed).length,inc:ss.filter(incomplete).length,cert:ss.filter(s=>s.certs.some(x=>x.type==='자격증'&&x.status==='ok')).length});
+  }));
+  const tot = rows.reduce((a,r)=>({n:a.n+r.n,p:a.p+r.p,e:a.e+r.e,inc:a.inc+r.inc,cert:a.cert+r.cert}),{n:0,p:0,e:0,inc:0,cert:0});
+  S._statRows = rows;
+  return `
+  ${pageHead('통계 · 보고', '학과·학급별 숫자를 보고, 현장 점검 일지를 남기고, 교육청 보고 양식으로 내려받아요', `<button class="btn pri" data-act="export">${ic.down} 교육청 보고 양식 내려받기</button>`)}
+  <div class="grid">
+    <section class="card c12">
+      <div class="card-h"><div><h2>학급별 현황</h2><p>3학년 기준 · 자격증은 교사 확인이 끝난 것만 세요</p></div></div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>학과</th><th>반</th><th class="r">학생</th><th class="r">파견</th><th class="r">파견율</th><th class="r">취업 확정</th><th class="r">자격증 1개 이상</th><th class="r">동의서 미완료</th></tr></thead><tbody>
+      ${rows.map(r=>`<tr><td class="nm">${r.d}</td><td>${r.c}반</td><td class="r" data-l="학생">${r.n}</td><td class="r" data-l="파견">${r.p}</td><td class="r" data-l="파견율"><b>${pct(r.p,r.n)}%</b></td><td class="r" data-l="취업">${r.e}</td><td class="r" data-l="자격증">${r.cert}</td><td class="r" data-l="미완료">${r.inc?`<span class="chip warn">${r.inc}</span>`:'0'}</td></tr>`).join('')}
+      <tr><td class="nm">합계</td><td></td><td class="r" data-l="학생"><b>${tot.n}</b></td><td class="r" data-l="파견"><b>${tot.p}</b></td><td class="r" data-l="파견율"><b>${pct(tot.p,tot.n)}%</b></td><td class="r" data-l="취업"><b>${tot.e}</b></td><td class="r" data-l="자격증"><b>${tot.cert}</b></td><td class="r" data-l="미완료"><b>${tot.inc}</b></td></tr>
+      </tbody></table></div>
+      <p class="help" style="margin:12px 0 0">데모에서는 CSV(엑셀에서 바로 열림)로 받아요. 실제 구축에서는 교육청 양식과 같은 칸 순서의 XLSX 파일로 만들어요. 양식 원본은 학교에서 받아야 해요.</p>
+    </section>
+    <section class="card c7">
+      <div class="card-h"><div><h2>현장 점검 일지</h2><p>순회 지도 때 휴대폰으로 바로 적어요</p></div><button class="btn sm" data-act="addJournal">${ic.plus} 일지 쓰기</button></div>
+      ${S.journal.map(j=>`<div class="li" style="align-items:flex-start"><div class="grow"><div class="t">${esc(j.co)} <span class="mut small">· ${esc(j.stu)}</span></div><div class="s">${j.date} · 점검 ${esc(j.who)}</div><div class="small" style="margin-top:4px">${esc(j.note)}</div></div>${j.act==='이상 없음'?'<span class="chip ok">이상 없음</span>':'<span class="chip warn">조치 필요</span>'}</div>`).join('')}
+    </section>
+    <section class="card c5">
+      <div class="card-h"><div><h2>교사 권한</h2><p>담임 · 취업지원부 · 총괄 3단계</p></div></div>
+      ${S.perm==='admin'?TEACHERS.map(t=>`<div class="li"><div class="grow"><div class="t">${t.name} <span class="mut small">${t.role}</span></div><div class="s">${t.scope}</div></div><select class="sel" aria-label="${t.name} 권한" data-act-change="perm"><option ${t.perm==='homeroom'?'selected':''}>담임</option><option ${t.perm==='career'?'selected':''}>취업지원부</option><option ${t.perm==='admin'?'selected':''}>총괄</option></select></div>`).join('')
+      :`<div class="notice"><b>총괄 관리자만 바꿀 수 있어요.</b><br>위쪽 권한 선택에서 ‘총괄 관리자’를 고르면 교사별 권한을 바꾸는 화면이 보여요.</div>
+      <dl class="dinfo" style="margin-top:16px"><dt>담임</dt><dd>본인 학급 학생만 열람, 증빙 확인, 상담 메모</dd><dt>취업지원부</dt><dd>전체 열람, 기업 공고·배정, 알림 발송</dd><dt>총괄</dt><dd>전체 + 교사 계정·권한, 보고 양식 관리</dd></dl>`}
+    </section>
+  </div>`;
+}
+function exportCSV(){
+  const rows = S._statRows || [];
+  const head = ['학교명','학년','학과','반','학생 수','현장실습 파견','파견율(%)','취업 확정','자격증 보유(교사 확인)','동의서 미완료','기준일'];
+  const lines = [head, ...rows.map(r=>['○○공업고등학교(예시)',3,r.d,r.c,r.n,r.p,pct(r.p,r.n),r.e,r.cert,r.inc,'2026-10-22'])];
+  const csv = '﻿' + lines.map(l=>l.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download = '교육청보고_현장실습취업현황_예시_20261022.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  toast('보고 양식을 내려받았어요 (데모는 CSV, 실제는 XLSX)');
+}
+function addJournal(){
+  openModal(`<div class="modal-h"><h2 id="modalTitle">현장 점검 일지</h2><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+  <form id="jForm" novalidate>
+    <div class="field"><label for="jCo">기업 <span style="color:var(--bad)">*</span></label><select class="sel" id="jCo" style="height:48px">${[...new Set(scoped().filter(s=>s.placement).map(s=>s.placement.company))].map(c=>`<option>${c}</option>`).join('')}</select></div>
+    <div class="field"><label for="jNote">점검 내용 <span style="color:var(--bad)">*</span></label><textarea class="ta" id="jNote" placeholder="예: 안전교육 이수 확인, 실습 일지 확인"></textarea><span class="help" id="jErr" style="display:none;color:var(--bad)">점검 내용을 한 줄 이상 써 주세요</span></div>
+    <div class="field"><span class="lb">결과</span><div class="fchips" role="radiogroup"><button type="button" class="fchip" aria-pressed="true" data-act="jres" data-v="이상 없음">이상 없음</button><button type="button" class="fchip" aria-pressed="false" data-act="jres" data-v="조치 필요">조치 필요</button></div></div>
+    <div class="modal-f"><button type="button" class="btn" data-act="closeModal">닫기</button><button class="btn pri" type="submit">일지 저장하기</button></div>
+  </form>`);
+  $('#jForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const note = $('#jNote').value.trim(); if (!note){ $('#jErr').style.display='block'; return; }
+    const co = $('#jCo').value; const res = document.querySelector('[data-act="jres"][aria-pressed="true"]').dataset.v;
+    const st = scoped().filter(s=>s.placement&&s.placement.company===co);
+    S.journal.unshift({date:'2026.10.22',co,stu:st.length?`${st[0].name}${st.length>1?` 외 ${st.length-1}명`:''}`:'-',who:({homeroom:'정*희',career:'한*수',admin:'오*진'})[S.perm],note,act:res==='이상 없음'?'이상 없음':'조치 필요'});
+    closeModal(); render(); toast('점검 일지를 저장했어요');
+  });
+}
+
+/* 엑셀 일괄 업로드 */
+const SAMPLE_CSV = `학번,이름,학과,반,희망직무,학생연락처,보호자연락처
+30425,김도윤,전기과,4,전기설비 시공·유지보수,010-1234-0001,010-2234-0001
+30426,이서연,전기과,4,태양광 설비 점검,010-1234-0002,010-2234-0002
+30427,박지호,전기,4,전기설비 시공·유지보수,010-1234-0003,010-2234-0003
+30428,최하은,전기과,4,전기설비 시공·유지보수,010-1234-04,010-2234-0004
+30304,정민재,전기과,3,태양광 설비 점검,010-1234-0005,010-2234-0005
+30429,한유진,전기과,4,태양광 설비 점검,010-1234-0006,010-2234-0006`;
+function parseCSV(t){
+  const out=[]; let row=[], cur='', q=false;
+  for (let i=0;i<t.length;i++){ const ch=t[i];
+    if (q){ if (ch==='"'){ if (t[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=ch; }
+    else if (ch==='"') q=true; else if (ch===','||ch==='\t'){row.push(cur);cur='';} else if (ch==='\n'){row.push(cur);out.push(row);row=[];cur='';} else if (ch!=='\r') cur+=ch; }
+  if (cur||row.length){row.push(cur);out.push(row);}
+  return out.filter(r=>r.some(c=>c.trim()));
+}
+function openExcel(){
+  openModal(`<div class="modal-h"><div><h2 id="modalTitle">엑셀로 한꺼번에 등록</h2><p class="mut small" style="margin:4px 0 0">학교 양식 그대로 붙여 넣거나 파일을 올리면, 저장 전에 오류를 먼저 보여 줘요</p></div><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+    <div class="tbar"><button class="btn sm" data-act="dlTemplate">${ic.down} 빈 양식 받기</button><label class="btn sm" style="cursor:pointer">${ic.up} 파일 고르기<input type="file" id="xFile" accept=".csv,.txt,.xlsx,.xls" class="sr"></label><span class="help" id="xName">엑셀에서 칸을 복사해 아래에 붙여 넣어도 돼요</span></div>
+    <textarea class="ta" id="xText" rows="7" style="font-size:13px" aria-label="붙여 넣을 표">${SAMPLE_CSV}</textarea>
+    <div style="display:flex;justify-content:flex-end;margin:12px 0"><button class="btn" data-act="parseX">미리 보기</button></div>
+    <div id="xPrev"></div>`, true);
+  $('#xFile').addEventListener('change', e => {
+    const f = e.target.files[0]; if (!f) return;
+    $('#xName').textContent = f.name;
+    if (/\.xlsx?$/i.test(f.name)) { $('#xPrev').innerHTML = `<div class="notice"><b>데모에서는 CSV만 읽어요.</b> 실제 구축에서는 엑셀(.xlsx) 파일을 그대로 올려요. 엑셀에서 ‘다른 이름으로 저장 → CSV’ 하거나 칸을 복사해 붙여 넣어 보세요.</div>`; return; }
+    const r = new FileReader(); r.onload = () => { $('#xText').value = r.result; parseX(); }; r.readAsText(f, 'utf-8');
+  });
+  parseX();
+}
+let parsedRows = [];
+function parseX(){
+  const rows = parseCSV($('#xText').value.replace(/^﻿/,''));
+  if (rows.length<2){ $('#xPrev').innerHTML='<div class="empty"><b>읽을 줄이 없어요</b>첫 줄은 칸 이름, 둘째 줄부터 학생이에요.</div>'; return; }
+  const h = rows[0].map(x=>x.trim()); const ix = k => h.indexOf(k);
+  const need = ['학번','이름','학과','반','희망직무'];
+  const miss = need.filter(k=>ix(k)<0);
+  if (miss.length){ $('#xPrev').innerHTML=`<div class="notice"><b>칸 이름이 양식과 달라요.</b> ${miss.join(', ')} 칸을 찾지 못했어요. 빈 양식을 받아 첫 줄을 맞춰 주세요.</div>`; return; }
+  const seen = new Set();
+  parsedRows = rows.slice(1).map(r => {
+    const g = k => (r[ix(k)]||'').trim();
+    const o = {id:g('학번'),name:g('이름'),dept:g('학과'),cls:g('반'),job:g('희망직무'),phone:ix('학생연락처')>=0?g('학생연락처'):'',pphone:ix('보호자연락처')>=0?g('보호자연락처'):''};
+    const errs = [];
+    if (!/^3\d{4}$/.test(o.id)) errs.push('학번은 3으로 시작하는 5자리예요');
+    else if (students.some(s=>s.id===o.id) || seen.has(o.id)) errs.push('이미 있는 학번이에요');
+    seen.add(o.id);
+    if (!o.name) errs.push('이름이 비어 있어요');
+    if (!DEPTS.some(d=>d.k===o.dept)) errs.push(`학과 이름 ‘${o.dept}’을 찾지 못했어요 (예: 전기과)`);
+    if (o.phone && !/^01\d-\d{3,4}-\d{4}$/.test(o.phone)) errs.push('연락처는 010-0000-0000 형식이에요');
+    if (o.pphone && !/^01\d-\d{3,4}-\d{4}$/.test(o.pphone)) errs.push('보호자 연락처 형식을 확인해 주세요');
+    o.errs = errs; return o;
+  });
+  const good = parsedRows.filter(o=>!o.errs.length);
+  $('#xPrev').innerHTML = `<div class="tbar"><span class="chip ok">바로 등록 ${good.length}명</span>${parsedRows.length-good.length?`<span class="chip bad">고칠 것 ${parsedRows.length-good.length}줄</span>`:''}</div>
+  <div class="tbl-wrap"><table class="tbl"><thead><tr><th>줄</th><th>학번</th><th>이름</th><th>학과·반</th><th>희망 직무</th><th>확인 결과</th></tr></thead><tbody>
+  ${parsedRows.map((o,i)=>`<tr><td class="num mut">${i+2}</td><td class="num">${esc(o.id)}</td><td class="nm">${esc(o.name.slice(0,1)+'*'+o.name.slice(-1))}</td><td class="mut">${esc(o.dept)} ${esc(o.cls)}반</td><td class="m-hide"><span class="ellip">${esc(o.job)}</span></td><td class="m-full">${o.errs.length?o.errs.map(e=>`<div class="small" style="color:var(--bad)">${esc(e)}</div>`).join(''):'<span class="chip ok">문제 없음</span>'}</td></tr>`).join('')}
+  </tbody></table></div>
+  <p class="help">이름은 화면에서 가운데 글자를 가려 보여 줘요. 원본은 암호화해서 저장해요(실제 구축).</p>
+  <div class="modal-f"><button class="btn" data-act="closeModal">닫기</button><button class="btn pri" data-act="importX" ${good.length?'':'disabled'}>문제 없는 ${good.length}명 등록하기</button></div>`;
+}
+function importX(){
+  const good = parsedRows.filter(o=>!o.errs.length);
+  good.forEach(o => students.push({id:o.id,name:o.name.slice(0,1)+'*'+o.name.slice(-1),dept:o.dept,cls:+o.cls||1,job:SPEC[o.job]?o.job:DEPTS.find(d=>d.k===o.dept).jobs[0],goal:'미입력',phone:o.phone?o.phone.replace(/-(\d{3,4})-/,'-****-'):'-',parent:o.name.slice(0,1)+'*호',birth:'08****',certs:[],docs:[],placement:null,consent:null,employed:false,applied:null,memo:''}));
+  closeModal(); S.stuQ=''; S.stuDept='all'; render(); toast(`${good.length}명을 등록했어요 · 고칠 줄은 다시 올려 주세요`);
+}
+
+/* PDF(서명 문서) */
+function agreementDoc(s, sigData, sigAt){
+  const p = POSTINGS.find(x=>x.co===s.placement.company) || {job:'현장실습',pay:'협약서 기준',ind:''};
+  const docNo = `HS-2026-${s.id}-${(sigAt||'').replace(/\D/g,'').slice(-6)||'000000'}`;
+  return `<div class="doc">
+    <h3>현장실습 학부모(보호자) 동의서</h3><div class="docno">문서번호 ${docNo} · ○○공업고등학교(예시)</div>
+    <table><tr><th>학생</th><td>${s.name} (${s.dept} 3학년 ${s.cls}반 · ${s.id})</td></tr>
+    <tr><th>실습 기업</th><td>${s.placement.company}${p.ind?' · '+p.ind:''}</td></tr>
+    <tr><th>실습 직무</th><td>${p.job}</td></tr><tr><th>실습 기간</th><td>2026.${s.placement.period.split(' ')[0]}</td></tr>
+    <tr><th>실습 수당</th><td>${p.pay} (예시)</td></tr><tr><th>지도 교사</th><td>정*희 (담임) · 한*수 (취업지원부)</td></tr></table>
+    <p>본인은 위 학생의 보호자로서, 학교와 기업이 맺은 현장실습 표준협약서의 내용(실습 시간, 안전교육, 수당, 중도 복귀 절차)을 확인했고, 학생이 위 현장실습에 참여하는 것에 동의합니다. 또한 현장실습 운영을 위해 학생의 이름·학과·연락처를 실습 기업에 제공하는 것에 동의합니다.</p>
+    <div class="sigs"><div><span class="small">보호자 ${s.parent}</span>${sigData?`<img src="${sigData}" alt="보호자 서명">`:'<p class="mut small" style="margin:20px 0 0">서명 전</p>'}</div><div><span class="small">학생 ${s.name}</span>${s.consent.student==='ok'?'<p class="small" style="margin:20px 0 0">전자서명 완료 (학생 동의서)</p>':'<p class="mut small" style="margin:20px 0 0">학생 동의서 서명 대기</p>'}</div></div>
+    <div class="foot">서명 일시 ${sigAt||'-'} · 접속 기기 ${navigator.userAgent.includes('iPhone')?'iPhone':navigator.userAgent.includes('Android')?'Android':'PC'} · 본인 확인: 알림톡 링크 + 학생 생년월일 · 데모 문서(법적 효력 없음). 실제 구축에서는 서명 후 문서를 PDF로 고정하고 변조 확인값을 함께 저장해요.</div>
+  </div>`;
+}
+function openPdf(id){
+  const s = students.find(x=>x.id===id);
+  const sig = s.id===HERO.id ? S.sig : null;
+  openModal(`<div class="modal-h"><div><h2 id="modalTitle">서명 완료 문서</h2><p class="mut small" style="margin:4px 0 0">자동으로 만든 PDF 미리 보기</p></div><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+  ${agreementDoc(s, sig, s.id===HERO.id?S.sigAt:'2026.10.14 19:42')}
+  <div class="modal-f"><button class="btn" data-act="closeModal">닫기</button><button class="btn pri" data-act="printDoc" data-v="${id}">${ic.print} PDF로 저장</button></div>`, true);
+}
+function printDoc(id){
+  const s = students.find(x=>x.id===id);
+  $('#printArea').innerHTML = agreementDoc(s, s.id===HERO.id?S.sig:null, s.id===HERO.id?S.sigAt:'2026.10.14 19:42');
+  window.print();
+}
+
+/* ---------- 학생 화면 ---------- */
+function vStudent(){
+  const s = HERO, t = S.stuTab;
+  const titles = {home:'홈',hist:'내 이력',field:'현장실습',report:'진로 리포트'};
+  let body = '';
+  if (t==='home'){
+    const todos = [];
+    if (s.consent.student!=='ok') todos.push(`<button class="todo" data-act="stuSign"><div class="grow"><div style="font-weight:600">현장실습 학생 동의서 서명하기</div><div class="small mut">${s.placement.company} · 10월 29일까지</div></div><span class="chip warn">할 일</span></button>`);
+    s.certs.filter(c=>c.status==='wait').forEach(c=>todos.push(`<div class="todo"><div class="grow"><div style="font-weight:600">${esc(c.name)}</div><div class="small mut">선생님이 증빙을 확인하고 있어요</div></div><span class="chip info">확인 중</span></div>`));
+    body = `<div class="ph-card"><div class="small mut">희망 직무 준비도</div><div class="big-n">${readiness(s)}<small>%</small></div><div class="small" style="margin-top:4px">${s.job}</div><div class="prog"><i style="width:${readiness(s)}%"></i></div>
+      <button class="btn sm ghost" style="margin:8px 0 0 -12px" data-act="stuTab" data-v="report">무엇을 더 준비할지 보기</button></div>
+      <div class="ph-card"><h3>오늘 할 일 ${todos.length}개</h3>${todos.join('')||'<p class="small mut" style="margin:0">할 일을 모두 끝냈어요</p>'}</div>
+      <div class="ph-card"><h3>새 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept).map(p=>`<div class="li"><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.period}</div></div></div>`).join('')}</div>`;
+  } else if (t==='hist'){
+    body = `<div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h3 style="margin:0">자격증 · 수상 · 어학</h3><button class="btn sm" data-act="addCert">${ic.plus} 추가</button></div>
+      ${s.certs.map(c=>`<div class="li"><div class="grow"><div class="t">${esc(c.name)}</div><div class="s">${c.type} · ${c.date} · ${esc(c.file)}</div></div>${c.status==='ok'?'<span class="chip ok">확인 완료</span>':c.status==='rej'?'<span class="chip bad">다시 올려 주세요</span>':'<span class="chip warn">확인 대기</span>'}</div>`).join('')}</div>
+      ${['자기소개서','포트폴리오'].map(k=>{const vs=s.docs.filter(d=>d.kind===k).slice().reverse(); return `<div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h3 style="margin:0">${k}</h3><label class="btn sm" style="cursor:pointer">${ic.up} 새 버전<input type="file" class="sr" data-kind="${k}" accept=".pdf,.hwp,.hwpx,.docx,.jpg,.png,.zip"></label></div>
+        ${vs.map((d,i)=>`<div class="li"><div class="fileic">${ic.file}</div><div class="grow"><div class="t">${d.ver}${i===0?' · 최신':''}</div><div class="s">${d.date} · ${esc(d.note)}</div></div></div>`).join('')}</div>`}).join('')}`;
+  } else if (t==='field'){
+    const steps = [['agree','표준협약서','학교와 기업'],['student','학생 동의서','나'],['parent','학부모 동의서','보호자']];
+    body = `<div class="ph-card"><div class="small mut">배정된 실습 기업</div><h3 style="margin:4px 0 0">${s.placement.company}</h3><div class="small mut">전기설비 시공 보조 · 2026.${s.placement.period}</div>
+      ${steps.map(([k,l,w])=>`<div class="li"><div class="grow"><div class="t">${l}</div><div class="s">${w}</div></div>${s.consent[k]==='ok'?'<span class="chip ok">서명 완료</span>':'<span class="chip warn">대기</span>'}</div>`).join('')}
+      ${s.consent.student!=='ok'?`<button class="btn pri block" style="margin-top:12px;height:48px" data-act="stuSign">내 동의서 서명하기</button>`:''}
+      ${s.consent.parent!=='ok'?`<p class="small mut" style="margin:12px 0 0">보호자님 휴대폰으로 서명 링크를 보냈어요.</p>`:''}</div>
+      <div class="ph-card"><h3>다른 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept&&p.co!==s.placement.company).map(p=>`<div class="li"><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.pay} (예시)</div></div><span class="chip neu">마감 전</span></div>`).join('')||'<p class="small mut">없어요</p>'}</div>`;
+  } else {
+    body = `<div class="ph-card">${reportHTML(s)}<button class="btn block" style="margin-top:8px;height:48px" data-act="printReport" data-v="${s.id}">${ic.print} PDF로 저장</button></div>`;
+  }
+  return `<div class="phone-wrap"><div class="phone-stage">
+    <div class="stage-note"><h1>학생 화면</h1><p>앱을 설치하지 않고, 학교가 보낸 링크나 홈 화면 바로가기로 들어와요.</p>
+      <ul><li>자격증을 찍어 올리면 담임이 확인하고, 확인되면 준비도가 올라가요.</li><li>자기소개서는 새로 올려도 이전 버전이 남아요.</li><li>배정된 실습 기업의 동의서를 휴대폰에서 바로 서명해요.</li></ul>
+      <p class="small mut" style="margin-top:16px">시연 학생: 박*준 (전기과 3학년 3반)</p></div>
+    <div class="phone" aria-label="학생 휴대폰 화면">
+      <div class="ph-top"><h2>${titles[t]}</h2><span class="small mut">${s.name} · ${s.id}</span></div>
+      <div class="ph-body">${body}</div>
+      <nav class="ph-tabs" aria-label="학생 메뉴">${[['home','홈',ic.home],['hist','내 이력',ic.list],['field','현장실습',ic.brief],['report','리포트',ic.chart]].map(([k,l,i])=>`<button data-act="stuTab" data-v="${k}" ${t===k?'aria-current="page"':''}>${i}${l}</button>`).join('')}</nav>
+    </div></div></div>`;
+}
+function addCert(){
+  openModal(`<div class="modal-h"><h2 id="modalTitle">이력 추가</h2><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+  <form id="cForm" novalidate>
+    <div class="field"><span class="lb">구분</span><div class="fchips">${['자격증','수상','어학'].map((k,i)=>`<button type="button" class="fchip" data-act="ctype" data-v="${k}" aria-pressed="${i===0}">${k}</button>`).join('')}</div></div>
+    <div class="field"><label for="cName">이름 <span style="color:var(--bad)">*</span></label><input class="inp" id="cName" list="certList" placeholder="예: 승강기기능사"><datalist id="certList">${(SPEC[HERO.job]||[]).filter(x=>x.k!=='경험').map(x=>`<option value="${x.n}">`).join('')}</datalist><span class="help">희망 직무 권장 자격증이 먼저 떠요</span></div>
+    <div class="field"><label for="cDate">취득일</label><input class="inp" id="cDate" type="date" value="2026-10-22"></div>
+    <div class="field"><span class="lb">증빙 사진·파일 <span style="color:var(--bad)">*</span></span><label class="btn block" style="cursor:pointer;height:48px">${ic.up} <span id="cFileName">사진 찍기 또는 파일 고르기</span><input type="file" id="cFile" class="sr" accept="image/*,.pdf"></label></div>
+    <p class="help" id="cErr" style="color:var(--bad);display:none"></p>
+    <div class="modal-f"><button class="btn pri cta" type="submit">올리고 확인 요청하기</button></div>
+  </form>`);
+  $('#cFile').addEventListener('change',e=>{ if(e.target.files[0]) $('#cFileName').textContent=e.target.files[0].name; });
+  $('#cForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name=$('#cName').value.trim(), f=$('#cFile').files[0];
+    const err = !name?'이름을 써 주세요':!f&&!$('#cFile').dataset.demo?'증빙 사진이나 파일을 골라 주세요':'';
+    if (err){ $('#cErr').textContent=err; $('#cErr').style.display='block'; return; }
+    const type=document.querySelector('[data-act="ctype"][aria-pressed="true"]').dataset.v;
+    HERO.certs.push({type,name,date:($('#cDate').value||'2026-10-22').replace(/-/g,'.'),file:f?f.name:'증빙.jpg',status:'wait'});
+    closeModal(); render(); toast('올렸어요. 선생님이 확인하면 알려 드려요');
+  });
+}
+
+/* ---------- 서명 패드 ---------- */
+function signaturePad(canvas, onChange){
+  const ctx = canvas.getContext('2d');
+  let drawing=false, last=null, ink=0;
+  const fit = () => { const r = canvas.getBoundingClientRect(), d = window.devicePixelRatio||1; canvas.width = r.width*d; canvas.height = r.height*d; ctx.setTransform(d,0,0,d,0,0); ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#191F28'; ctx.lineWidth=2.6; };
+  fit();
+  const pos = e => { const r = canvas.getBoundingClientRect(); return {x:e.clientX-r.left, y:e.clientY-r.top}; };
+  canvas.addEventListener('pointerdown', e => { e.preventDefault(); canvas.setPointerCapture(e.pointerId); drawing=true; last=pos(e); ctx.beginPath(); ctx.arc(last.x,last.y,1.2,0,Math.PI*2); ctx.fillStyle='#191F28'; ctx.fill(); });
+  canvas.addEventListener('pointermove', e => { if(!drawing) return; e.preventDefault(); const p=pos(e); ctx.beginPath(); ctx.moveTo(last.x,last.y); const mx=(last.x+p.x)/2,my=(last.y+p.y)/2; ctx.quadraticCurveTo(last.x,last.y,mx,my); ctx.lineTo(p.x,p.y); ctx.stroke(); ink += Math.hypot(p.x-last.x,p.y-last.y); last=p; onChange(ink); });
+  const end = () => { drawing=false; };
+  canvas.addEventListener('pointerup', end); canvas.addEventListener('pointercancel', end); canvas.addEventListener('pointerleave', end);
+  return { clear(){ ctx.clearRect(0,0,canvas.width,canvas.height); ink=0; onChange(0); }, get ink(){return ink}, data(){ return trimmed(canvas); },
+    demo(){ // 시연용 자동 서명 (헤드리스 검토용)
+      const r=canvas.getBoundingClientRect(); const pts=[]; for(let i=0;i<=60;i++){const t=i/60; pts.push({x:30+t*(r.width-60), y:r.height*.55+Math.sin(t*9)*22*(1-t)});}
+      ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y); pts.forEach(p=>ctx.lineTo(p.x,p.y)); ctx.stroke(); ink=400; onChange(ink); } };
+}
+function trimmed(canvas){
+  const ctx = canvas.getContext('2d'), {width:w,height:h} = canvas;
+  const d = ctx.getImageData(0,0,w,h).data; let x0=w,y0=h,x1=0,y1=0;
+  for (let y=0;y<h;y+=2) for (let x=0;x<w;x+=2) if (d[(y*w+x)*4+3]>10){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; }
+  if (x1<=x0) return canvas.toDataURL('image/png');
+  const p=12; x0=Math.max(0,x0-p); y0=Math.max(0,y0-p); x1=Math.min(w,x1+p); y1=Math.min(h,y1+p);
+  const c=document.createElement('canvas'); c.width=x1-x0; c.height=y1-y0; c.getContext('2d').drawImage(canvas,x0,y0,c.width,c.height,0,0,c.width,c.height);
+  return c.toDataURL('image/png');
+}
+let sp = null;
+function mountPad(btnSel){
+  const cv = $('#sigCanvas'); if (!cv) return;
+  sp = signaturePad(cv, ink => { const ok = ink>60; $('#sigBox').classList.toggle('signed', ink>0); $('#sigPh').style.display = ink>0?'none':''; $(btnSel).disabled = !ok || !allChecked(); $('#sigHint').textContent = ink===0?'손가락으로 이름을 써 주세요':ok?'서명했어요. 아래 버튼을 눌러 제출해요':'조금 더 길게 써 주세요'; });
+  window.__pad = sp;
+}
+const allChecked = () => [...document.querySelectorAll('.agreeChk')].every(c=>c.checked);
+function sigBlock(btnId,label){
+  return `<div class="sig-box" id="sigBox"><canvas id="sigCanvas" aria-label="서명 칸. 손가락이나 마우스로 서명해요"></canvas><div class="sig-line"></div><div class="sig-ph" id="sigPh">여기에 서명해 주세요</div></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span class="small mut" id="sigHint">손가락으로 이름을 써 주세요</span><button class="btn sm" data-act="sigClear">다시 쓰기</button></div>`;
+}
+function stuSign(){
+  openModal(`<div class="modal-h"><div><h2 id="modalTitle">학생 동의서 서명</h2><p class="mut small" style="margin:4px 0 0">${HERO.placement.company} · 2026.${HERO.placement.period}</p></div><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+    <div class="notice" style="margin-bottom:12px">현장실습 기간, 실습 시간(하루 7시간 이내), 안전교육, 중도 복귀 방법을 확인했어요. (예시 문구)</div>
+    <label class="check"><input type="checkbox" class="agreeChk" checked> 위 내용을 읽고 현장실습에 참여해요</label>
+    ${sigBlock()}
+    <div class="modal-f"><button class="btn pri cta" id="stuSignBtn" data-act="stuSignSubmit" disabled>서명 제출하기</button></div>`);
+  setTimeout(()=>mountPad('#stuSignBtn'),30);
+}
+
+/* ---------- 학부모 화면 ---------- */
+function vParent(){
+  const s = HERO, st = S.parentStep;
+  const p = POSTINGS[0];
+  let body='', foot='';
+  const stepper = `<div class="stepper" aria-label="${st}단계 / 3단계">${[1,2,3].map(i=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div>`;
+  if (st===0){
+    body = `<p class="small mut" style="text-align:center;margin:4px 0 12px">10월 22일 (수) 오후 4:10</p>
+      <div class="msg-from">○○공업고등학교 · 알림톡</div>
+      <div class="msg"><b>현장실습 동의서 서명 요청</b><br><br>${s.parent} 보호자님, ${s.name} 학생의 현장실습 동의서 서명을 부탁드려요.<br><br>실습 기업: ${s.placement.company}<br>기간: 2026.${s.placement.period}<br>서명 마감: 10월 29일(목)<br><br>아래 버튼을 누르면 휴대폰에서 바로 서명할 수 있어요. 앱 설치는 필요 없어요.
+      <button class="msg-btn" data-act="pStep" data-v="1">동의서 열기</button></div>
+      <p class="small mut" style="margin-top:16px">카카오톡이 없는 보호자에게는 같은 내용이 문자로 가요.</p>`;
+  } else if (st===1){
+    body = `${stepper}<div class="ph-card"><h3>본인 확인</h3><p class="small mut" style="margin:0 0 12px">${s.name} 학생의 생년월일 6자리를 넣어 주세요.</p>
+      <div class="field" style="margin:0"><label for="pBirth" class="sr">학생 생년월일</label><input class="inp" id="pBirth" inputmode="numeric" maxlength="6" placeholder="예: 081203" autocomplete="off"><span class="help" id="pBirthErr">데모에서는 아무 숫자 6자리나 돼요</span></div></div>`;
+    foot = `<button class="btn pri cta" data-act="pVerify">확인하기</button>`;
+  } else if (st===2){
+    body = `${stepper}<div class="ph-card"><h3>현장실습 내용</h3>
+      <dl class="dinfo"><dt>학생</dt><dd>${s.name} · ${s.dept} 3학년 ${s.cls}반</dd><dt>기업</dt><dd>${s.placement.company} · ${p.ind}</dd><dt>직무</dt><dd>${p.job}</dd><dt>기간</dt><dd>2026.${s.placement.period}</dd><dt>수당</dt><dd>${p.pay} (예시)</dd><dt>실습 시간</dt><dd>하루 7시간, 주 35시간 이내 (예시)</dd><dt>지도 교사</dt><dd>정*희 담임</dd></dl>
+      <button class="btn sm ghost" style="margin:8px 0 0 -12px" data-act="viewFile" data-v="표준협약서_전문.pdf">표준협약서 전문 보기</button></div>
+      <div class="ph-card"><h3>동의</h3>
+      <label class="check"><input type="checkbox" class="agreeChk"> (필수) 학생이 위 현장실습에 참여하는 데 동의해요</label>
+      <label class="check"><input type="checkbox" class="agreeChk"> (필수) 실습 운영을 위해 학생 이름·학과·연락처를 실습 기업에 주는 데 동의해요</label></div>
+      <div class="ph-card"><h3>보호자 서명</h3>${sigBlock()}</div>`;
+    foot = `<div class="hint">서명하면 학교와 보호자 휴대폰에 PDF가 남아요</div><button class="btn pri cta" id="pSignBtn" data-act="pSubmit" disabled>동의하고 서명 제출하기</button>`;
+  } else {
+    body = `${stepper}<div class="ph-card" style="text-align:center"><h3 style="margin-bottom:4px">서명을 마쳤어요</h3><p class="small mut" style="margin:0">${S.sigAt} · 학교에 바로 전달됐어요</p></div>
+      ${agreementDoc(s, S.sig, S.sigAt)}`;
+    foot = `<button class="btn pri cta" data-act="printDoc" data-v="${s.id}">${ic.print} PDF로 저장</button>`;
+  }
+  return `<div class="phone-wrap"><div class="phone-stage">
+    <div class="stage-note"><h1>학부모 서명 링크</h1><p>보호자는 알림톡이나 문자로 받은 링크만 누르면 돼요. 회원가입도, 앱 설치도 없어요.</p>
+      <ul><li>링크 + 학생 생년월일로 본인을 확인해요.</li><li>휴대폰 화면에 손가락으로 서명해요. PC에서는 마우스로 돼요.</li><li>제출하면 서명이 들어간 동의서 PDF가 바로 만들어지고, 교사 화면 숫자가 바뀌어요.</li></ul>
+      ${st>0?`<button class="btn sm" style="margin-top:16px" data-act="pStep" data-v="0">처음부터 다시 보기</button>`:''}
+      ${st===3?`<button class="btn sm" style="margin:16px 0 0 8px" data-act="toTeacher">교사 화면에서 확인하기</button>`:''}</div>
+    <div class="phone" aria-label="학부모 휴대폰 화면">
+      <div class="ph-top">${st>0&&st<3?`<button class="xbtn" style="width:44px;height:44px;background:none" data-act="pStep" data-v="${st-1}" aria-label="뒤로">${ic.back}</button>`:''}<h2>${st===0?'알림톡':st===3?'서명 완료':'현장실습 동의서'}</h2></div>
+      <div class="ph-body">${body}</div>
+      ${foot?`<div class="ph-foot">${foot}</div>`:''}
+    </div></div></div>`;
+}
+
+/* ---------- 모달·토스트 ---------- */
+let lastFocus=null;
+function openModal(html, wide=false){ lastFocus=document.activeElement; $('#modal').className='modal'+(wide?' wide':''); $('#modal').innerHTML=html; $('#modalBg').classList.add('open'); setTimeout(()=>{const f=$('#modal').querySelector('input:not(.sr),textarea,button.btn.pri:not([disabled])'); f&&f.focus({preventScroll:true});},30); }
+function closeModal(){ $('#modalBg').classList.remove('open'); $('#modal').innerHTML=''; sp=null; lastFocus&&lastFocus.focus&&lastFocus.focus({preventScroll:true}); }
+let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2600); }
+
+/* ---------- 이벤트 ---------- */
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]'); if (!el) { if (e.target===$('#modalBg')) closeModal(); return; }
+  const a = el.dataset.act, v = el.dataset.v;
+  const A = {
+    role(){ S.role=v; S.profile=null; if(v==='parent'&&S.parentStep===3){} render(); window.scrollTo(0,0); },
+    tab(){ S.tab=v; S.profile=null; render(); window.scrollTo(0,0); },
+    metric(){ S.metric=v; render(); }, dept(){ S.selDept=v; render(); },
+    filter(){ S.filter=v; S.page=1; render(); }, page(){ S.page=+v; render(); },
+    stuDept(){ S.stuDept=v; S.stuPage=1; render(); }, stuPage(){ S.stuPage=+v; render(); },
+    clearQ(){ S.stuQ=''; render(); },
+    openProfile(){ S.profile=v; render(); window.scrollTo(0,0); }, closeProfile(){ S.profile=null; render(); },
+    report(){ openReport(v); }, printReport(){ printReport(v); },
+    verify(){ const [id,i,st]=v.split('|'); const s=students.find(x=>x.id===id); s.certs[+i].status=st; render(); toast(st==='ok'?`${s.certs[+i].name} 확인했어요 · 학생에게 알림이 가요`:'반려했어요 · 학생에게 다시 올려 달라고 알려요'); },
+    viewFile(){ toast(`데모에서는 파일을 열지 않아요 · ${v}`); },
+    saveMemo(){ const s=students.find(x=>x.id===v); s.memo=$('#memo').value; toast('상담 메모를 저장했어요'); },
+    nudge(){ const list=scoped().filter(s=>s.placement); simulateSendList([...list.filter(s=>s.consent.parent!=='ok').map(s=>({s,to:'parent'})),...list.filter(s=>s.consent.student!=='ok').map(s=>({s,to:'student'}))]); },
+    posting(){ S.posting=+v; render(); if (innerWidth<1025) $('#matchCard').scrollIntoView({behavior:'smooth',block:'start'}); },
+    assign(){ const [pid,id]=v.split('|'); const p=POSTINGS.find(x=>x.id===+pid), s=students.find(x=>x.id===id); p.assigned.push(id); s.placement={company:p.co,period:p.period.split(' ')[0]}; s.consent={agree:'wait',student:'wait',parent:'wait'}; render(); toast(`${s.name} 학생을 ${p.co}에 배정했어요 · 협약서 서명 요청이 나가요`); },
+    newPosting(){ newPosting(); }, bundle(){ toast('데모: 실제로는 완료 문서를 ZIP 하나로 받아요'); },
+    pdf(){ openPdf(v); }, printDoc(){ printDoc(v); },
+    ncond(){ S.ntf.cond=v; render(); },
+    ins(){ const ta=$('#nBody'); const st=ta.selectionStart??ta.value.length; ta.value=ta.value.slice(0,st)+v+ta.value.slice(ta.selectionEnd??st); S.ntf.body=ta.value; render(); const t2=$('#nBody'); t2.focus(); t2.selectionStart=t2.selectionEnd=st+v.length; },
+    sendNtf(){ const T=ntfTargets(); simulateSend(T, TEMPLATES.find(t=>t.k===S.ntf.tpl).name, S.ntf.to); },
+    resend(){ const h=S.history[+v]; const list=scoped().slice(0,h.unread); simulateSend(list.map(s=>s), h.tpl+' (재발송)', 'parent'); h.unread=0; },
+    export(){ exportCSV(); }, addJournal(){ addJournal(); },
+    jres(){ document.querySelectorAll('[data-act="jres"]').forEach(b=>b.setAttribute('aria-pressed', b===el)); },
+    openExcel(){ openExcel(); }, parseX(){ parseX(); }, importX(){ importX(); },
+    dlTemplate(){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿학번,이름,학과,반,희망직무,학생연락처,보호자연락처\r\n'],{type:'text/csv'})); a.download='학생일괄등록_양식.csv'; document.body.appendChild(a); a.click(); a.remove(); toast('빈 양식을 내려받았어요'); },
+    closeModal(){ closeModal(); },
+    stuTab(){ S.stuTab=v; render(); }, addCert(){ addCert(); },
+    ctype(){ document.querySelectorAll('[data-act="ctype"]').forEach(b=>b.setAttribute('aria-pressed', b===el)); },
+    stuSign(){ stuSign(); },
+    stuSignSubmit(){ if(!sp||sp.ink<60) return; S.studentSig=sp.data(); HERO.consent.student='ok'; closeModal(); render(); toast('학생 동의서에 서명했어요'); },
+    sigClear(){ sp&&sp.clear(); },
+    pStep(){ S.parentStep=+v; render(); if(+v===2) setTimeout(()=>mountPad('#pSignBtn'),30); },
+    pVerify(){ const b=$('#pBirth').value.trim(); if(!/^\d{6}$/.test(b)){ $('#pBirthErr').textContent='숫자 6자리를 모두 넣어 주세요'; $('#pBirthErr').style.color='var(--bad)'; $('#pBirth').focus(); return; } S.parentStep=2; render(); setTimeout(()=>mountPad('#pSignBtn'),30); },
+    pSubmit(){ if(!sp||sp.ink<60||!allChecked()) return; el.disabled=true; el.textContent='제출하는 중…'; const data=sp.data(); setTimeout(()=>{ S.sig=data; S.sigAt=nowStr(); HERO.consent.parent='ok'; S.parentStep=3; render(); toast('서명이 학교에 전달됐어요'); },500); },
+    toTeacher(){ S.role='teacher'; S.tab='field'; S.profile=null; render(); window.scrollTo(0,0); },
+  };
+  if (A[a]) A[a]();
+});
+function simulateSendList(items){
+  const tplName='동의서 서명 독려';
+  const recips = items.map(x=>({s:x.s, name: x.to==='parent'? x.s.parent+' 보호자' : x.s.name+' 학생'}));
+  openModal(`<div class="modal-h"><div><h2 id="modalTitle">독려 알림 보내는 중 · 시뮬레이션</h2><p class="mut small" style="margin:4px 0 0">서명이 남은 학생 ${items.filter(x=>x.to==='student').length}명 · 보호자 ${items.filter(x=>x.to==='parent').length}명 · 실제로 보내지 않아요</p></div><button class="xbtn" data-act="closeModal" aria-label="닫기">${ic.x}</button></div>
+    <div class="sumrow"><div><b id="sOk">0</b><span>알림톡 성공</span></div><div><b id="sSms">0</b><span>문자로 대체</span></div><div><b id="sFail">0</b><span>최종 실패</span></div><div><b id="sLeft">${recips.length}</b><span>남음</span></div></div>
+    <div class="log" id="sLog" aria-live="polite"></div>
+    <div class="modal-f"><button class="btn pri" data-act="closeModal" id="sDone" disabled>확인</button></div>`);
+  let ok=0,sms=0,fail=0,i=0; const r2=mulberry32(7);
+  const step=()=>{
+    if(!$('#sLog')) return;
+    if(i>=recips.length){ $('#sLog').insertAdjacentHTML('beforeend',`<div><time>${timeStr()}</time><b>끝났어요.</b> 발송 이력은 ‘맞춤 알림’ 메뉴에 남아요.</div>`); $('#sDone').disabled=false; S.history.unshift({at:nowStr(),tpl:tplName,n:recips.length,ok,sms,fail,unread:Math.round(ok*.3)}); return; }
+    const x=recips[i++], v=r2(); let line;
+    if(v<0.82){ok++; line=`<span class="chip ok">알림톡</span> ${x.name} (${x.s.id})`;}
+    else if(v<0.96){sms++; line=`<span class="chip bad">알림톡 실패</span><span class="mut">카카오톡 미사용</span> → <span class="chip info">문자 대체 성공</span> ${x.name}`;}
+    else {fail++; line=`<span class="chip bad">실패</span> ${x.name} · 없는 번호`;}
+    $('#sLog').insertAdjacentHTML('beforeend',`<div><time>${timeStr()}</time>${line}</div>`); $('#sLog').scrollTop=1e6;
+    $('#sOk').textContent=ok; $('#sSms').textContent=sms; $('#sFail').textContent=fail; $('#sLeft').textContent=recips.length-i;
+    setTimeout(step,70);
+  };
+  setTimeout(step,200);
+}
+document.addEventListener('input', e => {
+  if (e.target.id==='stuQ'){ S.stuQ=e.target.value; S.stuPage=1; const pos=e.target.selectionStart; render(); const q=$('#stuQ'); q.focus(); q.setSelectionRange(pos,pos); }
+  if (e.target.id==='nBody'){ S.ntf.body=e.target.value; clearTimeout(window.__nb); window.__nb=setTimeout(()=>{const pos=e.target.selectionStart; render(); const t=$('#nBody'); t.focus(); t.setSelectionRange(pos,pos);},400); }
+  if (e.target.id==='pBirth'){ e.target.value=e.target.value.replace(/\D/g,'').slice(0,6); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id==='permSel'){ S.perm=e.target.value; S.page=1; S.stuPage=1; S.stuDept='all'; S.ntf.dept='all'; render(); toast($('#permSel').selectedOptions[0].textContent+' 권한으로 바꿨어요'); }
+  if (e.target.id==='nDept'){ S.ntf.dept=e.target.value; render(); }
+  if (e.target.id==='nTo'){ S.ntf.to=e.target.value; render(); }
+  if (e.target.id==='nTpl'){ S.ntf.tpl=e.target.value; S.ntf.body=TEMPLATES.find(t=>t.k===e.target.value).body; render(); }
+  if (e.target.classList.contains('agreeChk') && sp){ const b=$('#pSignBtn')||$('#stuSignBtn'); if(b) b.disabled = !(sp.ink>60 && allChecked()); }
+  if (e.target.dataset.kind){ const f=e.target.files[0]; if(!f) return; const k=e.target.dataset.kind; const n=HERO.docs.filter(d=>d.kind===k).length+1; HERO.docs.push({kind:k,ver:'v'+n,date:'2026.10.22',note:f.name,size:Math.max(1,Math.round(f.size/1024))+'KB'}); render(); toast(`${k} v${n}을 올렸어요 · 이전 버전도 남아 있어요`); }
+  if (e.target.dataset.actChange==='perm'){ toast('데모: 실제로는 바꾼 기록이 감사 로그에 남아요'); }
+});
+document.addEventListener('keydown', e => { if (e.key==='Escape' && $('#modalBg').classList.contains('open')) closeModal(); });
+function afterRender(){}
+render();
+</script>
+</body>
+</html>
