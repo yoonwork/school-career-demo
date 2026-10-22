@@ -5,23 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>진로·현장실습 관리 데모</title>
 <meta name="description" content="특성화고 학생 취업·진로 이력 관리와 현장실습 전자동의를 직접 눌러 볼 수 있는 제안용 데모예요. 학교 이름, 학생, 기업, 숫자는 모두 예시예요.">
-<meta name="theme-color" content="#F2F4F7">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232457F5'/%3E%3Cpath d='M9 22V10h8a4 4 0 010 8h-8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#E8EBE7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23131715'/%3E%3Cpath d='M9 22V10h8a4 4 0 010 8h-8' stroke='%2333C07A' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap">
 <style id="tokens">
 :root{
   color-scheme: only light;
-  --brand:#2457F5; --brand-hover:#1B45D6; --brand-press:#1638B0; --brand-text:#1B45D6;
-  --brand-tint:#EEF3FF; --brand-tint-2:#D9E4FF; --ring:0 0 0 3px rgba(36,87,245,.25); --on-brand:#FFFFFF;
-  --bg:#F2F4F7; --card:#FFFFFF; --soft:#F7F8FA; --track:#ECEFF3; --line:#E5E8EB; --line-2:#EBEEF2;
-  --ink:#191F28; --ink-2:#4E5968; --mut:#636D7B; --mut-2:#9AA3AE;
+  --brand:#17A05D; --brand-hover:#128A4F; --brand-press:#0E7342; --brand-text:#0D7A45;
+  --brand-tint:#E3F4EA; --brand-tint-2:#BFE6CF; --ring:0 0 0 3px rgba(23,160,93,.28); --on-brand:#FFFFFF;
+  --bg:#E8EBE7; --card:#FFFFFF; --soft:#F3F5F2; --track:#E2E6E1; --line:#DCE1DB; --line-2:#E7EBE6;
+  --ink:#131715; --ink-2:#47504A; --mut:#606A63; --mut-2:#99A29B;
+  --glass:rgba(255,255,255,.72); --glass-edge:rgba(255,255,255,.9); --black:#131715; --black-2:#1E2420;
+  --sh-card:0 1px 2px rgba(19,23,21,.04),0 12px 32px -12px rgba(19,23,21,.10);
+  --num:"Inter Tight","Pretendard Variable",Pretendard,sans-serif;
   --ok:#127A4F; --ok-bg:#E3F6ED; --ok-dot:#1FA971;
   --warn:#7A5600; --warn-bg:#FFF3D4; --warn-dot:#F2B01E;
   --bad:#BF2930; --bad-bg:#FFE3E4; --bad-dot:#E5484D;
   --info:#175CD3; --info-bg:#EAF2FF; --info-dot:#2E7CF6;
   --neu:#4E5968; --neu-bg:#F0F2F5; --neu-dot:#8B95A1;
   --font:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
-  --r-sm:8px; --r-md:12px; --r-lg:20px; --r-xl:28px; --r-pill:999px;
+  --r-sm:10px; --r-md:16px; --r-lg:28px; --r-xl:32px; --r-pill:999px;
   --sh-pill:0 1px 2px rgba(16,24,40,.08);
   --sh-pop:0 2px 6px rgba(16,24,40,.06),0 12px 32px rgba(16,24,40,.12);
 }
@@ -391,6 +396,236 @@ button.lrow:active{background:var(--soft)}
   .no-print{display:none !important}
   @page{size:A4;margin:16mm}
 }
+
+/* ===== 3차 디자인: 반투명 콘솔 + 검정 대비 카드 + 초록 하나 ===== */
+html,body{background:var(--bg)}
+body{background:
+  radial-gradient(1100px 560px at 88% -8%, rgba(23,160,93,.11), transparent 62%),
+  radial-gradient(900px 520px at -5% -5%, rgba(255,255,255,.95), transparent 60%),
+  var(--bg) fixed}
+.num,.kpi .v,.big-n,.score,.sumrow b,.bar-row .bv,.cap{font-family:var(--num);font-feature-settings:"tnum"}
+.demo-bar{background:transparent;border-bottom:1px solid rgba(19,23,21,.07);color:var(--mut)}
+.demo-bar b{color:var(--ink)}
+
+/* 머리: 로고 | 메뉴 | 권한 */
+.top{background:rgba(232,235,231,.78);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid rgba(19,23,21,.06)}
+.top-in{max-width:1240px;padding:14px 24px;flex-wrap:nowrap}
+.logo-mark{background:var(--black);border-radius:12px;width:36px;height:36px}
+.logo-t{font-size:15px;letter-spacing:-.01em}
+.nav-row{padding:0;margin:0 auto;max-width:none}
+.pills{background:rgba(255,255,255,.55);border:1px solid var(--glass-edge);box-shadow:var(--sh-pill)}
+.pills button{color:var(--ink-2)}
+.pills button:hover{color:var(--ink)}
+.pills button[aria-current="page"]{background:var(--black);color:#fff;box-shadow:none}
+.role-wrap{margin-left:0}
+.sel{border-color:transparent;background-color:rgba(255,255,255,.7);border-radius:var(--r-pill);box-shadow:var(--sh-pill)}
+
+/* 화면 바꾸기 독 */
+.dock{position:fixed;left:24px;bottom:20px;z-index:40;display:flex;align-items:center;gap:4px;background:rgba(19,23,21,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:6px;border-radius:var(--r-pill);box-shadow:0 18px 40px -12px rgba(19,23,21,.5)}
+.dock-l{font-size:12px;color:rgba(255,255,255,.55);padding:0 10px 0 12px;white-space:nowrap}
+.dock button{border:0;background:transparent;color:rgba(255,255,255,.78);height:40px;padding:0 16px;border-radius:var(--r-pill);font-weight:600;font-size:14px;white-space:nowrap}
+.dock button:hover{color:#fff;background:rgba(255,255,255,.08)}
+.dock button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+.wrap{max-width:1240px;padding-bottom:120px}
+.foot-note{max-width:1240px;padding-bottom:110px}
+
+/* 카드: 반투명 흰색, 회색 테두리 없음 */
+.card,.kpi{background:var(--glass);border:1px solid var(--glass-edge);box-shadow:var(--sh-card);-webkit-backdrop-filter:blur(18px) saturate(1.15);backdrop-filter:blur(18px) saturate(1.15)}
+.card{padding:28px}
+.card-h h2{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.page-h h1{font-size:34px;font-weight:700;letter-spacing:-.035em}
+.scope{background:rgba(255,255,255,.6);border-color:var(--glass-edge)}
+.btn{border-color:rgba(19,23,21,.08);background:rgba(255,255,255,.85)}
+.btn:hover{background:#fff}
+.btn.pri{box-shadow:0 8px 20px -8px rgba(23,160,93,.6)}
+.btn.lg{height:56px;padding:0 26px 0 22px;font-size:16px}
+.fchip{background:rgba(255,255,255,.6);border-color:transparent}
+.fchip[aria-pressed="true"]{background:var(--black);border-color:var(--black)}
+.seg{background:rgba(19,23,21,.06)}
+.tbl-wrap{border:0;border-radius:0}
+.tbl th{background:transparent;font-size:12px;letter-spacing:.02em;border-bottom:1px solid rgba(19,23,21,.08)}
+.tbl td{border-bottom:1px solid rgba(19,23,21,.06)}
+.tbl tbody tr.click:hover td{background:rgba(255,255,255,.75)}
+.bar-track{background:rgba(19,23,21,.06);height:24px;border-radius:12px}
+.bar-fill{background:var(--brand-tint-2);border-radius:12px}
+.bar-row:hover{background:rgba(255,255,255,.6)}
+.bar-tip{background:var(--black);border-radius:14px;padding:12px 14px}
+.posting{background:rgba(255,255,255,.7);border-color:transparent;transition:transform .2s,box-shadow .2s}
+.posting:hover{transform:translateY(-2px);box-shadow:var(--sh-card)}
+.posting[aria-pressed="true"]{border-color:var(--black);box-shadow:0 0 0 1px var(--black)}
+.notice,.log,.sumrow div,.preview-bubble{background:rgba(255,255,255,.6);border-color:transparent}
+.modal{border-radius:var(--r-lg)}
+.modal .notice,.modal .log,.modal .sumrow div,.modal .preview-bubble,.ph-card .notice{background:var(--soft)}
+.sumrow b{font-weight:500;font-size:24px}
+
+/* 히어로 */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 400px;padding-top:28px;margin-bottom:20px}
+.hero-main{grid-column:1/3;grid-row:1;position:relative;background:var(--glass);border:1px solid var(--glass-edge);border-radius:var(--r-xl);box-shadow:var(--sh-card);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);padding:32px 456px 32px 40px;min-width:0}
+.hm-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:28px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.live{width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(23,160,93,.18)}
+.hero-h{font-size:22px;font-weight:600;letter-spacing:-.02em;color:var(--ink-2)}
+.hero-n{display:flex;align-items:baseline;gap:6px;margin:2px 0 6px}
+.hero-n b{font-family:var(--num);font-weight:300;font-size:128px;line-height:.92;letter-spacing:-.055em;color:var(--ink)}
+.hero-n span{font-size:30px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.hero-sub{margin:0 0 28px;font-size:16px;color:var(--ink-2)}
+.hero-sub b{color:var(--ink);font-weight:700}
+.hs-d{display:inline-flex;align-items:center;height:28px;padding:0 12px;margin-left:6px;border-radius:var(--r-pill);background:var(--black);color:#fff;font-size:13px;font-weight:600}
+.pipe{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pipe li{position:relative;min-width:0}
+.pipe li:not(:last-child)::after{content:"";position:absolute;z-index:1;top:31px;left:52px;right:-28px;border-top:2px dashed rgba(19,23,21,.18);pointer-events:none}
+.st{width:100%;border:0;text-align:left;background:rgba(255,255,255,.72);border-radius:20px;padding:16px;display:grid;grid-template-columns:30px minmax(0,1fr) auto;grid-template-areas:"n n n" "t t v" "bar bar bar" "left left left";gap:6px 10px;align-items:center;transition:transform .2s,box-shadow .2s;min-height:44px}
+.st:hover{transform:translateY(-2px);box-shadow:var(--sh-card)}
+.st[aria-pressed="true"]{box-shadow:0 0 0 2px var(--black)}
+.st-n{grid-area:n;width:30px;height:30px;border-radius:50%;background:var(--black);color:#fff;display:grid;place-items:center;font-family:var(--num);font-weight:600;font-size:14px;position:relative;z-index:2}
+.st-n.done{background:var(--brand)}
+.st-t{grid-area:t;display:flex;flex-direction:column;margin-top:8px}
+.st-t b{font-size:15px;font-weight:700}
+.st-t span{font-size:12px;color:var(--mut)}
+.st-v{grid-area:v;font-size:26px;font-weight:400;letter-spacing:-.03em;line-height:1;align-self:end;margin-bottom:2px}
+.st-v small{font-size:13px;color:var(--mut);margin-left:1px}
+.st-bar{grid-area:bar;height:6px;border-radius:3px;background:rgba(19,23,21,.08);overflow:hidden}
+.st-bar i{display:block;height:100%;background:var(--brand);border-radius:3px}
+.st-left{grid-area:left;font-size:12px;font-weight:600;color:var(--warn)}
+.st-n.done ~ .st-left{color:var(--ok)}
+.hero-act{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hero-note{font-size:13px;color:var(--mut)}
+
+.hero-dark{grid-column:2;grid-row:1;align-self:start;position:relative;z-index:3;margin:-28px 24px 24px 0;background:var(--black);color:#fff;border-radius:var(--r-xl);padding:26px 26px 22px;box-shadow:0 40px 70px -28px rgba(19,23,21,.55);display:flex;flex-direction:column;gap:18px;min-width:0}
+.hd-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.6);font-weight:600}
+.hd-chip{height:28px;display:inline-flex;align-items:center;padding:0 12px;border-radius:var(--r-pill);background:rgba(255,255,255,.08);color:#fff;font-size:12px}
+.hd-nums{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hd-nums > div{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.hd-l{font-size:13px;color:rgba(255,255,255,.62)}
+.hd-nums b{font-family:var(--num);font-weight:300;font-size:56px;line-height:1;letter-spacing:-.045em}
+.hd-nums b small{font-size:22px;font-weight:400;margin-left:2px;color:rgba(255,255,255,.7)}
+.hero-dark .delta.up{background:rgba(51,192,122,.16);color:#6EE0A6}
+.hero-dark .delta.flat{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7)}
+.dots{display:grid;grid-template-columns:repeat(auto-fill,9px);gap:4px;padding:16px;border-radius:18px;background:rgba(255,255,255,.04)}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.14)}
+.dots i.p{background:rgba(255,255,255,.88)}
+.dots i.e{background:#33C07A}
+.dots.few{grid-template-columns:repeat(auto-fill,22px);gap:8px}
+.dots.few i{width:22px;height:22px}
+.hd-leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:rgba(255,255,255,.75)}
+.hd-leg span{display:inline-flex;align-items:center;gap:6px}
+.hd-leg i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.22)}
+.hd-leg i.p{background:rgba(255,255,255,.88)}.hd-leg i.e{background:#33C07A}
+.hd-foot{margin:-4px 0 0;font-size:12px;color:rgba(255,255,255,.45)}
+
+/* 휴대폰 화면 무대 */
+.stage-live{margin-top:24px;background:var(--black);color:#fff;border-radius:24px;padding:22px 24px;box-shadow:0 30px 60px -28px rgba(19,23,21,.5);max-width:420px}
+.sl-l{font-size:13px;color:rgba(255,255,255,.6);font-weight:600}
+.sl-row{display:flex;align-items:center;gap:14px;margin:6px 0 8px}
+.sl-row b{font-family:var(--num);font-weight:300;font-size:72px;line-height:1;letter-spacing:-.05em}
+.sl-row span{font-size:15px;line-height:1.45;color:rgba(255,255,255,.85)}
+.sl-s{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#6EE0A6}
+.sl-s::before{content:"";width:8px;height:8px;border-radius:50%;background:#33C07A}
+.dash-grid{align-items:start}
+.phone-stage{max-width:1040px;grid-template-columns:minmax(0,1fr) 410px;gap:56px;padding-top:12px}
+.stage-note{padding-top:24px}
+.stage-note h1{font-size:44px;font-weight:700;letter-spacing:-.04em;line-height:1.15;margin-bottom:16px}
+.stage-note p{font-size:17px}
+.stage-note ul{list-style:none;padding:0;margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.stage-note li{background:var(--glass);border:1px solid var(--glass-edge);border-radius:18px;padding:14px 16px 14px 44px;position:relative;margin:0;box-shadow:var(--sh-card)}
+.stage-note li::before{content:"";position:absolute;left:16px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(23,160,93,.15)}
+.phone{border:10px solid var(--black);border-radius:48px;box-shadow:0 50px 90px -30px rgba(19,23,21,.45)}
+.ph-top{border-bottom:0;background:var(--card)}
+.ph-hello{font-size:26px;letter-spacing:-.03em}
+.ph-hello em{color:var(--brand-text)}
+.ph-card{border-radius:24px}
+.ph-card.dark{background:var(--black);color:#fff;box-shadow:0 24px 40px -24px rgba(19,23,21,.6)}
+.ph-card.dark .mut,.ph-card.dark .big-n small{color:rgba(255,255,255,.6)}
+.ph-card.dark .prog{background:rgba(255,255,255,.12)}
+.ph-card.dark .prog i{background:#33C07A}
+.ph-card.dark .btn.ghost{color:#6EE0A6}
+.ph-card.dark .btn.ghost:hover{background:rgba(255,255,255,.08)}
+.big-n{font-weight:300;font-size:56px;letter-spacing:-.05em}
+.prog{height:10px;border-radius:5px}.prog i{border-radius:5px}
+.msg-hd{background:var(--black);color:#fff}
+.ph-tabs{border-top:1px solid rgba(19,23,21,.06)}
+
+/* 학과별 비교: PC는 세로 막대 */
+.bar-fill{width:var(--v)}
+@media (min-width:761px){
+  .dash-grid .bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:10px;align-items:end;min-height:280px}
+  .dash-grid .bar-row{display:flex;flex-direction:column-reverse;align-items:stretch;gap:8px;margin:0;width:auto;padding:8px 6px;border-radius:16px;text-align:center}
+  .dash-grid .bar-row .bl{font-size:13px}
+  .dash-grid .bar-row .bv{text-align:center;font-size:20px;font-weight:400;letter-spacing:-.03em}
+  .dash-grid .bar-track{height:190px;border-radius:14px}
+  .dash-grid .bar-fill{inset:auto 0 0 0;width:auto;height:var(--v);border-radius:14px}
+  .dash-grid .bar-row[aria-pressed="true"] .bv{color:var(--brand-text);font-weight:600}
+  #app.enter .dash-grid .bar-fill{animation:growh .9s .2s cubic-bezier(.2,.7,.2,1) both}
+}
+@keyframes growh{from{height:0}}
+/* 움직임: 화면이 바뀔 때만 */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes grow{from{width:0}}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes drop{from{opacity:0;transform:translateY(-18px) scale(.97)}to{opacity:1;transform:none}}
+#app.enter .hero-main,#app.enter .grid > *,#app.enter .page-h,#app.enter .card,#app.enter .phone,#app.enter .stage-note{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+#app.enter .grid > *:nth-child(2){animation-delay:.08s}
+#app.enter .grid > *:nth-child(3){animation-delay:.14s}
+#app.enter .hero-dark{animation:drop .7s .12s cubic-bezier(.2,.7,.2,1) both}
+#app.enter .dots{animation:wipe 1s .35s ease-out both}
+#app.enter .bar-fill,#app.enter .st-bar i,#app.enter .prog i{animation:grow .9s .2s cubic-bezier(.2,.7,.2,1) both}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+
+@media (max-width:1180px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero-main{grid-column:1;padding:32px 32px 52px}
+  .hero-dark{grid-column:1;grid-row:2;margin:-28px 20px 0}
+}
+@media (max-width:1024px){
+  .phone-stage{grid-template-columns:minmax(0,1fr);gap:24px}
+  .stage-note{padding-top:0}
+  .stage-note h1{font-size:34px}
+  .top-in{flex-wrap:wrap}
+  .nav-row{order:3;width:100%;margin:0}
+}
+@media (max-width:760px){
+  .top-in{padding:12px 16px}
+  .top-in{flex-wrap:wrap;row-gap:10px}
+  .logo{flex:1}
+  .logo-s{display:none}
+  .role-wrap{order:2;width:auto;flex:none}
+  .role-wrap .sel{width:auto;max-width:180px;font-size:13px}
+  .nav-row{padding:0}
+  .dock{position:static;transform:none;margin:12px 16px 0;padding:4px;justify-content:stretch;border-radius:var(--r-pill);box-shadow:none}
+  .dock-l{display:none}
+  .tbl td{border-bottom:0}
+  .tbl tr{border-bottom:1px solid rgba(19,23,21,.07)}
+  .dock button{flex:1;height:44px;padding:0 6px}
+  .wrap{padding-bottom:48px}
+  .foot-note{padding-bottom:32px}
+  .card{padding:20px 16px}
+  .page-h h1{font-size:28px}
+  .hero{padding-top:4px}
+  .hero-main{padding:22px 18px 48px;border-radius:26px}
+  .hm-top{margin-bottom:18px}
+  .hm-top .scope{display:none}
+  .hero-h{font-size:18px}
+  .hero-n b{font-size:96px}
+  .hero-n span{font-size:24px}
+  .hero-sub{font-size:15px;margin-bottom:20px}
+  .hs-d{margin:8px 0 0}
+  .pipe{grid-template-columns:1fr;gap:8px;margin-bottom:20px}
+  .pipe li:not(:last-child)::after{top:46px;left:30px;right:auto;height:calc(100% - 22px);border-top:0;border-left:2px dashed rgba(19,23,21,.18)}
+  .st{grid-template-columns:30px minmax(0,1fr) auto;grid-template-areas:"n t v" ". bar left";padding:14px;gap:8px 12px}
+  .st-left{text-align:right}
+  .st-t{margin-top:0}
+  .st-v{font-size:22px}
+  .hero-act .btn{width:100%}
+  .hero-note{width:100%;text-align:center}
+  .hero-dark{margin:-26px 10px 0;padding:22px 18px 18px;border-radius:26px}
+  .hd-nums b{font-size:46px}
+  .dots{padding:12px;grid-template-columns:repeat(auto-fill,8px);gap:4px}
+  .dots i{width:8px;height:8px}
+  .dots.few{grid-template-columns:repeat(auto-fill,20px);gap:7px}
+  .dots.few i{width:20px;height:20px}
+  .phone{border:0;border-radius:0;box-shadow:none;width:100%}
+  .phone-stage{justify-items:stretch}
+}
 </style>
 </head>
 <body>
@@ -399,15 +634,19 @@ button.lrow:active{background:var(--soft)}
 <header class="top">
   <div class="top-in">
     <div class="logo">
-      <div class="logo-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19V5h7a4.5 4.5 0 010 9H6"/></svg></div>
+      <div class="logo-mark" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#33C07A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19V5h7a4.5 4.5 0 010 9H6"/></svg></div>
       <div><div class="logo-t">진로·현장실습 관리</div><div class="logo-s">○○공업고등학교 (예시)</div></div>
     </div>
+    <div class="nav-row" id="navRow">
+      <nav class="pills" aria-label="교사 메뉴" id="pills">
+        <button data-act="tab" data-v="dash">대시보드</button>
+        <button data-act="tab" data-v="students">학생 이력</button>
+        <button data-act="tab" data-v="field">현장실습·동의서</button>
+        <button data-act="tab" data-v="notify">맞춤 알림</button>
+        <button data-act="tab" data-v="stats">통계·보고</button>
+      </nav>
+    </div>
     <div class="role-wrap">
-      <div class="seg" role="group" aria-label="화면 바꾸기" id="roleSeg">
-        <button data-act="role" data-v="teacher">교사 화면</button>
-        <button data-act="role" data-v="student">학생 화면</button>
-        <button data-act="role" data-v="parent">학부모 서명 링크</button>
-      </div>
       <select class="sel" id="permSel" aria-label="교사 권한">
         <option value="homeroom">담임 · 3학년 3반</option>
         <option value="career">취업지원부 · 전체</option>
@@ -415,16 +654,13 @@ button.lrow:active{background:var(--soft)}
       </select>
     </div>
   </div>
-  <div class="nav-row" id="navRow">
-    <nav class="pills" aria-label="교사 메뉴" id="pills">
-      <button data-act="tab" data-v="dash">대시보드</button>
-      <button data-act="tab" data-v="students">학생 이력</button>
-      <button data-act="tab" data-v="field">현장실습·동의서</button>
-      <button data-act="tab" data-v="notify">맞춤 알림</button>
-      <button data-act="tab" data-v="stats">통계·보고</button>
-    </nav>
-  </div>
 </header>
+<div class="dock" role="group" aria-label="화면 바꾸기" id="roleSeg">
+  <span class="dock-l">데모 화면</span>
+  <button data-act="role" data-v="teacher">교사</button>
+  <button data-act="role" data-v="student">학생</button>
+  <button data-act="role" data-v="parent">학부모 서명</button>
+</div>
 
 <main class="wrap" id="app"></main>
 <p class="foot-note" id="footNote">이 데모는 브라우저 안에서만 움직여요. 새로 고치면 처음 상태로 돌아가요. 실제 구축에서는 학교 명의 클라우드의 DB에 저장하고, 알림은 학교 명의 카카오 채널로 보내요.</p>
@@ -642,29 +878,40 @@ function vDash(){
   });
   const sel = deptRows.find(r=>r.d.k===S.selDept) || deptRows[0];
   return `
-  ${pageHead('오늘의 현황', `${S.perm==='homeroom'?'3학년 3반':'3학년'} 현장실습·취업 기준 · 2026.10.22 08:00 갱신`)}
-  <section class="kpis" aria-label="핵심 지표">
-    <div class="kpi-g">
-    <div class="kpi"><span class="l">재학생 수</span><span class="v">${totalStu.toLocaleString()}<small>명</small></span><span class="d">${S.perm==='homeroom'?'3학년 3반':'3학년 '+base+'명 · 1·2학년은 데모에서 생략'}</span><span class="f"><span class="delta flat">지난주와 같음</span></span></div>
-    <div class="kpi"><span class="l">현장실습 파견율</span><span class="v">${pct(placed.length,base)}<small>%</small></span><span class="d">${placed.length} / ${base}명 파견</span><span class="f">${deltaChip(placed.length,wkPlaced,base)}</span></div>
-    <div class="kpi"><span class="l">취업 확정률</span><span class="v">${pct(emp.length,base)}<small>%</small></span><span class="d">${emp.length}명 채용 확정</span><span class="f">${deltaChip(emp.length,wkEmp,base)}</span></div>
+  <section class="hero" aria-label="오늘 챙길 일">
+    <div class="hero-main">
+      <div class="hm-top"><span class="eyebrow"><i class="live" aria-hidden="true"></i>오늘의 현황 · ${S.perm==='homeroom'?'3학년 3반':'3학년'} · 10.22 08:00 갱신</span><span class="scope">${esc(scopeLabel())}</span></div>
+      <h1 class="hero-h">서명이 덜 끝난 학생</h1>
+      <div class="hero-n"><b class="num" data-count="${inc.length}">${inc.length}</b><span>명</span></div>
+      <p class="hero-sub">남은 서명 <b>${unsignedPeople}건</b> · 학생 ${unsignedStu} · 보호자 ${unsignedPar}${agreeWait?` · 협약서 ${agreeWait}`:''} <span class="hs-d">서명 마감 10월 29일(목)</span></p>
+      <ol class="pipe" aria-label="서명 단계 · 누르면 아래 표가 그 단계로 걸러져요">
+        ${[['협약서','학교·기업',placed.length-agreeWait,'agree'],['학생 동의서','학생 본인',placed.length-unsignedStu,'student'],['보호자 동의서','휴대폰 링크',placed.length-unsignedPar,'parent']].map(([t,w,ok,f],i)=>{const left=placed.length-ok, r=placed.length?Math.round(ok/placed.length*100):0; return `<li><button class="st" data-act="stage" data-v="${f}" aria-pressed="${S.filter===f}"><span class="st-n${left?'':' done'}">${left?i+1:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>'}</span><span class="st-t"><b>${t}</b><span>${w}</span></span><span class="st-v num">${ok}<small>/${placed.length}</small></span><span class="st-bar"><i style="width:${r}%"></i></span><span class="st-left">${left?`${left}건 남음`:'모두 완료'}</span></button></li>`}).join('')}
+      </ol>
+      <div class="hero-act"><button class="btn pri lg" data-act="nudge" ${unsignedPeople?'':'disabled'}>${ic.send} 서명 남은 ${unsignedPeople}명에게 알림</button><span class="hero-note">알림톡이 안 되면 문자로 대신 가요</span></div>
     </div>
-    <div class="kpi hi"><span class="l">서명이 덜 끝난 학생</span><span class="v">${inc.length}<small>명</small></span>
-      <span class="split" aria-label="남은 서명"><span title="학생 서명이 남은 학생">학생 ${unsignedStu}</span><span title="보호자 서명이 남은 학생">보호자 ${unsignedPar}</span>${agreeWait?`<span>협약서 ${agreeWait}</span>`:''}</span>
-      <button class="btn" data-act="nudge" ${unsignedPeople?'':'disabled'}>${ic.send} 서명 남은 ${unsignedPeople}명에게 알림</button></div>
+    <aside class="hero-dark" aria-label="파견·취업 현황">
+      <div class="hd-top"><span>현장실습 · 취업</span><span class="hd-chip">${S.perm==='homeroom'?'3학년 3반 '+base+'명':'재학생 '+totalStu.toLocaleString()+'명'}</span></div>
+      <div class="hd-nums">
+        <div><span class="hd-l">파견율</span><b class="num">${pct(placed.length,base)}<small>%</small></b>${deltaChip(placed.length,wkPlaced,base)}</div>
+        <div><span class="hd-l">취업 확정률</span><b class="num">${pct(emp.length,base)}<small>%</small></b>${deltaChip(emp.length,wkEmp,base)}</div>
+      </div>
+      <div class="dots${base<40?' few':''}" role="img" aria-label="${base}명 중 취업 확정 ${emp.length}명, 파견 중 ${placed.length-emp.length}명, 미배정 ${base-placed.length}명">${all.slice().sort((a,b)=>(b.employed-a.employed)||(!!b.placement-!!a.placement)).map(s=>`<i class="${s.employed?'e':s.placement?'p':''}"></i>`).join('')}</div>
+      <div class="hd-leg"><span><i class="e"></i>취업 확정 ${emp.length}</span><span><i class="p"></i>파견 중 ${placed.length-emp.length}</span><span><i></i>미배정 ${base-placed.length}</span></div>
+      <p class="hd-foot">점 하나가 학생 한 명${S.perm==='homeroom'?'':' · 3학년 '+base+'명 기준, 1·2학년은 데모에서 생략'}</p>
+    </aside>
   </section>
-  <div class="grid">
+  <div class="grid dash-grid">
     <section class="card c5">
       <div class="card-h"><div><h2>학과별 비교</h2><p>막대를 누르면 자세히 보여요</p></div></div>
       <div class="seg" role="group" aria-label="지표 고르기" style="margin-bottom:16px">
         ${[['disp','파견율'],['emp','취업 확정률'],['sign','동의서 완료율']].map(([k,l])=>`<button data-act="metric" data-v="${k}" aria-pressed="${S.metric===k}">${l}</button>`).join('')}
       </div>
       <div class="bars">
-        ${deptRows.map(r=>`<button class="bar-row" data-act="dept" data-v="${r.d.k}" aria-pressed="${r.d.k===sel.d.k}"><span class="bl">${r.d.k}</span><span class="bar-track"><span class="bar-fill" style="width:${r.v}%"></span></span><span class="bv">${r.v}%</span></button>`).join('')}
+        ${deptRows.map(r=>`<button class="bar-row" data-act="dept" data-v="${r.d.k}" aria-pressed="${r.d.k===sel.d.k}"><span class="bl">${r.d.k}</span><span class="bar-track"><span class="bar-fill" style="--v:${r.v}%"></span></span><span class="bv">${r.v}%</span></button>`).join('')}
       </div>
       <div class="bar-tip"><b>${sel.d.k}</b> · 3학년 ${sel.n}명 중 파견 ${sel.p}명, 취업 확정 ${sel.e}명, 동의서 모두 완료 ${sel.ok}명</div>
     </section>
-    <section class="card c7">
+    <section class="card c7" id="signTable">
       <div class="card-h"><div><h2>현장실습 배정 학생</h2><p>협약서 · 학생 동의서 · 학부모 동의서 순서</p></div>
         <button class="btn sm" data-act="nudge" ${unsignedPeople?'':'disabled'}>서명 남은 ${unsignedPeople}명에게 알림</button></div>
       <div class="fchips" style="margin-bottom:12px">
@@ -1110,7 +1357,7 @@ function vStudent(){
     const todos = [];
     if (s.consent.student!=='ok') todos.push(`<button class="lrow" data-act="stuSign"><span class="ic-c w">${ic.pen}</span><div class="grow"><div class="t">현장실습 동의서에 서명해요</div><div class="s">${s.placement.company} · 10월 29일(목)까지</div></div><span class="chev">${ic.back}</span></button>`);
     s.certs.filter(c=>c.status==='wait').forEach(c=>todos.push(`<div class="lrow"><span class="ic-c b">${ic.file}</span><div class="grow"><div class="t">${esc(c.name)}</div><div class="s">선생님이 증빙을 확인하고 있어요</div></div><span class="chip info">확인 중</span></div>`));
-    body = `<p class="ph-hello">${s.name}님,<br>${todos.length?`오늘 할 일이 <em>${todos.length}개</em> 있어요`:'오늘 할 일을 다 끝냈어요'}</p><div class="ph-card"><div class="small mut">희망 직무 준비도</div><div class="big-n">${readiness(s)}<small>%</small></div><div class="small" style="margin-top:4px">${s.job}</div><div class="prog"><i style="width:${readiness(s)}%"></i></div>
+    body = `<p class="ph-hello">${s.name}님,<br>${todos.length?`오늘 할 일이 <em>${todos.length}개</em> 있어요`:'오늘 할 일을 다 끝냈어요'}</p><div class="ph-card dark"><div class="small mut">희망 직무 준비도</div><div class="big-n">${readiness(s)}<small>%</small></div><div class="small" style="margin-top:4px">${s.job}</div><div class="prog"><i style="width:${readiness(s)}%"></i></div>
       <button class="btn sm ghost" style="margin:8px 0 0 -12px" data-act="stuTab" data-v="report">무엇을 더 준비할지 보기</button></div>
       ${todos.length?`<div class="ph-card" style="padding:8px 20px"><h3 class="sr">오늘 할 일</h3>${todos.join('')}</div>`:''}
       <div class="ph-card" style="padding-bottom:8px"><h3 style="margin-bottom:4px">우리 과 새 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept).map(p=>`<button class="lrow" data-act="stuTab" data-v="field"><span class="ic-c">${p.co.slice(0,1)}</span><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.period}</div></div><span class="chev">${ic.back}</span></button>`).join('')}</div>`;
@@ -1132,6 +1379,7 @@ function vStudent(){
   return `<div class="phone-wrap"><div class="phone-stage">
     <div class="stage-note"><h1>학생 화면</h1><p>앱을 설치하지 않고, 학교가 보낸 링크나 홈 화면 바로가기로 들어와요.</p>
       <ul><li>자격증을 찍어 올리면 담임이 확인하고, 확인되면 준비도가 올라가요.</li><li>자기소개서는 새로 올려도 이전 버전이 남아요.</li><li>배정된 실습 기업의 동의서를 휴대폰에서 바로 서명해요.</li></ul>
+      ${liveCard('student')}
       <p class="small mut" style="margin-top:16px">시연 학생: 박*준 (전기과 3학년 3반)</p></div>
     <div class="phone" aria-label="학생 휴대폰 화면">
       <div class="ph-top"><h2>${titles[t]}</h2><span class="small mut">${s.name} · ${s.id}</span></div>
@@ -1207,6 +1455,13 @@ function stuSign(){
 }
 
 /* ---------- 학부모 화면 ---------- */
+/* 휴대폰 화면 옆: 서명하면 바로 바뀌는 교사 화면 숫자 */
+function liveCard(who){
+  const placed = students.filter(s=>s.placement);
+  const n = placed.filter(s=>s.consent[who]!=='ok').length;
+  const done = who==='parent' ? S.parentStep===3 : HERO.consent.student==='ok';
+  return `<div class="stage-live" aria-live="polite"><div class="sl-l">지금 교사 화면 · 3학년 전체</div><div class="sl-row"><b class="num">${n}</b><span>명<br>${who==='parent'?'보호자':'학생'} 서명이 남았어요</span></div><div class="sl-s">${done?'방금 서명이 반영돼서 1명 줄었어요':'서명을 제출하면 이 숫자가 바로 1 줄어요'}</div></div>`;
+}
 function vParent(){
   const s = HERO, st = S.parentStep;
   const p = POSTINGS[0];
@@ -1242,6 +1497,7 @@ function vParent(){
   return `<div class="phone-wrap"><div class="phone-stage">
     <div class="stage-note"><h1>학부모 서명 링크</h1><p>보호자는 알림톡이나 문자로 받은 링크만 누르면 돼요. 회원가입도, 앱 설치도 없어요.</p>
       <ul><li>링크 + 학생 생년월일로 본인을 확인해요.</li><li>휴대폰 화면에 손가락으로 서명해요. PC에서는 마우스로 돼요.</li><li>제출하면 서명이 들어간 동의서 PDF가 바로 만들어지고, 교사 화면 숫자가 바뀌어요.</li></ul>
+      ${liveCard('parent')}
       ${st>0?`<button class="btn sm" style="margin-top:16px" data-act="pStep" data-v="0">처음부터 다시 보기</button>`:''}
       ${st===3?`<button class="btn sm" style="margin:16px 0 0 8px" data-act="toTeacher">교사 화면에서 확인하기</button>`:''}</div>
     <div class="phone" aria-label="학부모 휴대폰 화면">
@@ -1265,7 +1521,8 @@ document.addEventListener('click', e => {
     role(){ S.role=v; S.profile=null; if(v==='parent'&&S.parentStep===3){} render(); window.scrollTo(0,0); },
     tab(){ S.tab=v; S.profile=null; render(); window.scrollTo(0,0); },
     metric(){ S.metric=v; render(); }, dept(){ S.selDept=v; render(); },
-    filter(){ S.filter=v; S.page=1; render(); }, page(){ S.page=+v; render(); },
+    filter(){ S.filter=v; S.page=1; render(); },
+    stage(){ S.filter = S.filter===v ? 'all' : v; S.page=1; render(); const t=$('#signTable'); t&&t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); }, page(){ S.page=+v; render(); },
     stuDept(){ S.stuDept=v; S.stuPage=1; render(); }, stuPage(){ S.stuPage=+v; render(); },
     clearQ(){ S.stuQ=''; render(); },
     openProfile(){ S.profile=v; render(); window.scrollTo(0,0); }, closeProfile(){ S.profile=null; render(); },
@@ -1335,7 +1592,22 @@ document.addEventListener('change', e => {
   if (e.target.dataset.actChange==='perm'){ toast('데모: 실제로는 바꾼 기록이 감사 로그에 남아요'); }
 });
 document.addEventListener('keydown', e => { if (e.key==='Escape' && $('#modalBg').classList.contains('open')) closeModal(); });
-function afterRender(){}
+/* 화면이 바뀔 때만 등장 움직임 + 숫자 세기 (같은 화면 안 클릭에는 안 움직임) */
+let lastView='';
+const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+function afterRender(){
+  document.body.dataset.role = S.role;
+  const key = S.role+'|'+S.tab+'|'+(S.profile||'')+'|'+S.perm+'|'+S.stuTab+'|'+S.parentStep;
+  if (key===lastView || calm()) { lastView=key; return; }
+  lastView = key;
+  const app=$('#app'); app.classList.remove('enter'); void app.offsetWidth; app.classList.add('enter');
+  clearTimeout(window.__en); window.__en=setTimeout(()=>app.classList.remove('enter'),1200);
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const to=+el.dataset.count; if(!to) return; const t0=performance.now(), dur=700;
+    const f=t=>{ const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); el.textContent=Math.round(to*e); if(k<1) requestAnimationFrame(f); };
+    el.textContent='0'; requestAnimationFrame(f);
+  });
+}
 render();
 </script>
 </body>
