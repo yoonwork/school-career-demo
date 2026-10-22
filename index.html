@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>진로·현장실습 관리 데모</title>
 <meta name="description" content="특성화고 학생 취업·진로 이력 관리와 현장실습 전자동의를 직접 눌러 볼 수 있는 제안용 데모예요. 학교 이름, 학생, 기업, 숫자는 모두 예시예요.">
-<meta name="theme-color" content="#E8EBE7">
+<meta name="theme-color" content="#F7F4EE">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23131715'/%3E%3Cpath d='M9 22V10h8a4 4 0 010 8h-8' stroke='%2333C07A' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -626,6 +626,246 @@ body{background:
   .phone{border:0;border-radius:0;box-shadow:none;width:100%}
   .phone-stage{justify-items:stretch}
 }
+
+/* ===== 4차 디자인: 따뜻한 크림 + 흰 카드 + 작은 검정 알약 (참고: 인테리어 쇼핑 시안) ===== */
+:root{
+  --bg:#F7F4EE; --card:#FFFFFF; --soft:#F3EEE6; --beige:#EFE8DC; --track:#EBE4D8; --line:#DED6C8; --line-2:#ECE6DB;
+  --ink:#1B1A17; --ink-2:#3D3934; --mut:#5A554D; --mut-2:#857E73; --black:#1B1A17; --black-2:#2A2824;
+  --glass:#FFFFFF; --glass-edge:#FFFFFF;
+  --sh-card:0 1px 2px rgba(27,26,23,.04),0 20px 44px -28px rgba(27,26,23,.18);
+  --r-lg:22px; --r-xl:26px;
+}
+html,body{background:var(--bg)}
+body{background:var(--bg)}
+.demo-bar{color:var(--ink-2);border-bottom-color:rgba(27,26,23,.08)}
+.top{background:rgba(247,244,238,.9);border-bottom:1px solid rgba(27,26,23,.07)}
+.pills{background:#fff;border:0;box-shadow:var(--sh-pill)}
+.pills button{color:var(--ink-2)}
+.sel{background-color:#fff}
+
+/* 화면 바꾸기: 떠 있지 않고 머리 아래 한 줄 */
+.dock{position:static;width:max-content;max-width:calc(100% - 32px);margin:20px auto 0;background:#fff;box-shadow:var(--sh-pill);-webkit-backdrop-filter:none;backdrop-filter:none;padding:4px}
+.dock-l{color:var(--mut)}
+.dock button{color:var(--ink-2);height:36px;font-size:13px}
+.dock button:hover{background:var(--soft);color:var(--ink)}
+.dock button[aria-pressed="true"]{background:var(--black);color:#fff}
+.wrap{padding-top:28px;padding-bottom:72px}
+.foot-note{padding-bottom:40px;color:var(--mut)}
+
+/* 카드: 흰색, 테두리 없이 옅은 그림자 */
+.card,.kpi{background:#fff;border:0;box-shadow:var(--sh-card);-webkit-backdrop-filter:none;backdrop-filter:none}
+.card{padding:32px}
+.grid{gap:24px}
+.btn{background:#fff;border-color:var(--line)}
+.btn:hover{background:var(--soft)}
+.btn.pri,.btn.dk{background:var(--black);border-color:var(--black);color:#fff;box-shadow:none}
+.btn.pri:hover,.btn.dk:hover{background:#000;border-color:#000}
+.btn.pri:active,.btn.dk:active{background:var(--black-2)}
+.btn.lg{height:48px;padding:0 22px 0 18px;font-size:15px}
+.btn.dk.sm{height:36px;padding:0 16px;font-size:13px}
+.fchip{background:var(--soft);border-color:transparent;color:var(--ink-2)}
+.fchip b{color:var(--mut)}
+.fchip[aria-pressed="true"] b{color:#E4DED3}
+.seg{background:var(--soft)}
+.seg button{color:var(--ink-2)}
+.scope{background:var(--soft);border-color:transparent;color:var(--ink-2)}
+.tbl th{color:var(--mut);border-bottom-color:var(--line-2)}
+.tbl td{border-bottom-color:var(--line-2)}
+.tbl tbody tr.click:hover td{background:var(--soft)}
+.bar-track{background:var(--soft)}
+.bar-row:hover{background:var(--soft)}
+.bar-tip{background:var(--beige);color:var(--ink)}
+.notice,.log,.sumrow div,.preview-bubble{background:var(--soft)}
+.tag{background:var(--soft);border-color:transparent;color:var(--ink-2)}
+.cap,.help,.small.mut,.mut{color:var(--mut)}
+
+/* 히어로: 두 카드가 나란히, 사이 간격 (겹침 없음) */
+.hero{grid-template-columns:minmax(0,1fr) 380px;gap:24px;padding-top:0;margin-bottom:32px;align-items:stretch}
+.hero-main{grid-column:1;background:#fff;border:0;box-shadow:var(--sh-card);-webkit-backdrop-filter:none;backdrop-filter:none;padding:36px 40px;border-radius:var(--r-xl)}
+.hero-h{color:var(--ink-2)}
+.hero-n b{font-size:120px}
+.hero-sub{color:var(--ink-2)}
+.hs-d{background:var(--beige);color:var(--ink)}
+.st{background:var(--soft);border-radius:18px}
+.st:hover{box-shadow:none;background:var(--beige)}
+.st[aria-pressed="true"]{box-shadow:0 0 0 2px var(--black)}
+.st-bar{background:rgba(27,26,23,.08)}
+.st-t span{color:var(--mut)}
+.pipe li:not(:last-child)::after{border-top-color:rgba(27,26,23,.2)}
+.hero-note{color:var(--mut)}
+.hero-dark{grid-column:2;grid-row:1;align-self:stretch;margin:0;background:var(--beige);color:var(--ink);box-shadow:none;border-radius:var(--r-xl);padding:28px}
+.hd-top{color:var(--ink-2)}
+.hd-chip{background:#fff;color:var(--ink)}
+.hd-l{color:var(--mut)}
+.hd-nums b small{color:var(--mut)}
+.hero-dark .delta.up{background:#fff;color:var(--ok)}
+.hero-dark .delta.flat{background:#fff;color:var(--neu)}
+.dots{background:#fff;align-content:center}
+@media (min-width:1181px){.hero-dark .dots{flex:1;grid-template-columns:repeat(auto-fill,11px);gap:5px}.hero-dark .dots i{width:11px;height:11px}.hero-dark .dots.few{grid-template-columns:repeat(auto-fill,24px);gap:9px}.hero-dark .dots.few i{width:24px;height:24px}}
+.dots i{background:#E3DBCD}
+.dots i.p{background:var(--ink)}
+.dots i.e{background:var(--brand)}
+.hd-leg{color:var(--ink-2)}
+.hd-leg i{background:#D6CDBE}
+.hd-leg i.p{background:var(--ink)}.hd-leg i.e{background:var(--brand)}
+.hd-foot{color:var(--mut);margin:auto 0 0}
+
+/* 공고 사진 카드 구역 (연베이지 바탕) */
+.psec{background:var(--beige);border-radius:var(--r-xl);padding:36px 36px 40px;margin-bottom:32px}
+.psec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 24px;flex-wrap:wrap;margin-bottom:24px}
+.psec-h h2{font-size:24px;font-weight:700;letter-spacing:-.03em}
+.psec-h p{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+.tabpills{display:flex;gap:6px;flex-wrap:wrap}
+.tabpills button{height:36px;padding:0 16px;border-radius:var(--r-pill);border:0;background:#fff;color:var(--ink-2);font-size:13px;font-weight:600;white-space:nowrap}
+.tabpills button:hover{color:var(--ink)}
+.tabpills button[aria-pressed="true"]{background:var(--black);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}
+.pcard{grid-column:span 3;background:#fff;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.pcard:nth-child(-n+2){grid-column:span 6}
+.pgrid.n1 .pcard{grid-column:1/-1}
+.pc-ph{aspect-ratio:4/3;background:var(--soft);overflow:hidden}
+.pcard:nth-child(-n+2) .pc-ph{aspect-ratio:2/1}
+.pgrid.n1 .pcard{flex-direction:row}
+.pgrid.n1 .pcard .pc-ph{aspect-ratio:16/9;width:58%;flex:none}
+.pgrid.n1 .pc-b{flex:1;justify-content:center;padding:28px}
+.pc-ph img,.pc-ph .ph-none{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.pcard:hover .pc-ph img{transform:scale(1.03)}
+.ph-none{background:var(--soft)}
+.pc-b{padding:16px 18px 18px;display:flex;flex-direction:column;gap:12px}
+.pc-t{display:flex;flex-direction:column;gap:2px}
+.pc-t b{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.pc-t span{font-size:14px;color:var(--ink-2)}
+.pc-m{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap;font-size:13px;color:var(--mut)}
+
+/* 현장실습 탭 공고 카드 사진 */
+.posting{background:#fff;border:1px solid var(--line-2);border-radius:20px;padding:0 0 16px;overflow:hidden;gap:6px}
+.posting > span:not(.po-ph){padding:0 16px}
+.posting .po-ph{display:block;aspect-ratio:16/9;background:var(--soft);margin-bottom:8px;overflow:hidden}
+.posting .po-ph img,.posting .po-ph .ph-none{width:100%;height:100%;object-fit:cover;display:block}
+.posting[aria-pressed="true"]{border-color:var(--black);box-shadow:0 0 0 1px var(--black)}
+
+/* 학생·학부모 화면 */
+.stage-note li{background:#fff;border:0;box-shadow:var(--sh-card)}
+.stage-ph{margin:24px 0 0;border-radius:22px;overflow:hidden;background:#fff;box-shadow:var(--sh-card)}
+.stage-ph img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.stage-ph figcaption{padding:12px 16px;font-size:13px;color:var(--mut)}
+.stage-live{background:#fff;color:var(--ink);box-shadow:var(--sh-card);border-radius:22px}
+.sl-l{color:var(--mut)}
+.sl-row span{color:var(--ink-2)}
+.sl-s{color:var(--ok)}
+.sl-s::before{background:var(--brand)}
+.phone{border:8px solid var(--black);box-shadow:0 40px 80px -36px rgba(27,26,23,.35)}
+.ph-card{box-shadow:0 1px 2px rgba(27,26,23,.04)}
+.ph-card.dark{background:var(--beige);color:var(--ink);box-shadow:none}
+.ph-card.dark .mut,.ph-card.dark .big-n small{color:var(--mut)}
+.ph-card.dark .prog{background:#fff}
+.ph-card.dark .prog i{background:var(--brand)}
+.ph-card.dark .btn.ghost{color:#0A6338}
+.ph-card.dark .btn.ghost:hover{background:#fff}
+.thumb{width:48px;height:48px;border-radius:14px;overflow:hidden;flex:none;background:var(--soft)}
+.thumb img,.thumb .ph-none{width:100%;height:100%;object-fit:cover;display:block}
+.msg-hd{background:var(--beige);color:var(--ink)}
+.msg-btn{background:var(--black);border-radius:var(--r-pill)}
+.msg-btn:active{background:var(--black-2)}
+.ph-tabs button{color:var(--mut)}
+.ph-tabs button[aria-current="page"]{color:var(--ink)}
+.stepper i.on{background:var(--black)}
+.chev{color:var(--mut)}
+.sig-ph{color:var(--mut)}
+
+/* 얇은 검정 바닥 */
+.bfoot{background:var(--black);color:#E9E4DA;font-size:12px}
+.bf-in{max-width:1240px;margin:0 auto;padding:12px 24px;display:flex;justify-content:space-between;gap:6px 24px;flex-wrap:wrap}
+.bfoot a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+body[data-role="student"] .wrap,body[data-role="parent"] .wrap{padding-bottom:56px}
+
+@media (max-width:1180px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:20px}
+  .hero-main{grid-column:1;padding:32px}
+  .hero-dark{grid-column:1;grid-row:2;margin:0}
+}
+@media (max-width:1024px){
+  .pcard{grid-column:span 6}
+}
+@media (max-width:760px){
+  .dock{position:static;width:auto;max-width:none;margin:12px 16px 0;display:flex;padding:4px}
+  .dock button{height:44px}
+  .wrap{padding-top:16px}
+  .grid{gap:16px}
+  .card{padding:22px 18px}
+  .hero{gap:16px;margin-bottom:24px}
+  .hero-main{padding:24px 20px 28px}
+  .hero-n b{font-size:96px}
+  .hero-dark{padding:22px 18px 20px}
+  .psec{padding:24px 16px 20px;margin:0 0 24px;border-radius:24px}
+  .psec-h{margin-bottom:16px}
+  .psec-h h2{font-size:21px}
+  .tabpills{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px;width:calc(100% + 32px)}
+  .tabpills::-webkit-scrollbar{display:none}
+  .tabpills button{height:44px}
+  .pgrid{grid-template-columns:minmax(0,1fr);gap:14px}
+  .pcard,.pcard:nth-child(-n+2),.pgrid.n1 .pcard{grid-column:auto}
+  .pgrid.n1 .pcard{flex-direction:column}
+  .pgrid.n1 .pcard .pc-ph{width:100%}
+  .pgrid.n1 .pc-b{padding:16px 18px 18px}
+  .posting .po-ph{aspect-ratio:2/1}
+  .pcard.big .pc-ph,.pgrid.n1 .pcard .pc-ph{aspect-ratio:16/10}
+  .pcard:not(.big){flex-direction:row;align-items:stretch}
+  .pcard:not(.big) .pc-ph{width:38%;aspect-ratio:auto;flex:none;min-height:132px}
+  .pcard:not(.big) .pc-b{flex:1;min-width:0;padding:14px;gap:8px}
+  .pcard:not(.big) .pc-m{flex-direction:column;align-items:flex-start}
+  .btn.dk.sm{height:44px}
+  .bf-in{padding:12px 16px}
+  .phone{border:0;border-radius:0;box-shadow:none}
+}
+
+/* 4차 보완: 교무실 모니터 (숫자 굵게, 화면 바꾸기는 머리 안, 첫 화면 압축) */
+.hero-n b{font-weight:500;font-size:104px;letter-spacing:-.045em}
+.hd-nums b{font-weight:500;font-size:52px;letter-spacing:-.035em}
+.st-v{font-weight:600;font-size:24px}
+.sl-row b{font-weight:500}
+.big-n{font-weight:600;letter-spacing:-.035em}
+.sumrow b{font-weight:600}
+.dash-grid .bar-row .bv{font-weight:500}
+.tbl{font-size:15px}
+.chip{font-size:13px;height:28px}
+.top-in .dock{margin:0;width:auto;max-width:none;flex:none}
+.top-in .dock .dock-l{display:none}
+.top-in{gap:12px 16px}
+.nav-row{flex:1;display:flex;justify-content:center;min-width:0}
+.hero-main{padding:30px 36px 32px}
+.hm-top{margin-bottom:18px}
+.hero-sub{margin-bottom:20px}
+.pipe{margin-bottom:22px}
+.st{grid-template-columns:30px minmax(0,1fr) auto;grid-template-areas:"n t v" ". bar bar" ". left left";padding:14px 16px;gap:6px 12px}
+.st-t{margin-top:0}
+.psec{margin:32px 0 0}
+@media (min-width:761px){
+  .pipe li:not(:last-child)::after{display:none}
+  .hero-n b{font-size:96px}
+  .hero-main{padding:26px 36px 28px}
+  .hm-top{margin-bottom:12px}
+  .hero-n{margin:0 0 4px}
+  .hero-sub{margin-bottom:18px}
+  .pipe{margin-bottom:18px}
+  .hero{margin-bottom:24px}
+  .dash-grid .card{padding:26px 30px}
+  .dash-grid .card-h{margin-bottom:14px}
+}
+@media (min-width:1181px){.hero-dark .dots{grid-template-columns:repeat(auto-fill,9px);gap:5px}.hero-dark .dots i{width:9px;height:9px}.hero-dark{padding:24px 26px;gap:14px}}
+@media (max-width:1140px){
+  .top-in{flex-wrap:wrap}
+  .nav-row{order:3;flex:0 0 100%;justify-content:flex-start}
+  .top-in .dock{margin-left:auto}
+  .role-wrap{margin-left:0}
+}
+@media (max-width:760px){
+  .hero-n b{font-size:88px}
+  .hd-nums b{font-size:44px}
+  .top-in .dock{order:4;flex:0 0 100%;margin:0;display:flex}
+  .top-in .dock button{flex:1}
+  .psec{margin:24px 0 0}
+}
 </style>
 </head>
 <body>
@@ -646,6 +886,12 @@ body{background:
         <button data-act="tab" data-v="stats">통계·보고</button>
       </nav>
     </div>
+<div class="dock" role="group" aria-label="화면 바꾸기" id="roleSeg">
+      <span class="dock-l">데모 화면</span>
+      <button data-act="role" data-v="teacher">교사</button>
+      <button data-act="role" data-v="student">학생</button>
+      <button data-act="role" data-v="parent">학부모 서명</button>
+    </div>
     <div class="role-wrap">
       <select class="sel" id="permSel" aria-label="교사 권한">
         <option value="homeroom">담임 · 3학년 3반</option>
@@ -655,16 +901,11 @@ body{background:
     </div>
   </div>
 </header>
-<div class="dock" role="group" aria-label="화면 바꾸기" id="roleSeg">
-  <span class="dock-l">데모 화면</span>
-  <button data-act="role" data-v="teacher">교사</button>
-  <button data-act="role" data-v="student">학생</button>
-  <button data-act="role" data-v="parent">학부모 서명</button>
-</div>
 
 <main class="wrap" id="app"></main>
 <p class="foot-note" id="footNote">이 데모는 브라우저 안에서만 움직여요. 새로 고치면 처음 상태로 돌아가요. 실제 구축에서는 학교 명의 클라우드의 DB에 저장하고, 알림은 학교 명의 카카오 채널로 보내요.</p>
 
+<footer class="bfoot" id="bfoot"></footer>
 <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal" id="modal"></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="printArea"></div>
@@ -791,6 +1032,18 @@ POSTINGS.forEach(p => {
   p.applicants = cand.slice(0, 3 + (p.id % 3)).map(s => { s.applied = p.id; return s.id; });
   p.assigned = [];
 });
+// 공고 사진 (Unsplash 무료 라이선스, images.unsplash.com 직접 링크)
+const PH = {
+  1:{id:'1621905251189-08b45d6a269e',by:'Emmanuel Ikwuegbu',p:'_2AlIm-F6pw',alt:'안전모를 쓰고 배전반을 점검하는 작업자'},
+  2:{id:'1666634157070-6fd830fb5672',by:'Sven Daniel',p:'eaanLTG7TCU',alt:'선반 척에 물린 금속 봉을 깎는 모습'},
+  3:{id:'1625047509248-ec889cbff17f',by:'Kate Ibragimova',p:'bEGTsOCnHro',alt:'보닛을 열고 엔진을 점검하는 정비사'},
+  4:{id:'1640955785023-1854685dae05',by:'Vishnu Mohanan',p:'zs4gtT8thO0',alt:'핀셋으로 회로 기판에 부품을 올리는 모습'},
+  5:{id:'1762146828422-50a8bd416d3c',by:'Marina Zvada',p:'fNxmdlYHRm8',alt:'책상 위에 펼친 건축 도면'},
+  6:{id:'1509391366360-2e959784a276',by:'American Public Power Association',p:'513dBrMJ_5w',alt:'풀밭에 줄지어 놓인 태양광 패널'},
+  class:{id:'1690356107685-3725367f6f3f',by:'Septian Setiawan',p:'x2y2rzLMKiA',alt:'작업복을 입은 학생들이 실습실에서 바이스 작업을 하는 모습'},
+};
+const phUrl = (k,w=720) => PH[k] ? `https://images.unsplash.com/photo-${PH[k].id}?w=${w}&q=62&auto=format&fit=crop` : '';
+const phImg = (k,w,cls='') => PH[k] ? `<img class="${cls}" src="${phUrl(k,w)}" srcset="${phUrl(k,w)} 1x, ${phUrl(k,w*2)} 2x" alt="${PH[k].alt}" loading="lazy" decoding="async">` : `<span class="${cls} ph-none" aria-hidden="true"></span>`;
 // 박*준은 이미 세진전기 배정
 POSTINGS[0].assigned.push(HERO.id);
 
@@ -812,7 +1065,7 @@ const TEACHERS = [
 const S = {
   role:'teacher', perm:'career', tab:'dash', metric:'disp', selDept:'전기과',
   filter:'all', page:1, stuQ:'', stuDept:'all', stuPage:1, profile:null,
-  posting:1, stuTab:'home', parentStep:0, sig:null, sigAt:null, studentSig:null,
+  posting:1, pdept:'all', stuTab:'home', parentStep:0, sig:null, sigAt:null, studentSig:null,
   history:[
     {at:'2026.10.20 16:10',tpl:'동의서 서명 독려',n:21,ok:17,sms:3,fail:1,unread:6},
     {at:'2026.10.17 09:30',tpl:'채용·실습 공고 안내',n:42,ok:38,sms:4,fail:0,unread:11},
@@ -923,9 +1176,24 @@ function vDash(){
       <div class="pager"><span class="num">${rows.length}명 중 ${(S.page-1)*per+1}–${Math.min(S.page*per,rows.length)}</span>${pager('page',S.page,pages)}</div>`
       : `<div class="empty"><b>해당하는 학생이 없어요</b>다른 상태를 골라 보세요.<br><button class="btn sm" style="margin-top:12px" data-act="filter" data-v="all">전체 보기</button></div>`}
     </section>
-  </div>`;
+  </div>
+  ${postingStrip()}`;
 }
 
+function postingStrip(){
+  const depts = ['all',...new Set(POSTINGS.map(p=>p.dept))];
+  const list = POSTINGS.filter(p=>S.pdept==='all'||p.dept===S.pdept);
+  const cap = POSTINGS.reduce((a,p)=>a+p.cap,0), asg = POSTINGS.reduce((a,p)=>a+p.assigned.length,0);
+  return `<section class="psec" aria-label="모집 중인 현장실습 기업">
+    <div class="psec-h"><div><h2>모집 중인 현장실습 기업</h2><p>공고 ${POSTINGS.length}건 · 모집 ${cap}명 중 배정 ${asg}명</p></div>
+      <div class="tabpills" role="group" aria-label="학과 고르기">${depts.map(d=>`<button data-act="pdept" data-v="${d}" aria-pressed="${S.pdept===d}">${d==='all'?'전체':d}</button>`).join('')}</div></div>
+    <div class="pgrid n${Math.min(list.length,6)}">${list.map((p,i)=>`<article class="pcard${i===0?' big':''}">
+      <div class="pc-ph">${phImg(p.id, i===0?960:560)}</div>
+      <div class="pc-b"><div class="pc-t"><b>${esc(p.co)}</b><span>${esc(p.job)}</span></div>
+        <div class="pc-m"><span class="num">${p.dept} · 모집&nbsp;${p.cap} · 배정&nbsp;${p.assigned.length} · 지원&nbsp;${p.applicants.length}</span><button class="btn dk sm" data-act="goPosting" data-v="${p.id}" aria-label="${esc(p.co)} 공고 자세히 보기">자세히 보기</button></div></div>
+    </article>`).join('')}</div>
+  </section>`;
+}
 function deltaChip(now, before, base){
   const d = Math.round((now-before)/base*1000)/10;
   return d>0 ? `<span class="delta up" title="지난주 대비"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>지난주보다 ${d}%p</span>` : `<span class="delta flat">지난주와 같음</span>`;
@@ -1057,6 +1325,7 @@ function vField(){
       <div class="card-h"><div><h2>모집 중인 기업 공고</h2><p>공고를 누르면 지원 학생과 배정 칸이 열려요</p></div><span class="cap">${POSTINGS.length}건</span></div>
       <div class="plist">
         ${POSTINGS.map(x=>`<button class="posting" data-act="posting" data-v="${x.id}" aria-pressed="${x.id===S.posting}">
+          <span class="po-ph">${phImg(x.id,560)}</span>
           <span class="pt">${x.co} <span class="mut" style="font-weight:500;font-size:13px">· ${x.ind}</span></span>
           <span class="small">${x.job}</span>
           <span class="meta"><span class="tag">${x.pay} (예시)</span><span class="tag">${x.period}</span></span>
@@ -1360,7 +1629,7 @@ function vStudent(){
     body = `<p class="ph-hello">${s.name}님,<br>${todos.length?`오늘 할 일이 <em>${todos.length}개</em> 있어요`:'오늘 할 일을 다 끝냈어요'}</p><div class="ph-card dark"><div class="small mut">희망 직무 준비도</div><div class="big-n">${readiness(s)}<small>%</small></div><div class="small" style="margin-top:4px">${s.job}</div><div class="prog"><i style="width:${readiness(s)}%"></i></div>
       <button class="btn sm ghost" style="margin:8px 0 0 -12px" data-act="stuTab" data-v="report">무엇을 더 준비할지 보기</button></div>
       ${todos.length?`<div class="ph-card" style="padding:8px 20px"><h3 class="sr">오늘 할 일</h3>${todos.join('')}</div>`:''}
-      <div class="ph-card" style="padding-bottom:8px"><h3 style="margin-bottom:4px">우리 과 새 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept).map(p=>`<button class="lrow" data-act="stuTab" data-v="field"><span class="ic-c">${p.co.slice(0,1)}</span><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.period}</div></div><span class="chev">${ic.back}</span></button>`).join('')}</div>`;
+      <div class="ph-card" style="padding-bottom:8px"><h3 style="margin-bottom:4px">우리 과 새 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept).map(p=>`<button class="lrow" data-act="stuTab" data-v="field"><span class="thumb">${phImg(p.id,120)}</span><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.period}</div></div><span class="chev">${ic.back}</span></button>`).join('')}</div>`;
   } else if (t==='hist'){
     body = `<div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h3 style="margin:0">자격증 · 수상 · 어학</h3><button class="btn sm" data-act="addCert">${ic.plus} 추가</button></div>
       ${s.certs.map(c=>`<div class="li"><div class="grow"><div class="t">${esc(c.name)}</div><div class="s">${c.type} · ${c.date} · ${esc(c.file)}</div></div>${c.status==='ok'?'<span class="chip ok">확인 완료</span>':c.status==='rej'?'<span class="chip bad">다시 올려 주세요</span>':'<span class="chip warn">확인 대기</span>'}</div>`).join('')}</div>
@@ -1378,6 +1647,7 @@ function vStudent(){
   }
   return `<div class="phone-wrap"><div class="phone-stage">
     <div class="stage-note"><h1>학생 화면</h1><p>앱을 설치하지 않고, 학교가 보낸 링크나 홈 화면 바로가기로 들어와요.</p>
+      <figure class="stage-ph">${phImg('class',880)}<figcaption>실습실에서 찍은 사진을 그대로 올리면 이력이 쌓여요 (사진은 예시)</figcaption></figure>
       <ul><li>자격증을 찍어 올리면 담임이 확인하고, 확인되면 준비도가 올라가요.</li><li>자기소개서는 새로 올려도 이전 버전이 남아요.</li><li>배정된 실습 기업의 동의서를 휴대폰에서 바로 서명해요.</li></ul>
       ${liveCard('student')}
       <p class="small mut" style="margin-top:16px">시연 학생: 박*준 (전기과 3학년 3반)</p></div>
@@ -1531,6 +1801,8 @@ document.addEventListener('click', e => {
     viewFile(){ toast(`데모에서는 파일을 열지 않아요 · ${v}`); },
     saveMemo(){ const s=students.find(x=>x.id===v); s.memo=$('#memo').value; toast('상담 메모를 저장했어요'); },
     nudge(){ const list=scoped().filter(s=>s.placement); simulateSendList([...list.filter(s=>s.consent.parent!=='ok').map(s=>({s,to:'parent'})),...list.filter(s=>s.consent.student!=='ok').map(s=>({s,to:'student'}))]); },
+    pdept(){ S.pdept=v; render(); },
+    goPosting(){ S.tab='field'; S.profile=null; S.posting=+v; render(); window.scrollTo(0,0); if (innerWidth<1025) $('#matchCard').scrollIntoView({block:'start'}); },
     posting(){ S.posting=+v; render(); if (innerWidth<1025) $('#matchCard').scrollIntoView({behavior:'smooth',block:'start'}); },
     assign(){ const [pid,id]=v.split('|'); const p=POSTINGS.find(x=>x.id===+pid), s=students.find(x=>x.id===id); p.assigned.push(id); s.placement={company:p.co,period:p.period.split(' ')[0]}; s.consent={agree:'wait',student:'wait',parent:'wait'}; render(); toast(`${s.name} 학생을 ${p.co}에 배정했어요 · 협약서 서명 요청이 나가요`); },
     newPosting(){ newPosting(); }, bundle(){ toast('데모: 실제로는 완료 문서를 ZIP 하나로 받아요'); },
@@ -1608,6 +1880,7 @@ function afterRender(){
     el.textContent='0'; requestAnimationFrame(f);
   });
 }
+$('#bfoot').innerHTML = `<div class="bf-in"><span>제안용 데모 · 학교·학생·기업 이름과 숫자는 모두 예시</span><span>사진: ${Object.values(PH).map(p=>`<a href="https://unsplash.com/photos/${p.p}" target="_blank" rel="noopener">${esc(p.by)}</a>`).join(', ')} · <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash 무료 라이선스</a></span></div>`;
 render();
 </script>
 </body>
