@@ -8,8 +8,6 @@
 <meta name="theme-color" content="#F7F4EE">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23131715'/%3E%3Cpath d='M9 22V10h8a4 4 0 010 8h-8' stroke='%2333C07A' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap">
 <style id="tokens">
 :root{
   color-scheme: only light;
@@ -865,6 +863,51 @@ body[data-role="student"] .wrap,body[data-role="parent"] .wrap{padding-bottom:56
   .top-in .dock{order:4;flex:0 0 100%;margin:0;display:flex}
   .top-in .dock button{flex:1}
   .psec{margin:24px 0 0}
+}
+
+/* 최종 검사: 교과서 8장 체크리스트 맞춤 (글꼴 1개, 글자 8단계, 반경 8/16/24/알약, 카드는 면으로만) */
+:root{--num:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;--r-sm:8px;--r-md:16px;--r-lg:24px;--r-xl:24px;--line-strong:#8A8378}
+.card,.kpi,.hero-main{box-shadow:none}
+.hero-h{line-height:1.2}
+.hero-n span{font-size:28px}
+.hero-sub{font-size:17px}
+.st{border-radius:16px}
+.st-n{font-size:13px}
+.st-v{font-size:22px}
+.st-bar,.st-bar i{border-radius:999px}
+.dots{border-radius:16px}
+.bar-track,.bar-fill{border-radius:8px}
+.bar-tip{border-radius:16px}
+.dash-grid .bars .bar-track,.dash-grid .bars .bar-fill{border-radius:16px}
+.pgrid .pcard,.pgrid .pcard.big{border-radius:24px}
+.dash-grid .bar-row .bv{font-size:22px}
+.card-h h2,.psec-h h2{font-size:22px}
+.psec-h p{font-size:15px}
+.pc-t span{font-size:13px}
+.pills button{font-size:15px}
+.logo-mark{border-radius:8px}
+.pager .pg button{border-radius:999px;border-color:var(--line-strong)}
+.sel,.inp,.ta{border:1px solid var(--line-strong)}
+.msg{border-radius:8px 24px 24px 24px}
+.msg-kv dt,.msg-kv dd{font-size:15px}
+.foot-note{max-width:1240px;box-sizing:border-box;padding-right:calc(24px + max(0px, min(1240px, 100%) - 608px))}
+@media (max-width:760px){
+  .hero-main{padding:22px 20px 24px}
+  .hm-top{margin-bottom:12px}
+  .hero-h{font-size:17px}
+  .hero-n b{font-size:56px;line-height:1}
+  .hero-n span{font-size:22px}
+  .hero-sub{font-size:15px;margin-bottom:14px}
+  .pipe{gap:8px;margin-bottom:16px}
+  .pipe li:not(:last-child)::after{top:38px}
+  .st{grid-template-areas:"n t v" ". bar left";padding:12px 14px;gap:6px 12px}
+  .bar-row .bv{font-size:15px}
+  .bar-row .bv,.dash-grid .bar-row .bv{font-size:15px}
+  .card-h h2,.psec-h h2{font-size:22px}
+  .btn.lg,.msg-btn{height:52px}
+  .card-h{flex-wrap:wrap}
+  .card-h > div{flex:1 1 100%}
+  .hero-note{font-size:13px}
 }
 </style>
 </head>
@@ -1880,7 +1923,7 @@ function afterRender(){
     el.textContent='0'; requestAnimationFrame(f);
   });
 }
-$('#bfoot').innerHTML = `<div class="bf-in"><span>제안용 데모 · 학교·학생·기업 이름과 숫자는 모두 예시</span><span>사진: ${Object.values(PH).map(p=>`<a href="https://unsplash.com/photos/${p.p}" target="_blank" rel="noopener">${esc(p.by)}</a>`).join(', ')} · <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash 무료 라이선스</a></span></div>`;
+$('#bfoot').innerHTML = `<div class="bf-in"><span>운영: ○○공업고등학교 취업지원부(예시) · 개인정보 보호책임자: 교감(예시) · 제안용 데모, 학교·학생·기업 이름과 숫자는 모두 예시</span><span>사진: ${Object.values(PH).map(p=>`<a href="https://unsplash.com/photos/${p.p}" target="_blank" rel="noopener">${esc(p.by)}</a>`).join(', ')} · <a href="https://unsplash.com/license" target="_blank" rel="noopener">Unsplash 무료 라이선스</a></span></div>`;
 render();
 </script>
 </body>
