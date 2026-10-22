@@ -42,6 +42,7 @@ h1,h2,h3{margin:0;line-height:1.3}
 /* 예시 띠 */
 .demo-bar{background:var(--soft);border-bottom:1px solid var(--line-2);font-size:13px;color:var(--ink-2);padding:8px 16px;text-align:center}
 .demo-bar b{font-weight:600;color:var(--ink)}
+.db-short{display:none}
 
 /* 머리 */
 .top{background:var(--card);border-bottom:1px solid var(--line-2);position:sticky;top:0;z-index:20}
@@ -115,14 +116,23 @@ h1,h2,h3{margin:0;line-height:1.3}
 
 /* KPI */
 .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.kpi-g{display:contents}
 .kpi{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px 24px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi.hi{order:4}
+.kpi .f{margin-top:auto;padding-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.delta{display:inline-flex;align-items:center;gap:3px;height:24px;padding:0 8px;border-radius:var(--r-pill);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.delta.up{background:var(--ok-bg);color:var(--ok)}
+.delta.flat{background:var(--neu-bg);color:var(--neu)}
+.delta svg{flex:none}
 .kpi .l{font-size:14px;color:var(--ink-2);font-weight:500}
 .kpi .v{font-size:32px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.25}
 .kpi .v small{font-size:15px;font-weight:500;color:var(--mut);margin-left:2px}
 .kpi .d{font-size:13px;color:var(--mut)}
 .kpi.hi{background:var(--brand);border-color:var(--brand);color:#fff}
 .kpi.hi .l,.kpi.hi .d,.kpi.hi .v small{color:rgba(255,255,255,.86)}
-.kpi.hi .btn{margin-top:8px;align-self:flex-start;background:#fff;color:var(--brand-text);border-color:#fff;height:40px}
+.kpi.hi .split{display:flex;gap:4px;flex-wrap:wrap;margin:2px 0 12px}
+.kpi.hi .split span{background:rgba(255,255,255,.16);border-radius:var(--r-pill);height:24px;padding:0 10px;display:inline-flex;align-items:center;font-size:12px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
+.kpi.hi .btn{margin-top:auto;align-self:flex-start;background:#fff;color:var(--brand-text);border-color:#fff;height:40px}
 .kpi.hi .btn:hover{background:var(--brand-tint)}
 
 /* 막대 */
@@ -221,10 +231,21 @@ h1,h2,h3{margin:0;line-height:1.3}
 .stage-note ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:14px}
 .stage-note li{margin-bottom:6px}
 .phone{background:var(--card);border:1px solid var(--line);border-radius:36px;overflow:clip;width:100%;max-width:400px;min-height:780px;display:flex;flex-direction:column;position:relative}
-.ph-top{padding:16px 20px 12px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:8px}
+.ph-top{padding:16px 20px 12px;border-bottom:1px solid var(--line-2);min-height:64px;display:flex;align-items:center;gap:8px}
 .ph-top h2{font-size:17px;font-weight:700;flex:1}
 .ph-body{padding:16px 16px 24px;flex:1;background:var(--bg);overflow:auto}
-.ph-card{background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px;margin-bottom:12px}
+.ph-card{background:var(--card);border:0;border-radius:var(--r-lg);padding:20px;margin-bottom:12px}
+.ph-hello{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.4;margin:8px 4px 16px}
+.ph-hello em{font-style:normal;color:var(--brand-text)}
+.lrow{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:10px 0;border:0;background:none;text-align:left;border-radius:var(--r-md)}
+button.lrow:active{background:var(--soft)}
+.lrow .grow{flex:1;min-width:0}
+.lrow .t{font-weight:600;font-size:15px;line-height:1.4}
+.lrow .s{font-size:13px;color:var(--mut)}
+.ic-c{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--soft);color:var(--ink-2);font-weight:700;font-size:15px}
+.ic-c.b{background:var(--brand-tint);color:var(--brand-text)}
+.ic-c.w{background:var(--warn-bg);color:var(--warn)}
+.chev{color:var(--mut-2);flex:none;transform:scaleX(-1)}
 .ph-card h3{font-size:17px;font-weight:600;margin-bottom:8px}
 .ph-tabs{position:sticky;bottom:0;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line-2);background:var(--card);padding-bottom:env(safe-area-inset-bottom)}
 .ph-tabs button{border:0;background:none;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;color:var(--mut);font-weight:500}
@@ -237,9 +258,16 @@ h1,h2,h3{margin:0;line-height:1.3}
 .prog i{display:block;height:100%;background:var(--brand);border-radius:4px}
 .todo{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line-2);width:100%;border-left:0;border-right:0;border-bottom:0;background:none;text-align:left;min-height:56px}
 .todo .grow{flex:1;min-width:0}
-.msg{background:var(--card);border-radius:4px 20px 20px 20px;padding:16px;border:1px solid var(--line-2);font-size:15px;line-height:1.6}
+.msg{background:var(--card);border-radius:4px 20px 20px 20px;overflow:hidden;font-size:15px;line-height:1.6}
+.msg-row{display:flex;gap:8px;align-items:flex-start}
+.msg-row .ic-c{width:36px;height:36px;font-size:13px}
+.msg-hd{background:var(--brand-tint);color:var(--brand-text);font-weight:700;padding:12px 16px;font-size:15px}
+.msg-bd{padding:16px}
+.msg-kv{display:grid;grid-template-columns:72px 1fr;gap:4px 8px;background:var(--soft);border-radius:var(--r-md);padding:12px 14px;margin:12px 0;font-size:14px}
+.msg-kv dt{color:var(--mut)}.msg-kv dd{margin:0;font-weight:600}
 .msg-from{font-size:13px;color:var(--mut);margin-bottom:6px}
-.msg-btn{display:flex;align-items:center;justify-content:center;height:48px;border-radius:var(--r-md);background:var(--soft);border:1px solid var(--line);font-weight:600;margin-top:12px;width:100%}
+.msg-btn{display:flex;align-items:center;justify-content:center;height:48px;border-radius:var(--r-md);background:var(--brand);color:#fff;border:0;font-weight:600;margin-top:12px;width:100%}
+.msg-btn:active{background:var(--brand-press)}
 .stepper{display:flex;gap:6px;margin-bottom:12px}
 .stepper i{flex:1;height:4px;border-radius:2px;background:var(--line)}
 .stepper i.on{background:var(--brand)}
@@ -289,6 +317,7 @@ h1,h2,h3{margin:0;line-height:1.3}
 /* 반응형 */
 @media (max-width:1024px){
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi.hi{order:0}
   .c8,.c7,.c6,.c5,.c4{grid-column:span 12}
   .phone-stage{grid-template-columns:1fr;justify-items:center}
   .stage-note{max-width:400px}
@@ -306,10 +335,20 @@ h1,h2,h3{margin:0;line-height:1.3}
   .wrap{padding:16px 16px 48px}
   .page-h h1{font-size:22px}
   .card{padding:20px 16px}
-  .kpis{gap:12px}
-  .kpi{padding:16px}
-  .kpi .v{font-size:24px}
-  .kpi .l{font-size:13px}
+  .demo-bar{padding:8px 12px}
+  .db-long{display:none}.db-short{display:inline}
+  .kpis{grid-template-columns:1fr;gap:12px}
+  .kpi.hi{order:0;padding:20px}
+  .kpi.hi .v{font-size:32px}
+  .kpi.hi .btn{width:100%;margin-top:4px;height:48px}
+  .kpi-g{display:block;order:1;background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:4px 16px}
+  .kpi-g .kpi{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"l v" "d f";align-items:center;gap:2px 12px;border:0;border-radius:0;padding:14px 0;border-bottom:1px solid var(--line-2)}
+  .kpi-g .kpi:last-child{border-bottom:0}
+  .kpi-g .l{grid-area:l;font-size:15px;font-weight:600;color:var(--ink)}
+  .kpi-g .v{grid-area:v;font-size:22px;text-align:right}
+  .kpi-g .d{grid-area:d}
+  .kpi-g .f{grid-area:f;margin:0;padding:0;justify-content:flex-end}
+  .kpi-g .f .d{display:none}
   .grid{gap:12px}
   .bar-row{grid-template-columns:72px 1fr 52px;gap:8px}
   .tbl-wrap{border:0;border-radius:0}
@@ -355,7 +394,7 @@ h1,h2,h3{margin:0;line-height:1.3}
 </style>
 </head>
 <body>
-<div class="demo-bar"><b>제안용 데모 · 예시</b> — ○○공업고등학교(예시)를 가정했어요. 학생·학부모·기업 이름과 숫자는 모두 가상이고, 알림은 실제로 보내지 않아요.</div>
+<div class="demo-bar"><b>제안용 데모 · 예시</b><span class="db-long"> — ○○공업고등학교(예시)를 가정했어요. 학생·학부모·기업 이름과 숫자는 모두 가상이고, 알림은 실제로 보내지 않아요.</span><span class="db-short"> · 이름·숫자는 가상, 알림 발송 없음</span></div>
 
 <header class="top">
   <div class="top-in">
@@ -406,6 +445,7 @@ const pad = n => String(n).padStart(2,'0');
 const nowStr = () => { const d = new Date(); return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
 const timeStr = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; };
 const ic = {
+  pen:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
   file:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5"/></svg>',
   send:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>',
   up:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>',
@@ -583,7 +623,10 @@ function vDash(){
   const inc = placed.filter(incomplete);
   const totalStu = S.perm==='homeroom' ? all.length : 612;
   const base = all.length;
-  const unsignedPeople = placed.reduce((a,s)=>a+(s.consent.student!=='ok')+(s.consent.parent!=='ok'),0);
+  const unsignedStu = placed.filter(s=>s.consent.student!=='ok').length, unsignedPar = placed.filter(s=>s.consent.parent!=='ok').length;
+  const unsignedPeople = unsignedStu + unsignedPar, agreeWait = placed.filter(s=>s.consent.agree!=='ok').length;
+  // 지난주 값(예시): 이번 주에 새로 파견·확정된 학생 수를 빼서 계산
+  const wkPlaced = placed.length - Math.round(placed.length*0.05), wkEmp = emp.length - Math.round(emp.length*0.04);
   // 필터
   const F = {
     all:['전체',()=>true], done:['모두 완료',s=>!incomplete(s)], agree:['협약서 대기',s=>s.consent.agree!=='ok'],
@@ -601,11 +644,14 @@ function vDash(){
   return `
   ${pageHead('오늘의 현황', `${S.perm==='homeroom'?'3학년 3반':'3학년'} 현장실습·취업 기준 · 2026.10.22 08:00 갱신`)}
   <section class="kpis" aria-label="핵심 지표">
-    <div class="kpi"><span class="l">재학생 수</span><span class="v">${totalStu.toLocaleString()}<small>명</small></span><span class="d">${S.perm==='homeroom'?'3학년 3반':'3학년 '+base+'명 · 1·2학년은 데모에서 생략'}</span></div>
-    <div class="kpi"><span class="l">현장실습 파견율</span><span class="v">${pct(placed.length,base)}<small>%</small></span><span class="d">${placed.length} / ${base}명 파견</span></div>
-    <div class="kpi"><span class="l">취업 확정률</span><span class="v">${pct(emp.length,base)}<small>%</small></span><span class="d">${emp.length}명 채용 확정</span></div>
-    <div class="kpi hi"><span class="l">동의서 미완료</span><span class="v">${inc.length}<small>건</small></span><span class="d">서명이 남은 사람 ${unsignedPeople}명</span>
-      <button class="btn" data-act="nudge" ${unsignedPeople?'':'disabled'}>${ic.send} 독려 알림 보내기</button></div>
+    <div class="kpi-g">
+    <div class="kpi"><span class="l">재학생 수</span><span class="v">${totalStu.toLocaleString()}<small>명</small></span><span class="d">${S.perm==='homeroom'?'3학년 3반':'3학년 '+base+'명 · 1·2학년은 데모에서 생략'}</span><span class="f"><span class="delta flat">지난주와 같음</span></span></div>
+    <div class="kpi"><span class="l">현장실습 파견율</span><span class="v">${pct(placed.length,base)}<small>%</small></span><span class="d">${placed.length} / ${base}명 파견</span><span class="f">${deltaChip(placed.length,wkPlaced,base)}</span></div>
+    <div class="kpi"><span class="l">취업 확정률</span><span class="v">${pct(emp.length,base)}<small>%</small></span><span class="d">${emp.length}명 채용 확정</span><span class="f">${deltaChip(emp.length,wkEmp,base)}</span></div>
+    </div>
+    <div class="kpi hi"><span class="l">서명이 덜 끝난 학생</span><span class="v">${inc.length}<small>명</small></span>
+      <span class="split" aria-label="남은 서명"><span title="학생 서명이 남은 학생">학생 ${unsignedStu}</span><span title="보호자 서명이 남은 학생">보호자 ${unsignedPar}</span>${agreeWait?`<span>협약서 ${agreeWait}</span>`:''}</span>
+      <button class="btn" data-act="nudge" ${unsignedPeople?'':'disabled'}>${ic.send} 서명 남은 ${unsignedPeople}명에게 알림</button></div>
   </section>
   <div class="grid">
     <section class="card c5">
@@ -620,7 +666,7 @@ function vDash(){
     </section>
     <section class="card c7">
       <div class="card-h"><div><h2>현장실습 배정 학생</h2><p>협약서 · 학생 동의서 · 학부모 동의서 순서</p></div>
-        <button class="btn sm" data-act="nudge" ${unsignedPeople?'':'disabled'}>미서명 ${unsignedPeople}명에게 알림</button></div>
+        <button class="btn sm" data-act="nudge" ${unsignedPeople?'':'disabled'}>서명 남은 ${unsignedPeople}명에게 알림</button></div>
       <div class="fchips" style="margin-bottom:12px">
         ${Object.entries(F).map(([k,[l,f]])=>`<button class="fchip" data-act="filter" data-v="${k}" aria-pressed="${S.filter===k}">${l}<b class="num">${placed.filter(f).length}</b></button>`).join('')}
       </div>
@@ -633,6 +679,10 @@ function vDash(){
   </div>`;
 }
 
+function deltaChip(now, before, base){
+  const d = Math.round((now-before)/base*1000)/10;
+  return d>0 ? `<span class="delta up" title="지난주 대비"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>지난주보다 ${d}%p</span>` : `<span class="delta flat">지난주와 같음</span>`;
+}
 function pager(act,cur,pages){
   if (pages<=1) return '';
   const st=Math.max(1,Math.min(cur-2,pages-4)), nums=[]; for(let i=st;i<=Math.min(pages,st+4);i++) nums.push(i);
@@ -1058,22 +1108,22 @@ function vStudent(){
   let body = '';
   if (t==='home'){
     const todos = [];
-    if (s.consent.student!=='ok') todos.push(`<button class="todo" data-act="stuSign"><div class="grow"><div style="font-weight:600">현장실습 학생 동의서 서명하기</div><div class="small mut">${s.placement.company} · 10월 29일까지</div></div><span class="chip warn">할 일</span></button>`);
-    s.certs.filter(c=>c.status==='wait').forEach(c=>todos.push(`<div class="todo"><div class="grow"><div style="font-weight:600">${esc(c.name)}</div><div class="small mut">선생님이 증빙을 확인하고 있어요</div></div><span class="chip info">확인 중</span></div>`));
-    body = `<div class="ph-card"><div class="small mut">희망 직무 준비도</div><div class="big-n">${readiness(s)}<small>%</small></div><div class="small" style="margin-top:4px">${s.job}</div><div class="prog"><i style="width:${readiness(s)}%"></i></div>
+    if (s.consent.student!=='ok') todos.push(`<button class="lrow" data-act="stuSign"><span class="ic-c w">${ic.pen}</span><div class="grow"><div class="t">현장실습 동의서에 서명해요</div><div class="s">${s.placement.company} · 10월 29일(목)까지</div></div><span class="chev">${ic.back}</span></button>`);
+    s.certs.filter(c=>c.status==='wait').forEach(c=>todos.push(`<div class="lrow"><span class="ic-c b">${ic.file}</span><div class="grow"><div class="t">${esc(c.name)}</div><div class="s">선생님이 증빙을 확인하고 있어요</div></div><span class="chip info">확인 중</span></div>`));
+    body = `<p class="ph-hello">${s.name}님,<br>${todos.length?`오늘 할 일이 <em>${todos.length}개</em> 있어요`:'오늘 할 일을 다 끝냈어요'}</p><div class="ph-card"><div class="small mut">희망 직무 준비도</div><div class="big-n">${readiness(s)}<small>%</small></div><div class="small" style="margin-top:4px">${s.job}</div><div class="prog"><i style="width:${readiness(s)}%"></i></div>
       <button class="btn sm ghost" style="margin:8px 0 0 -12px" data-act="stuTab" data-v="report">무엇을 더 준비할지 보기</button></div>
-      <div class="ph-card"><h3>오늘 할 일 ${todos.length}개</h3>${todos.join('')||'<p class="small mut" style="margin:0">할 일을 모두 끝냈어요</p>'}</div>
-      <div class="ph-card"><h3>새 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept).map(p=>`<div class="li"><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.period}</div></div></div>`).join('')}</div>`;
+      ${todos.length?`<div class="ph-card" style="padding:8px 20px"><h3 class="sr">오늘 할 일</h3>${todos.join('')}</div>`:''}
+      <div class="ph-card" style="padding-bottom:8px"><h3 style="margin-bottom:4px">우리 과 새 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept).map(p=>`<button class="lrow" data-act="stuTab" data-v="field"><span class="ic-c">${p.co.slice(0,1)}</span><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.period}</div></div><span class="chev">${ic.back}</span></button>`).join('')}</div>`;
   } else if (t==='hist'){
     body = `<div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h3 style="margin:0">자격증 · 수상 · 어학</h3><button class="btn sm" data-act="addCert">${ic.plus} 추가</button></div>
       ${s.certs.map(c=>`<div class="li"><div class="grow"><div class="t">${esc(c.name)}</div><div class="s">${c.type} · ${c.date} · ${esc(c.file)}</div></div>${c.status==='ok'?'<span class="chip ok">확인 완료</span>':c.status==='rej'?'<span class="chip bad">다시 올려 주세요</span>':'<span class="chip warn">확인 대기</span>'}</div>`).join('')}</div>
       ${['자기소개서','포트폴리오'].map(k=>{const vs=s.docs.filter(d=>d.kind===k).slice().reverse(); return `<div class="ph-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h3 style="margin:0">${k}</h3><label class="btn sm" style="cursor:pointer">${ic.up} 새 버전<input type="file" class="sr" data-kind="${k}" accept=".pdf,.hwp,.hwpx,.docx,.jpg,.png,.zip"></label></div>
         ${vs.map((d,i)=>`<div class="li"><div class="fileic">${ic.file}</div><div class="grow"><div class="t">${d.ver}${i===0?' · 최신':''}</div><div class="s">${d.date} · ${esc(d.note)}</div></div></div>`).join('')}</div>`}).join('')}`;
   } else if (t==='field'){
-    const steps = [['agree','표준협약서','학교와 기업'],['student','학생 동의서','나'],['parent','학부모 동의서','보호자']];
+    const steps = [['agree','표준협약서','학교와 기업이 서명'],['student','학생 동의서','내가 서명'],['parent','학부모 동의서','보호자가 서명']];
     body = `<div class="ph-card"><div class="small mut">배정된 실습 기업</div><h3 style="margin:4px 0 0">${s.placement.company}</h3><div class="small mut">전기설비 시공 보조 · 2026.${s.placement.period}</div>
       ${steps.map(([k,l,w])=>`<div class="li"><div class="grow"><div class="t">${l}</div><div class="s">${w}</div></div>${s.consent[k]==='ok'?'<span class="chip ok">서명 완료</span>':'<span class="chip warn">대기</span>'}</div>`).join('')}
-      ${s.consent.student!=='ok'?`<button class="btn pri block" style="margin-top:12px;height:48px" data-act="stuSign">내 동의서 서명하기</button>`:''}
+      ${s.consent.student!=='ok'?`<button class="btn pri cta" style="margin-top:16px" data-act="stuSign">내 동의서 서명하기</button>`:''}
       ${s.consent.parent!=='ok'?`<p class="small mut" style="margin:12px 0 0">보호자님 휴대폰으로 서명 링크를 보냈어요.</p>`:''}</div>
       <div class="ph-card"><h3>다른 공고</h3>${POSTINGS.filter(p=>p.dept===s.dept&&p.co!==s.placement.company).map(p=>`<div class="li"><div class="grow"><div class="t">${p.co}</div><div class="s">${p.job} · ${p.pay} (예시)</div></div><span class="chip neu">마감 전</span></div>`).join('')||'<p class="small mut">없어요</p>'}</div>`;
   } else {
@@ -1164,10 +1214,13 @@ function vParent(){
   const stepper = `<div class="stepper" aria-label="${st}단계 / 3단계">${[1,2,3].map(i=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div>`;
   if (st===0){
     body = `<p class="small mut" style="text-align:center;margin:4px 0 12px">10월 22일 (수) 오후 4:10</p>
-      <div class="msg-from">○○공업고등학교 · 알림톡</div>
-      <div class="msg"><b>현장실습 동의서 서명 요청</b><br><br>${s.parent} 보호자님, ${s.name} 학생의 현장실습 동의서 서명을 부탁드려요.<br><br>실습 기업: ${s.placement.company}<br>기간: 2026.${s.placement.period}<br>서명 마감: 10월 29일(목)<br><br>아래 버튼을 누르면 휴대폰에서 바로 서명할 수 있어요. 앱 설치는 필요 없어요.
-      <button class="msg-btn" data-act="pStep" data-v="1">동의서 열기</button></div>
-      <p class="small mut" style="margin-top:16px">카카오톡이 없는 보호자에게는 같은 내용이 문자로 가요.</p>`;
+      <div class="msg-row"><span class="ic-c b" aria-hidden="true">○○</span><div style="flex:1;min-width:0">
+      <div class="msg-from">○○공업고등학교</div>
+      <div class="msg"><div class="msg-hd">현장실습 동의서 서명 요청</div><div class="msg-bd">${s.parent} 보호자님, ${s.name} 학생의 현장실습 동의서에 서명을 부탁드려요.
+      <dl class="msg-kv"><dt>실습 기업</dt><dd>${s.placement.company}</dd><dt>기간</dt><dd class="num">2026.${s.placement.period}</dd><dt>서명 마감</dt><dd>10월 29일(목)</dd></dl>
+      버튼을 누르면 휴대폰에서 바로 서명해요. 앱 설치는 필요 없어요.
+      <button class="msg-btn" data-act="pStep" data-v="1">동의서 열기</button></div></div></div></div>
+      <p class="small mut" style="margin:16px 4px 0">카카오톡이 없는 보호자에게는 같은 내용이 문자로 가요.</p>`;
   } else if (st===1){
     body = `${stepper}<div class="ph-card"><h3>본인 확인</h3><p class="small mut" style="margin:0 0 12px">${s.name} 학생의 생년월일 6자리를 넣어 주세요.</p>
       <div class="field" style="margin:0"><label for="pBirth" class="sr">학생 생년월일</label><input class="inp" id="pBirth" inputmode="numeric" maxlength="6" placeholder="예: 081203" autocomplete="off"><span class="help" id="pBirthErr">데모에서는 아무 숫자 6자리나 돼요</span></div></div>`;
